@@ -1,3 +1,7 @@
+// NTHUOJ 12138 - too many treasures   
+// SYC
+// 2020 / 4 / 13
+
 #include<stdlib.h>
 #include<stdio.h>
 

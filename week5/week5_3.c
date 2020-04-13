@@ -1,3 +1,7 @@
+// NTHUOJ 12678 - Count 1s   
+// SYC
+// 2020 / 4 / 13
+
 #include<stdlib.h>
 #include<stdio.h>
 
