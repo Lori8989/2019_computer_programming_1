@@ -3,40 +3,34 @@
 
 int main(){
     long int n = 0;
-    long int q = 0;
 
-    long int prefixSum[1000003];
+    long int prefixSum[1000002];
+    long int count = 0;
+    for(long int i = 1; i < 1000002; i++){
+        
+        char strInt[10];
+        sprintf(strInt, "%ld", i);
+        // printf("%s\n", strInt);
+        // printf("%ld\n", sizeof(strInt));
+        for(long int j = 0; j < 10; j++){
+            // printf("%c", strInt[j]);
+            if(strInt[j] == '1'){
+                count++;
+            }
+        }
 
-    scanf("%ld", &n);
-    scanf("%ld", &q);
-
-    long int accSum = 0;
-    prefixSum[0] = 0;
-    for(long int i = 1; i <= n; i++){
-        long int temp = 0;
-        scanf("%ld", &temp);
-        accSum += temp;
-        prefixSum[i] = accSum;
-        // printf("%ld ", prefixSum[i]);
+        prefixSum[i] = count;
     }
 
-    // printf("\n");
-
-    for(long int i = 0; i < q; i++){
+    scanf("%ld", &n);
+    for(long int i = 0; i < n; i++){
         long int a = 0;
         long int b = 0;
-        long int c = 0;
 
         scanf("%ld", &a);
         scanf("%ld", &b);
-        scanf("%ld", &c);
 
-        // long int idxA = a - 1;
-        // long int idxB = b - 1;
-
-        // printf("%ld %ld %ld %ld %ld\n", a, b, c, a + c - 1, a - 1);
-        // printf(" %ld\n", );
-        printf("%ld\n", prefixSum[a + c - 1] - prefixSum[a - 1]);
+        printf("%ld\n", prefixSum[b] - prefixSum[a-1]);
     }
 
     return 0;
