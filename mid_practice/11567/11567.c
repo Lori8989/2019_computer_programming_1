@@ -20,7 +20,7 @@
 // 100010000
 
 // 2020/05/01 SYC
-
+// 助教您好，這個bug我確定有修@@，因為用gcc compile的時候有跳出這個warning，有特別把他修好@@
 #include<stdio.h>
 #include<stdlib.h>
 
