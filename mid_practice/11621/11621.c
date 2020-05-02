@@ -92,8 +92,6 @@ int main(){
             buffCount = 0;
         }
     }
-    // printf("\n");
-    countPalindrome(buff, buffCount);
 
     return 0;
 }

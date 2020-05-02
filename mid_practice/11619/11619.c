@@ -47,6 +47,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+// UImportant HINT: Do not use too large array, it may cause Runtime Error.
 #define CoordBuffSize 105
 #define CoordLabelsArraySize 10000
 
