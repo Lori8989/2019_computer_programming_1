@@ -44,7 +44,10 @@ typedef struct coord{
     int col;
 } Coord;
 
-int isBingo(int marked[TableLen][TableLen], int len){
+Coord table[TableSize];
+int marked[TableLen][TableLen];
+
+int isBingo(){
     // Check Rows
     // for(int i = 0; i < len; i++){
     //     int isBingoYet = 1;
@@ -82,15 +85,17 @@ int isBingo(int marked[TableLen][TableLen], int len){
     if(marked[0][4] && marked[1][4] && marked[2][4] && marked[3][4] && marked[4][4]){return 1;}
 
     // Check Diagonoses
-    if(marked[0][0] && marked[1][1] && marked[2][2] && marked[3][3] && marked[4][4]){return 1;}
+    if(marked[0][0] && marked[1][1] && marked[2][2] && marked[3][3] && marked[4][4]){
+        return 1;
+    }
     if(marked[0][4] && marked[1][3] && marked[2][2] && marked[3][1] && marked[4][0]){return 1;}
 
     return 0;
 }
 
-void clearMarked(int marked[TableLen][TableLen], int len){
-    for(int i = 0; i < len; i++){
-        for(int j = 0; j < len; j++){
+void clearMarked(){
+    for(int i = 0; i < TableLen; i++){
+        for(int j = 0; j < TableLen; j++){
             marked[i][j] = 0;
         }
     }
@@ -98,8 +103,8 @@ void clearMarked(int marked[TableLen][TableLen], int len){
 
 int main(){
     int T = 0;
-    Coord table[TableSize];
-    int marked[TableLen][TableLen];
+    // Coord table[25];
+    // int marked[5][5];
 
     for(int i = 0; i < TableLen; i++){
         for(int j = 0; j < TableLen; j++){
@@ -121,17 +126,18 @@ int main(){
             int temp = 0;
             scanf("%d", &temp);
 
-            marked[table[temp].row][table[temp].col] = 1;
-            flag = isBingo(marked, TableLen);
-            if(flag){
-                printf("Case #%d: %d\n", i + 1, k + 1);
-                break;
+            if(!flag){
+                marked[table[temp].row][table[temp].col] = 1;
+                flag = isBingo();
+                if(flag){
+                    printf("Case #%d: %d\n", i + 1, k + 1);
+                }
             }
         }
         if(!flag){
             printf("Case #%d: Not yet \\(^o^)/\n", i + 1);
         }
-        clearMarked(marked, TableLen);
+        clearMarked();
     }
 
     return 0;
