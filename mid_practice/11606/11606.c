@@ -1,3 +1,35 @@
+// NTHUOJ 11606 - Factor Counter   
+// Description
+// Given an interval [L,R], please find out the integer which has the most positive factors (正因數) in this interval.
+// If there are multiple answers, print the smallest of them.
+
+// Input
+// The first line contains an integer T, representing the number of testcases.
+// The next T lines contain two integers L and R, representing the endpoints of the interval.
+// 1 ≤ T ≤ 20
+// 1 ≤ L ≤ R ≤ 20000
+
+// Output
+// For each testcase, please output a line contains an integer representing your answer.
+// (i.e. Please print '\n' after each answer.)
+
+// Sample Input  
+// 5
+// 5 5
+// 5 6
+// 5 7
+// 5 8
+// 5 12
+
+// Sample Output  
+// 5
+// 6
+// 6
+// 6
+// 12
+
+// 2020/05/01 SYC
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
