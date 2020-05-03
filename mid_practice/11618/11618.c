@@ -43,8 +43,16 @@ long long int gcd(long long int a, long long int b){
     return a;
 }
 
+long long int lcm(long long int a, long long int b){
+    return a * b / gcd(a, b);
+}
+
 long long int triGcd(long long int a, long long int b, long long int c){
     return gcd(gcd(a, b), c);
+}
+
+long long int triLcm(long long int a, long long int b, long long int c){
+    return lcm(lcm(a, b), c);
 }
 
 int main(){
@@ -53,50 +61,55 @@ int main(){
 
     for(int i = 0; i < T; i++){
         long long int n = 0, x1 = 0, x2 = 0, x3 = 0;
-        int isX1Divide = 0, isX2Divide = 0, isX3Divide = 0;
+        // long long int x1Reduced = 0, x2Reduced = 0, x3Reduced = 0;
+        // int isX1Divide = 0, isX2Divide = 0, isX3Divide = 0;
         scanf("%lld %lld %lld %lld\n", &n, &x1, &x2, &x3);
 
-        if(gcd(n, x1) != 1){isX1Divide = 1;}
-        if(gcd(n, x2) != 1){isX2Divide = 1;}
-        if(gcd(n, x3) != 1){isX3Divide = 1;}
+        // if(gcd(n, x1) != 1){
+        //     isX1Divide = 1;
+        //     x1Reduced = gcd(n, x1);
+        // }
+        // if(gcd(n, x2) != 1){isX2Divide = 1;}
+        // if(gcd(n, x3) != 1){isX3Divide = 1;}
 
-        int needGcd = isX1Divide + isX2Divide + isX3Divide;
-        long long int gcdForAll = 0;
-        long long int get3BalloonPonies = 0;
+        // int needGcd = isX1Divide + isX2Divide + isX3Divide;
+        // long long int gcdForAll = 0;
+        // long long int get3BalloonPonies = 0;
 
-        if(needGcd == 3){// Find Least Common Multiple
-            gcdForAll = triGcd(x1, x2, x3);
-            get3BalloonPonies = n / gcdForAll;
-        }else if(needGcd == 2){// Find Least Common Multiple: lcm = (Xi / gcd) * (Xj / gcd) * gcd = Xi / gcd * Xj
-            long long int lcm = 0;
-            if(isX1Divide && isX2Divide){
-                gcdForAll = gcd(x1, x2);
-                lcm = x1 / gcdForAll * x2;
-                // printf("%lld %lld\n", x1, x2);
-                // printf("%lld\n", gcdForAll);
-                get3BalloonPonies = n / lcm;
-            }else if(isX2Divide && isX3Divide){
-                gcdForAll = gcd(x2, x3);
-                lcm = x2 / gcdForAll * x3;
-                get3BalloonPonies = n / lcm;
-            }else if(isX1Divide && isX3Divide){
-                gcdForAll = gcd(x1, x3);
-                lcm = x1 / gcdForAll * x3;
-                get3BalloonPonies = n / lcm;
-            }
-        }else if(needGcd == 1){
-            if(isX1Divide){
-                get3BalloonPonies = n / x1;
-            }else if(isX2Divide){
-                get3BalloonPonies = n / x2;
-            }else if(isX3Divide){
-                get3BalloonPonies = n / x3;
-            }
-        }else{
-            get3BalloonPonies = n;
-        }
+        // if(needGcd == 3){// Find Least Common Multiple
+        //     gcdForAll = triGcd(x1, x2, x3);
+        //     get3BalloonPonies = n / gcdForAll;
+        // }else if(needGcd == 2){// Find Least Common Multiple: lcm = (Xi / gcd) * (Xj / gcd) * gcd = Xi / gcd * Xj
+        //     long long int lcm = 0;
+        //     if(isX1Divide && isX2Divide){
+        //         gcdForAll = gcd(x1, x2);
+        //         lcm = x1 / gcdForAll * x2;
+        //         // printf("%lld %lld\n", x1, x2);
+        //         // printf("%lld\n", gcdForAll);
+        //         get3BalloonPonies = n / lcm;
+        //     }else if(isX2Divide && isX3Divide){
+        //         gcdForAll = gcd(x2, x3);
+        //         lcm = x2 / gcdForAll * x3;
+        //         get3BalloonPonies = n / lcm;
+        //     }else if(isX1Divide && isX3Divide){
+        //         gcdForAll = gcd(x1, x3);
+        //         lcm = x1 / gcdForAll * x3;
+        //         get3BalloonPonies = n / lcm;
+        //     }
+        // }else if(needGcd == 1){
+        //     if(isX1Divide){
+        //         get3BalloonPonies = n / x1;
+        //     }else if(isX2Divide){
+        //         get3BalloonPonies = n / x2;
+        //     }else if(isX3Divide){
+        //         get3BalloonPonies = n / x3;
+        //     }
+        // }else{
+        //     get3BalloonPonies = n;
+        // }
 
-        printf("%lld\n", get3BalloonPonies);
+        // printf("%lld\n", get3BalloonPonies);
+        printf("%lld\n", n / triLcm(gcd(x1, n), gcd(x2, n), gcd(x3, n)));
     }
     return 0;
 }
