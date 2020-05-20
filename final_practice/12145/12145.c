@@ -32,7 +32,32 @@
 #include<stdlib.h>
 #include<stdio.h>
 
+#define TypeOfKnukles 26
+
 int main(){
+    long int n = 0;
+    long int knukles[TypeOfKnukles] = {0};
+    scanf("%ld\n", &n);
+
+    for(long int i = 0; i < n; i++){
+        char temp;
+        scanf("%c", &temp);
+        // printf("%c %d %d\n",temp,  temp, temp - 97);
+        knukles[temp - 97]++;
+    }
+
+    int flag = 1;
+    for(int i = 0; i < TypeOfKnukles; i++){
+        if(knukles[i] > 1){
+            printf("I'm the god of Knuckles!\n");
+            flag = 0;
+            break;
+        }
+    }
+
+    if(flag){
+        printf("Different makes perfect\n");
+    }
 
     return 0;
 }

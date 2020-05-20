@@ -68,7 +68,81 @@
 #include<stdlib.h>
 #include<stdio.h>
 
+typedef struct container{
+    int size;
+    int used_times;
+}Container;
+
+void showCon(Container *con_arr, int N){
+    printf("\nSize: ");
+    for(int i = 0; i < N; i++){
+        printf("%d\t", con_arr[i].size);
+    }
+
+    printf("\nUsed: ");
+    for(int i = 0; i < N; i++){
+        printf(" %d\t", con_arr[i].used_times);
+    }
+    printf("\n=======================================\n");
+}
+
+void sort_con(Container *con_arr, int n){
+    for(int i = 1; i < n; i++){
+        for(int j = i - 1; j >= 0; j--){
+            if(con_arr[i].size > con_arr[j].size){
+                // swap i, j
+                Container temp = con_arr[i];
+                con_arr[i] = con_arr[j];
+                con_arr[j] = temp;
+            }else{
+                break;
+            }
+        }
+    }
+}
+
+int fill(Container *con_arr, int target, int layer, int con_num){
+    if(target == 0){
+        return 1;
+    }else if(target < 0 || layer >= con_num){
+        return 0;
+    }
+
+    int max = target / con_arr[layer].size;
+
+    for(int i = max; i >= 0; i--){
+        con_arr[layer].used_times = i;
+        // showCon(con_arr, con_num);
+        if(fill(con_arr, target - (i * con_arr[layer].size), layer + 1, con_num)){
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
 int main(){
+    int N = 0;
+    scanf("%d", &N);
+
+    Container *con_arr = (Container *)malloc(sizeof(Container) * N);
+
+    for(int i = 0; i < N; i++){
+        scanf("%d", &(con_arr[i].size));
+        con_arr[i].used_times = 0;
+    }
+
+    int target = 0;
+    scanf("%d", &target);
+    
+    sort_con(con_arr, N);
+    fill(con_arr, target, 0, N);
+
+    printf("(");
+    for(int i = 0; i < N - 1; i++){
+        printf("%d,", con_arr[i].used_times);
+    }
+    printf("%d)\n", con_arr[N - 1].used_times);
 
     return 0;
 }
