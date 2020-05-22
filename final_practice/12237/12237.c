@@ -49,10 +49,11 @@
 
 int mian(){
 
-    double n = 28.759;
+    double f = 28.759;
+    // long int n = (int)f;
     for(int i = 0; i < 32; i++){
-        printf("%lf", n & 1);
-        n >> 1;
+        // printf("%lld", n & 1);
+        // n >> 1;
     }
 
     return 0;
