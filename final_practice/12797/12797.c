@@ -37,6 +37,35 @@
 #include<stdio.h>
 
 int main(){
+    int T = 0;
+    scanf("%d\n", &T);
+
+    for(itn i = 0; i < T; i++){
+        int A = 0, B = 0, C = 0, D = 0;
+        scanf("%d %d %d %d\n", A, B, C, D);
+
+        long int count = 0;
+        int third_edge_max = 0
+        int third_edge = 0;
+        int first_and_sec_edge = 0;
+
+        // Find Range of Third Edge
+        if(B + C > D){
+            third_edge_max = D;
+            third_edge = D - C + 1;
+        }else{
+            third_edge_max = B + C - 1;
+            third_edge = B;
+        }
+
+        // 
+        if(A + B > C){
+            (B - A + 1) * 
+        }
+
+
+
+    }
 
     return 0;
 }
