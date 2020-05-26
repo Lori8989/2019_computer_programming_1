@@ -1,4 +1,4 @@
-# NTHUOJ Subjects
+# NTHUOJ Solutions
 > [11119](./mid_practice/11119/11119.c)	Done
 
 > [11576](./mid_practice/11576/11576.c)	Done
@@ -21,23 +21,23 @@
 
 > [11099](./mid_practice/11099/11099.c)	Done
 
-> 10786 Done
+> [10786](./mid_practice/10786/10786.c)	Done
 
 > 12675	Done
 
 > 12690 Done
 
-> 10716	Done
+> [10716](./mid_practice/10716/10716.c)	Done
 
-> 11166 Done
+> [11166](./mid_practice/11166/11166.c)	Done
 
 > 12125	Done
 
 > 12132	Done
  
-> 10728 Done
+> [10728](./mid_practice/10728/10728.c)	Done
 	
-> 11617 Done
+> [11617](./mid_practice/11617/11617.c)	Done
 
 > 12138	Done
 
@@ -45,13 +45,13 @@
 
 > 12674	Done
 
-> 11618 Done
+> [11618](./mid_practice/11618/11618.c)	Done
 
 > 12661	Done
 
 > 12127 Done
 
-> 11549	Done
+> [11549](./mid_practice/11549/11549.c)	Done
 
 > 11619 Done
 
@@ -59,17 +59,17 @@
 
 > 12133	Done
 
-> 12135 Done
+> [12135](./mid_practice/12135/12135.c)	Done
 
-> 11620 Done
+> [11620](./mid_practice/11620/11620.c)	Done
 
 > 12733	Done
 
 > 12179	Done
 
-> 11567	Done
+> [11567](./mid_practice/11567/11567.c)	Done
 
-> 11621 Done
+> [11621](./mid_practice/11621/11621.c)	Done
 
 Final Exam
 
@@ -93,7 +93,7 @@ Final Exam
 
 > 12145	
 
-> 11679
+> [11679](./final_practice/11679/11679.c) Done
 
 > 11219
 
