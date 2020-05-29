@@ -83,6 +83,8 @@ Final Exam
 
 > [12151](./final_practice/12151/12151.c) Done
 
+> [12152](./final_practice/12152/12152.c) Done
+
 > 12237	
 
 > 11662	
@@ -144,3 +146,5 @@ Final Exam
 > 12289	
 
 > 12303
+
+> [12797](./final_practice/12797/12797.c) Done

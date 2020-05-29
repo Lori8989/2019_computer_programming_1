@@ -33,39 +33,47 @@
 // 423883295
 // 1
 
-#include<stdlib.h>
-#include<stdio.h>
-
+#include <stdio.h>
+#include <stdlib.h>
+ 
 int main(){
     int T = 0;
     scanf("%d\n", &T);
 
-    for(itn i = 0; i < T; i++){
-        int A = 0, B = 0, C = 0, D = 0;
-        scanf("%d %d %d %d\n", A, B, C, D);
+    for(int i = 0; i < T; i++){
+        long int A = 0, B = 0, C = 0, D = 0;
+        long int ans = 0;
+        int seq[100009] = {0};
+        scanf("%ld %ld %ld %ld\n", &A, &B, &C, &D);
 
-        long int count = 0;
-        int third_edge_max = 0
-        int third_edge = 0;
-        int first_and_sec_edge = 0;
-
-        // Find Range of Third Edge
-        if(B + C > D){
-            third_edge_max = D;
-            third_edge = D - C + 1;
-        }else{
-            third_edge_max = B + C - 1;
-            third_edge = B;
+        for(long int j = A; j <= B; j++){
+            seq[j + B]++;
+            seq[j + C + 1]--;
         }
 
-        // 
-        if(A + B > C){
-            (B - A + 1) * 
+        for(long int j = A + B; j <= B + C + 1; j++){
+            seq[j] = seq[j - 1] + seq[j];
         }
 
+        // for(int q = 0; q < 15; q++){
+        //     printf("%d ", seq[q]);
+        // }
+        // printf("\n");
 
+        for(long int j = A + B; j <= D + C + 1; j++){
+            seq[j] = seq[j - 1] + seq[j];
+        }
 
+        // for(int q = 0; q < 15; q++){
+        //     printf("%d ", seq[q]);
+        // }
+        // printf("\n");
+
+        for(long int k = C; k <= D; k++){
+            ans += (seq[B + C] - seq[k]);
+        }
+
+        printf("%ld\n", ans);
     }
-
     return 0;
 }
