@@ -91,9 +91,9 @@ Final Exam
 
 > [10895](./final_practice/10895/10895.c) Done
 
-> 12220	
+> [12220](./final_practice/12220/12220.c) Done
 
-> 12145	
+> [12145](./final_practice/12145/12145.c) Done
 
 > [11679](./final_practice/11679/11679.c) Done
 
