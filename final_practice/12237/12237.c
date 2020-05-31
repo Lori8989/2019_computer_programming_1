@@ -44,17 +44,43 @@
 
 // 2020/05/09 SYC
 
+// Reference: 
+// https://www.geeksforgeeks.org/program-for-conversion-of-32-bits-single-precision-ieee-754-floating-point-representation/
+// https://www.itread01.com/content/1544817994.html
+
 #include<stdio.h>
 #include<stdlib.h>
 
-int mian(){
+typedef union{
+    float f;
+    struct {
+        unsigned int mantissa: 23;
+        unsigned int exponent: 8;
+        unsigned int sign: 1;
+    } raw;
+}Float;
 
-    double f = 28.759;
-    // long int n = (int)f;
-    for(int i = 0; i < 32; i++){
-        // printf("%lld", n & 1);
-        // n >> 1;
+void printBin(int num, int len){
+    for(int i = len - 1; i >= 0; i--){
+        printf("%d", (num >> i) & 1);
     }
+}
 
+void printFloat(float f){
+    Float fStruct;
+    fStruct.f = f;
+    printBin(fStruct.raw.sign, 1);
+    printBin(fStruct.raw.exponent, 8);
+    printBin(fStruct.raw.mantissa, 23);
+    printf("\n");
+}
+
+int main(){
+
+    float f = 0;
+    while((scanf("%f", &f)) != EOF){
+        printFloat(f);
+    }
+    
     return 0;
 }
