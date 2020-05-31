@@ -60,17 +60,17 @@ int isCollision(CatToast a, CatToast b, int r){
 CatToast *findHead(CatToast *a){
     CatToast *temp = a;
     CatToast *compressNodes[1005];
-    int compressCount = 1;
-    compressNodes[0] = a;
+    int compressCount = 0;
+    
     while(temp->collision_to != NULL){
         temp = temp->collision_to;
-        compressNodes[compressCount]->collision_to = temp;
-        compressCount++;
+        // compressNodes[compressCount]->collision_to = temp;
+        // compressCount++;
     }
 
-    for(int i = 0; i < compressCount; i++){
-        compressNodes[i]->collision_to = temp;
-    }
+    // for(int i = 0; i < compressCount; i++){
+    //     compressNodes[i]->collision_to = temp;
+    // }
 
     return temp;
 }
@@ -92,7 +92,14 @@ int main(){
             if(isCollision(cat_toasts[i], cat_toasts[j], r)){
                 if(cat_toasts[j].collision_to != NULL && cat_toasts[j].collision_to != NULL){
                     // Merge Set
-
+                    CatToast *head_i = findHead(&(cat_toasts[i]));
+                    CatToast *head_j = findHead(&(cat_toasts[j]));
+                    
+                    head_j->collision_to = head_i;
+                    head_j->is_collision = 1;
+                    cat_toasts[i].is_collision = 1;
+                    cat_toasts[j].collision_to = head_i;
+                    cat_toasts[j].is_collision = 1;
                 }else if(cat_toasts[j].collision_to != NULL){
                     // Merge node i to Set j
                     CatToast *head = findHead(&(cat_toasts[j]));
@@ -101,7 +108,7 @@ int main(){
                     // cat_toasts[j].collision_to = head;
                 }else{
                     // Merge node j to Set i or node i
-                    cat_toasts[j].collision_to = &(cat_toasts[i]);
+                    cat_toasts[j].collision_to = findHead(&(cat_toasts[i]));
                     cat_toasts[i].is_collision = 1;
                     cat_toasts[j].is_collision = 1;
                 }

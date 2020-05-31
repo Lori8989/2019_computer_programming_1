@@ -39,6 +39,11 @@ int main(){
     long int knukles[TypeOfKnukles] = {0};
     scanf("%ld\n", &n);
 
+    if(n == 1){
+        printf("I'm the god of Knuckles!\n");
+        return 0;
+    }
+
     for(long int i = 0; i < n; i++){
         char temp;
         scanf("%c", &temp);

@@ -46,25 +46,37 @@
 #include<stdio.h>
 
 #define MaxLen 1000005
+#define Inf 9223372036854775807
 
 long long int binSearch(long long int *seq, long long int target, long long int start, long long int end){
-    if(end - start > 1){
-        long long int mid = (start + end) / 2;
-        if(target < seq[mid]){
-            binSearch(seq, target, start, mid);
+    long long int mid = (start + end) / 2;
+    if(end - start > 0){
+        
+        if(target <= seq[mid]){
+            return binSearch(seq, target, start, mid);
         }else if(target > seq[mid]){
-            binSearch(seq, target, mid + 1, end);
-        }else{
-            return mid;
+            return binSearch(seq, target, mid + 1, end);
         }
+        // else{
+        //     return mid;
+        // }
     }else{
-        long long int disStart = target < seq[start]? seq[start] - target : target - seq[start];
-        long long int disEnd = target < seq[end]? seq[end] - target : target - seq[end];
-        if(disStart <= disEnd){
-            return start;
-        }else{
-            return end;
-        }
+
+        // long long int minDis = Inf;
+        // long long int idx = start;
+        // for(long long int i = end; i >= start; i--){
+        //     long long int tempDis = target < seq[i]? seq[i] - target : target - seq[i];
+        //     // printf("[%lld]%lld : [%lld]%lld : [%lld]%lld, idx: %lld, MinDis: %lld, TempDis: %lld\n", start, seq[start], i, seq[i], end, seq[end], idx, minDis, tempDis);
+        //     if(target <= seq[i] && minDis >= tempDis){
+        //         idx = i;
+        //         minDis = tempDis;
+        //     }
+        // }
+
+        // // printf("Idx: %lld, MinDis: %lld\n", idx, minDis);
+
+        // return idx;
+        return mid;
     }
     
 }
@@ -86,10 +98,24 @@ int main(){
         if(f > seq[n - 1]){
             printf("gan ni nya sai bau\n");
         }else{
-            long long int output = 0;
-            output = binSearch(seq, f, 0, n - 1) + 1;
+            long long int outputLeft = 0, outputRight = 0;
+            long long int rightDis = 0, leftDis = 0;
+            
+            outputRight = binSearch(seq, f, k, n - 1);
+            outputLeft = binSearch(seq, f, 0, k - 1);
+            // printf("OutputRight: %lld OutputLeft: %lld\n", outputRight, outputLeft);
+            rightDis = seq[outputRight] - f >= 0? seq[outputRight] - f : f - seq[outputRight];
+            leftDis = seq[outputLeft] - f >= 0? seq[outputLeft] - f : f - seq[outputLeft];
+
+            if((seq[k - 1] == seq[k] && rightDis <= leftDis) || (seq[k - 1] != seq[k] && f > seq[k - 1])){
+                printf("%lld\n", outputRight + 1 - k);
+            }else{
+                printf("%lld\n", outputLeft + 1 - k + n);
+            }
+            
+            
             // printf("Idx: %lld\n", output - 1);
-            printf("%lld\n", (output - k + n) % n);
+            
         }   
     }
 
