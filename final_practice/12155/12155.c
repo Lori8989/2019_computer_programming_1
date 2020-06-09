@@ -39,95 +39,146 @@
 // Sample Output  
 // 1 2
 
+// #include<stdio.h>
+// #include<stdlib.h>
+
+// typedef struct catToast{
+//     int x;
+//     int y;
+//     struct catToast *collision_to;
+//     int is_collision;
+// }CatToast;
+
+// int isCollision(CatToast a, CatToast b, int r){
+//     if((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) <= r * r){
+//         return 1;
+//     }else{
+//         return 0;
+//     }
+// }
+
+// CatToast *findHead(CatToast *a){
+//     CatToast *temp = a;
+//     CatToast *compressNodes[1005];
+//     int compressCount = 0;
+    
+//     while(temp->collision_to != NULL){
+//         temp = temp->collision_to;
+//         // compressNodes[compressCount]->collision_to = temp;
+//         // compressCount++;
+//     }
+
+//     // for(int i = 0; i < compressCount; i++){
+//     //     compressNodes[i]->collision_to = temp;
+//     // }
+
+//     return temp;
+// }
+
+// int main(){
+//     int n = 0, r = 0;
+//     CatToast cat_toasts[1005];
+//     // CatToast buckets[1005];
+//     scanf("%d %d\n", &n, &r);
+
+//     for(int i = 0; i < n; i++){
+//         scanf("%d %d\n", &(cat_toasts[i].x), &(cat_toasts[i].y));
+//         cat_toasts[i].collision_to = NULL;
+//         cat_toasts[i].is_collision = 0;
+//     }
+
+//     for(int i = 0; i < n; i++){
+//         for(int j = i + 1; j < n; j++){
+//             if(isCollision(cat_toasts[i], cat_toasts[j], r)){
+//                 if(cat_toasts[j].collision_to != NULL && cat_toasts[j].collision_to != NULL){
+//                     // Merge Set
+//                     CatToast *head_i = findHead(&(cat_toasts[i]));
+//                     CatToast *head_j = findHead(&(cat_toasts[j]));
+                    
+//                     head_j->collision_to = head_i;
+//                     head_j->is_collision = 1;
+//                     cat_toasts[i].is_collision = 1;
+//                     cat_toasts[j].collision_to = head_i;
+//                     cat_toasts[j].is_collision = 1;
+//                 }else if(cat_toasts[j].collision_to != NULL){
+//                     // Merge node i to Set j
+//                     CatToast *head = findHead(&(cat_toasts[j]));
+//                     cat_toasts[i].collision_to = head;
+//                     cat_toasts[i].is_collision = 1;
+//                     // cat_toasts[j].collision_to = head;
+//                 }else{
+//                     // Merge node j to Set i or node i
+//                     cat_toasts[j].collision_to = findHead(&(cat_toasts[i]));
+//                     cat_toasts[i].is_collision = 1;
+//                     cat_toasts[j].is_collision = 1;
+//                 }
+//             }
+//         }
+//     }
+
+//     int collision_count = 0;
+//     int uncollision_count = 0;
+//     for(int i = 0; i < n; i++){
+//         if(cat_toasts[i].collision_to == NULL && cat_toasts[i].is_collision == 1){
+//             collision_count++;
+//         }
+//         if(cat_toasts[i].is_collision == 0){
+//             uncollision_count++;
+//         }
+//     }
+
+//     printf("%d %d\n", uncollision_count, collision_count);
+
+//     return 0;
+// }
+
 #include<stdio.h>
 #include<stdlib.h>
-
 typedef struct catToast{
     int x;
     int y;
-    struct catToast *collision_to;
-    int is_collision;
+    int visited;
 }CatToast;
 
-int isCollision(CatToast a, CatToast b, int r){
-    if((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) <= r * r){
-        return 1;
-    }else{
-        return 0;
-    }
+int getDisSqrt(CatToast a, CatToast b){
+    return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
 }
 
-CatToast *findHead(CatToast *a){
-    CatToast *temp = a;
-    CatToast *compressNodes[1005];
-    int compressCount = 0;
-    
-    while(temp->collision_to != NULL){
-        temp = temp->collision_to;
-        // compressNodes[compressCount]->collision_to = temp;
-        // compressCount++;
+int dfs(CatToast *catToasts, int now, int n, int r){
+    int isRemain = 1;
+    catToasts[now].visited = 1;
+
+    for(int i = 0; i < n; i++){
+        if(!catToasts[i].visited && getDisSqrt(catToasts[now], catToasts[i]) <= r * r){
+            isRemain = 0;
+            dfs(catToasts, i, n, r);
+        }
     }
 
-    // for(int i = 0; i < compressCount; i++){
-    //     compressNodes[i]->collision_to = temp;
-    // }
-
-    return temp;
+    return isRemain;
 }
 
 int main(){
-    int n = 0, r = 0;
-    CatToast cat_toasts[1005];
+    int n = 0, r = 0, remain = 0, blackhole = 0;
+    CatToast catToasts[1005];
     // CatToast buckets[1005];
     scanf("%d %d\n", &n, &r);
 
     for(int i = 0; i < n; i++){
-        scanf("%d %d\n", &(cat_toasts[i].x), &(cat_toasts[i].y));
-        cat_toasts[i].collision_to = NULL;
-        cat_toasts[i].is_collision = 0;
+        scanf("%d %d\n", &(catToasts[i].x), &(catToasts[i].y));
+        catToasts[i].visited = 0;
     }
 
     for(int i = 0; i < n; i++){
-        for(int j = i + 1; j < n; j++){
-            if(isCollision(cat_toasts[i], cat_toasts[j], r)){
-                if(cat_toasts[j].collision_to != NULL && cat_toasts[j].collision_to != NULL){
-                    // Merge Set
-                    CatToast *head_i = findHead(&(cat_toasts[i]));
-                    CatToast *head_j = findHead(&(cat_toasts[j]));
-                    
-                    head_j->collision_to = head_i;
-                    head_j->is_collision = 1;
-                    cat_toasts[i].is_collision = 1;
-                    cat_toasts[j].collision_to = head_i;
-                    cat_toasts[j].is_collision = 1;
-                }else if(cat_toasts[j].collision_to != NULL){
-                    // Merge node i to Set j
-                    CatToast *head = findHead(&(cat_toasts[j]));
-                    cat_toasts[i].collision_to = head;
-                    cat_toasts[i].is_collision = 1;
-                    // cat_toasts[j].collision_to = head;
-                }else{
-                    // Merge node j to Set i or node i
-                    cat_toasts[j].collision_to = findHead(&(cat_toasts[i]));
-                    cat_toasts[i].is_collision = 1;
-                    cat_toasts[j].is_collision = 1;
-                }
-            }
+        if(catToasts[i].visited == 0){
+            int res = dfs(catToasts, i, n, r);
+
+            if(res){remain++;}
+            else{blackhole++;}
         }
     }
 
-    int collision_count = 0;
-    int uncollision_count = 0;
-    for(int i = 0; i < n; i++){
-        if(cat_toasts[i].collision_to == NULL && cat_toasts[i].is_collision == 1){
-            collision_count++;
-        }
-        if(cat_toasts[i].is_collision == 0){
-            uncollision_count++;
-        }
-    }
-
-    printf("%d %d\n", uncollision_count, collision_count);
-
+    printf("%d %d\n", remain, blackhole);
+    
     return 0;
 }
