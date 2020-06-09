@@ -99,9 +99,9 @@ Final Exam
 
 > 11219
 
-> 12155	
+> [12155 Cat-Toast crisis](./final_practice/12155/12155.c) Done	
 
-> 12142	
+> [12142 Ugandan Knuckles's adventure](./final_practice/12142/12142.c) Done	
 
 > 11665	
 
@@ -150,3 +150,5 @@ Final Exam
 > [12797](./final_practice/12797/12797.c) Done
 
 > [12801](./final_practice/12801/12801.c) Done
+
+> [12178 Queens and Castles](./final_practice/12178/12178.c) Done
