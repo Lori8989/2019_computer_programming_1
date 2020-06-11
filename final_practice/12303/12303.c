@@ -54,10 +54,10 @@ typedef struct node{
     struct node *prev;
 }Node;
 
-void insert(const int val, const int copies, Node *pos){
+void insert(const int val, const int copies, Node *pos, int *count){
     Node *temp = pos;
     Node *posNext = pos->next;
-    // Node *posNextPrev = pos->next->prev;
+    (*count) += copies;
 
     for(int i = 0; i < copies; i++){
         Node *newNode = (Node *)malloc(sizeof(Node));
@@ -72,31 +72,47 @@ void insert(const int val, const int copies, Node *pos){
     posNext->prev = temp;
 }
 
-void erase(const int val, Node *pos){
-    Node *nextTemp = pos;
+void erase(const int val, Node *pos, int *count){
+    Node *nextTemp = pos->next;
+    (*count) -= val;
     
+    for(int i = 0; i < val; i++){
+        Node *temp = nextTemp;
+        nextTemp = nextTemp->next;
+        free(temp);
+    }
 
+    pos->next = nextTemp;
+    nextTemp->prev = pos;
 }
 
 void move(const int val, Node **pos){ 
-    for(int i = 0; i < val; i++){
-        (*pos) = (*pos)->next;
+    if(val >= 0){
+        for(int i = 0; i < val; i++){
+            (*pos) = (*pos)->next;
+        }
+    }else{
+        for(int i = 0; i > val; i--){
+            (*pos) = (*pos)->prev;
+        }
     }
+    
 }
 
-void show(Node *pos){
+void show(Node *pos, int *count){
     Node *temp = pos;
 
-    printf("%d ", pos->value);
-    while(temp->next != pos){
-        printf("%d ", temp->next->value);
+    printf("%d", pos->value);
+    // while(temp->next != pos){
+    for(int i = 0; i < (*count); i++){
+        printf(" %d", temp->next->value);
         temp = temp->next;
     }
     printf("\n");
 }
 
 int main(){
-    int x = 0, n = 0;
+    int x = 0, n = 0, count = 0;
     Node *init = (Node *)malloc(sizeof(Node));
     Node *pos = init;
 
@@ -110,23 +126,23 @@ int main(){
         int val = 0, copies = 0;
 
         scanf("%s", op);
-        printf("%c\n", op[0]);
+        // printf("%c\n", op[0]);
 
         switch (op[0]){
             case 'i': // Insert
                 scanf("%d %d\n", &val, &copies);
-                insert(val, copies, pos);
+                insert(val, copies, pos, &count);
                 break;
             case 'e': // Erase
                 scanf("%d\n", &val);
-                erase(val, pos);
+                erase(val, pos, &count);
                 break;
             case 'm': // Move
                 scanf("%d\n", &val);
                 move(val, &pos);
                 break;
             case 's': // Show
-                show(pos);
+                show(pos, &count);
                 break;
         // default:
             // break;
