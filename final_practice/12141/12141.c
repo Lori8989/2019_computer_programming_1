@@ -43,6 +43,8 @@
 // uganda
 // ugandan
 
+// Reference: https://www.geeksforgeeks.org/substring-sort/
+
 #include<stdio.h>
 #include<stdlib.h>
 #define StrSize 1005

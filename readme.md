@@ -75,7 +75,7 @@ Final Exam
 
 > [12143](./final_practice/12143/12143.c) Done
 
-> [12219](./final_practice/12219/12219.c) Done
+> [12219 Uncle Huang Points Tutor](./final_practice/12219/12219.c) Done
 
 > [11209](./final_practice/11209/11209.c) Done
 
@@ -83,31 +83,31 @@ Final Exam
 
 > [12151](./final_practice/12151/12151.c) Done
 
-> [12152](./final_practice/12152/12152.c) Done
+> [12152 youbike racer](./final_practice/12152/12152.c) Done
 
-> 12237	
+> [12237 TA's Heartfelt](./final_practice/12237/12237.c) Done
 
 > 11662	
 
-> [10895](./final_practice/10895/10895.c) Done
+> [10895 Grade report(different order)](./final_practice/10895/function.c) Done
 
-> [12220](./final_practice/12220/12220.c) Done
+> [12220 McDonalld's fries](./final_practice/12220/12220.c) Done
 
-> [12145](./final_practice/12145/12145.c) Done
+> [12145 Species of Knuckles](./final_practice/12145/12145.c) Done
 
-> [11679](./final_practice/11679/11679.c) Done
+> [11679 Flattening the Tree](./final_practice/11679/11679.c) Done
 
-> 11219
+> [11219 Get your array and then sort it!](./final_practice/11219/function.c)
 
-> [12155 Cat-Toast crisis](./final_practice/12155/12155.c) Done	
+> [Week13 12155 Cat-Toast crisis](./final_practice/12155/12155.c) Done	
 
-> [12142 Ugandan Knuckles's adventure](./final_practice/12142/12142.c) Done	
+> [Week13 12142 Ugandan Knuckles's adventure](./final_practice/12142/12142.c) Done	
 
 > 11665	
 
 > 11728
 
-> [12141 Ugandan Knuckles's code](./final_practice/12141/12141.c)
+> [Week14 12141 Ugandan Knuckles's code](./final_practice/12141/12141.c) Done
 
 > 12144	
 
@@ -143,12 +143,12 @@ Final Exam
 
 > 12194	
 
-> 12289	
+> [12289 after rain](./final_practice/12289/12289.c)
 
-> 12303
+> [12303 Operation on Sequence](./final_practice/12303/12303.c)
 
-> [12797](./final_practice/12797/12797.c) Done
+> [12797 Unlimited Triangle Work](./final_practice/12797/12797.c) Done
 
-> [12801](./final_practice/12801/12801.c) Done
+> [12801 Poorgrammer](./final_practice/12801/12801.c) Done
 
 > [12178 Queens and Castles](./final_practice/12178/12178.c) Done
