@@ -65,7 +65,7 @@ int fight(const int youHp, const int youAttack, const Monster mon){
     if(youAttack <= 0){
         return Inf;
     }else{
-        return youHp - ((mon.hp / youAttack + (mon.hp % youAttack > 0) - 1) * mon.attack);
+        return youHp - (((mon.hp / youAttack) + (mon.hp % youAttack > 0) - 1) * mon.attack);
         // return youHp - ((mon.hp / youAttack + 1) * mon.attack);
     }
 }
@@ -142,7 +142,7 @@ int main(){
         }
     }
 
-    // showMap(maxHpMap);
+    showMap(maxHpMap);
 
     if(maxHpMap[4][4] > 0){printf("HEIR OF FIRE DESTROYED\n");}
     else{printf("YOU DIED\n");}
