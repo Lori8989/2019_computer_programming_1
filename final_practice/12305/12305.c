@@ -36,8 +36,6 @@
 // Output the old index of every element in the new a respectively, each separated with a space
 // Note that there should be no space after the last number but a '\n'.
 
- 
-
 // Sample Input  
 // 5
 // 6 60
@@ -49,3 +47,58 @@
 // Sample Output  
 // 5 2 4 1 3
 
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct item{
+    int idx;
+    int admin;
+    int license;
+}Item;
+
+int cmp(const Item *a, const Item *b){
+    const int aLarger = 1;
+    const int bLarger = 0;
+    // Compare Admin
+    if(a->admin > b->admin){
+        return aLarger;
+    }else if(a->admin < b->admin){
+        return bLarger;
+    }else{
+        // Compare License
+        if(a->license > b->license){
+            return aLarger;
+        }else if(a->license < b->license){
+            return bLarger;
+        }else{
+            // Compare Index
+            if(a->idx > b->idx){
+                return aLarger;
+            }else if(a->idx < b->idx){
+                return bLarger;
+            }
+        }
+    }
+}
+
+int main(){
+    int n = 0;
+    scanf("%d", &n);
+
+    Item *array = (Item *)malloc(sizeof(Item) * n);
+
+    for(int i = 0; i < n; i++){
+        scanf("%d %d\n", &(array[i].admin), &(array[i].license));
+        array[i].idx = i + 1;
+    }
+
+    qsort(array, n, sizeof(Item), (int (*)(const void *, const void *))cmp);
+    
+    printf("%d", array[0].idx);
+    for(int i = 1; i < n; i++){
+        printf(" %d", array[i].idx);
+    }
+    printf("\n");
+
+    return 0;
+}

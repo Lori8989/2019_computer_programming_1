@@ -77,9 +77,9 @@ Final Exam
 
 > [12219 Uncle Huang Points Tutor](./final_practice/12219/12219.c) Done
 
-> [11209](./final_practice/11209/11209.c) Done
+> [11209 N queens](./final_practice/11209/11209.c) Done
 
-> [11691](./final_practice/11691/11691.c) Done
+> [11691 pC - Ponds](./final_practice/11691/11691.c) Done
 
 > [12151](./final_practice/12151/12151.c) Done
 
@@ -87,7 +87,7 @@ Final Exam
 
 > [12237 TA's Heartfelt](./final_practice/12237/12237.c) Done
 
-> 11662	
+> [11662 Fill containers with water](./final_practice/11662/11662.c)
 
 > [10895 Grade report(different order)](./final_practice/10895/function.c) Done
 
@@ -109,9 +109,9 @@ Final Exam
 
 > [Week14 12141 Ugandan Knuckles's code](./final_practice/12141/12141.c) Done
 
-> 12144	
+> [Week14 12144 Dark Souls](./final_practice/12144/12144.c)
 
-> 12305	
+> [Week14 12305 Airplane Shooter](./final_practice/12305/12305.c) Done
 
 > 11758
 
