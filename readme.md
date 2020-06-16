@@ -129,7 +129,7 @@ Final Exam
 
 > 11686	
 
-> 11760
+> [11760 C - Stable Sort](./final_practice/11760/11760.c) Done
 
 > 11761	
 
