@@ -61,12 +61,30 @@ void showMap(int (*map)[MapSize]){
     }
 }
 
+// int fight(const int youHp, const int youAttack, const Monster mon){
+//     if(youAttack <= 0){
+//         return Inf;
+//     }else{
+//         return youHp - (((mon.hp / youAttack) + (mon.hp % youAttack > 0) - 1) * mon.attack);
+//         // return youHp - ((mon.hp / youAttack + 1) * mon.attack);
+//     }
+// }
+
 int fight(const int youHp, const int youAttack, const Monster mon){
     if(youAttack <= 0){
         return Inf;
     }else{
-        return youHp - (((mon.hp / youAttack) + (mon.hp % youAttack > 0) - 1) * mon.attack);
+        int tempHp = youHp;
+        int tempMonHp = mon.hp;
+        while(tempMonHp > 0){
+            tempMonHp -= youAttack;
+            if(tempMonHp > 0){
+                tempHp -= mon.attack;
+            }
+        }
+        // return youHp - (((mon.hp / youAttack) + (mon.hp % youAttack > 0) - 1) * mon.attack);
         // return youHp - ((mon.hp / youAttack + 1) * mon.attack);
+        return tempHp;
     }
 }
 
@@ -129,6 +147,7 @@ int main(){
                             maxHpMap[i][j + 1] = fightRes;
                         }
                     }
+                    
                     if(j - 1 >= 0){
                         int fightRes = fight(maxHpMap[i][j], y.attack, mons[i][j - 1]);
                         // fightRes = fightRes < 0? fightRes : fightRes;

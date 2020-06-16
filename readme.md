@@ -103,9 +103,9 @@ Final Exam
 
 > [Week13 12142 Ugandan Knuckles's adventure](./final_practice/12142/12142.c) Done	
 
-> 11665	
+> [11665 World war](./final_practice/11665/11665.c)
 
-> 11728
+> [11728 Distance on 2D plane](./final_practice/11728/function.c)
 
 > [Week14 12141 Ugandan Knuckles's code](./final_practice/12141/12141.c) Done
 
@@ -139,9 +139,9 @@ Final Exam
 
 > 11770
 
-> 12154	
+> [12154 You shall not pass!](./final_practice/12154/function.c) 	
 
-> 12194	
+> [12194 de way to home](./final_practice/12194/12194.c)	
 
 > [12289 after rain](./final_practice/12289/12289.c)
 
