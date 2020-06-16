@@ -37,7 +37,43 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int main(){
+int binSearch(int *a, int q, int n){
+    int start = 0, end = n - 1, mid = (n - 1) / 2;
 
+    while(start != end){
+        if(q < a[mid]){
+            end = mid;
+        }else if(q > a[mid]){
+            start = mid + 1;
+        }else{
+            break;
+        }
+        mid = (start + end) / 2;
+    }
+    return mid;
+}
+
+int main(){
+    int n = 0, q = 0;
+
+    scanf("%d %d\n", &n, &q);
+    int *a = (int *)malloc(sizeof(int) * n);
+    
+    for(int i = 0; i < n; i++){
+        scanf("%d", &(a[i]));
+    }
+
+    for(int i = 0; i < q; i++){
+        int query = 0;
+        int res = 0;
+        scanf("%d", &query);
+
+        res = binSearch(a, query, n);
+        if(a[res] == query){
+            printf("I know de way to your home.\n");
+        }else{
+            printf("Wake up, you homeless poor.\n");
+        }
+    }
     return 0;
 }

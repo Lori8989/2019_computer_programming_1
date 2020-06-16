@@ -141,7 +141,7 @@ Final Exam
 
 > [12154 You shall not pass!](./final_practice/12154/function.c) 	
 
-> [12194 de way to home](./final_practice/12194/12194.c)	
+> [12194 de way to home](./final_practice/12194/12194.c) Done
 
 > [12289 after rain](./final_practice/12289/12289.c)
 

@@ -252,7 +252,7 @@ int forward(char (*map)[MaxMapSize], Pos *head, Pos *head1, Pos *head2, Pos *cen
            if(map[tempHead2.r][tempHead2.c] == Secret){addSecret++; map[tempHead2.r][tempHead2.c] = Ground;}
     }
 
-    printf("Forward Head: R: %d, C: %d\n", head->r, head->c);
+    printf("Forward Head: (%d, %d) Cent: (%d, %d)\n", head->r, head->c, cen->r, cen->c);
 
     return addSecret;
 }
@@ -265,11 +265,11 @@ void turnRight(Pos *head, const Pos cen){
     // X = (-1) * Y; Y = X;
     // As for Row&Col coordinate, left&Right Reverse
     // C = -R; R = C;
-    int headPosX = -(head->r - cen.r);
-    int headPosY = (head->c - cen.c);
-    head->c = headPosX + cen.r;
-    head->r = headPosY + cen.c;
-    printf("Turn Right Head: R: %d, C: %d\n", headPosY, headPosX);
+    int headPosR = head->r - cen.r;
+    int headPosC = head->c - cen.c;
+    head->c = cen.c - headPosR;
+    head->r = cen.r + headPosC;
+    printf("Turn Right Head: R: %d = cen.:r%d + headPosC:%d, C: %d = cen.c:%d - headPosR:%d\n", head->r, cen.r, headPosC, head->c, cen.c, headPosR);
 }
 
 void turnLeft(Pos *head, const Pos cen){
@@ -280,11 +280,11 @@ void turnLeft(Pos *head, const Pos cen){
     // X = (-1) * Y; Y = X;
     // As for Row&Col coordinate, left&Right Reverse
     // C = R; R = -C;
-    int headPosX = head->r;
-    int headPosY = -(head->c);
-    head->c = headPosX;
-    head->r = headPosY;
-    printf("Turn Left Head: R: %d, C: %d\n", headPosY, headPosX);
+    int headPosR = head->r - cen.r;
+    int headPosC = head->c - cen.c;
+    head->c = cen.c + headPosR;
+    head->r = cen.r - headPosC;
+    printf("Turn Left Head: R: %d = cen.:r%d - headPosC:%d, C: %d = cen.c:%d + headPosR:%d\n", head->r, cen.r, headPosC, head->c, cen.c, headPosR);
 }
 
 int main(){
@@ -308,7 +308,7 @@ int main(){
             // scanf("%c", &tempC);
             // printf("%c", tempC);
 
-            if(tempC == '\n'){continue;}
+            // if(tempC == '\n'){continue;}
 
             if(tempC == 'o'){
                 head.r = i;
