@@ -44,8 +44,47 @@
 // 12154.h
 #include<stdio.h>
 #include<stdlib.h>
-#include<function.h>
+#include"function.h"
+
+int cmp(const int *a, const int *b){
+    return (*a) > (*b);
+}
 
 int solve(int *n, int *k, int *sputum, int (*spell)[MAX_N]){
+    // n: Number of spell area(Meteor)
+    // k: Number of Sputum
+    // nTotal: Number of spellS(Meteor)
+    const int ns = (*n), ks = (*k);
+    int nTotal = 0;
+    int *spellS = (int *)malloc(sizeof(int) * ns * ns);
 
+    for(int i = 0; i < ns; i++){
+        for(int j = 0; j < ns; j++){
+            if(spell[i][j] > 0){
+                spellS[nTotal] = spell[i][j];
+                // printf("%d ", spellS[nTotal]);
+                nTotal++;
+            }
+        }
+    }
+
+    if(nTotal > ks){return 0;}
+    qsort(spellS, nTotal, sizeof(int), (int (*)(const void*, const void*))cmp);
+
+    int flag = 1;
+    for(int i = 0; i < ks; i++){
+        // printf("[%d]Sputim:%d\tSpell:%d\n", i, sputum[i], spellS[i]);
+        
+        if(i >= nTotal){
+            break;
+        }
+        if(sputum[i] < spellS[i]){
+            flag = 0;
+            break;
+        }
+    }
+
+    // printf("\n%d\n", flag);
+
+    return flag;
 }
