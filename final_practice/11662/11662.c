@@ -67,16 +67,25 @@
 
 #include<stdlib.h>
 #include<stdio.h>
+#define Inf 2147483647
 
 typedef struct container{
+    int idx;
     int size;
     int used_times;
 }Container;
 
-void showCon(Container *con_arr, int N){
+typedef struct best_sol{
+    int *cons_used_times;
+    int pours;
+}Best_Sol;
+
+Best_Sol sol;
+
+void showCon(const Container *con_arr, const int N){
     printf("\nSize: ");
     for(int i = 0; i < N; i++){
-        printf("%d\t", con_arr[i].size);
+        printf(" %d\t", con_arr[i].size);
     }
 
     printf("\nUsed: ");
@@ -86,23 +95,48 @@ void showCon(Container *con_arr, int N){
     printf("\n=======================================\n");
 }
 
-void sort_con(Container *con_arr, int n){
-    for(int i = 1; i < n; i++){
-        for(int j = i - 1; j >= 0; j--){
-            if(con_arr[i].size > con_arr[j].size){
-                // swap i, j
-                Container temp = con_arr[i];
-                con_arr[i] = con_arr[j];
-                con_arr[j] = temp;
-            }else{
-                break;
-            }
-        }
+void showBestSol(const Best_Sol sol, const Container *con_arr, const int N){
+    int used_total = 0;
+    printf("\nSize: ");
+    for(int i = 0; i < N; i++){
+        printf(" %d\t", con_arr[i].size);
     }
+
+    printf("\nUsed: ");
+    for(int i = 0; i < N; i++){
+        printf(" %d\t", con_arr[i].used_times);
+        used_total += con_arr[i].used_times;
+    }
+    printf(" => %d", used_total);
+    used_total = 0;
+
+    printf("\nBest: ");
+    for(int i = 0; i < N; i++){
+        printf(" %d\t", sol.cons_used_times[i]);
+        used_total += sol.cons_used_times[i];
+    }
+    printf(" => %d", used_total);
+    printf("\n=======================================\n");
 }
 
-int fill(Container *con_arr, int target, int layer, int con_num){
+// int cmpSize(const Container *a, const Container *b){
+//     return a->size < b->size;
+// }
+
+// int cmpIdx(const Container *a, const Container *b){
+//     return a->idx > b->idx;
+// }
+
+int fill(Container *con_arr, int target, int layer, int con_num, int accum_pour){
+    // All water has been done
     if(target == 0){
+        if(accum_pour < sol.pours){
+            sol.pours = accum_pour;
+            for(int i = 0; i < con_num; i++){
+                sol.cons_used_times[i] = con_arr[i].used_times;
+            }
+        }
+        // showBestSol(sol, con_arr, con_num);
         return 1;
     }else if(target < 0 || layer >= con_num){
         return 0;
@@ -113,36 +147,43 @@ int fill(Container *con_arr, int target, int layer, int con_num){
     for(int i = max; i >= 0; i--){
         con_arr[layer].used_times = i;
         // showCon(con_arr, con_num);
-        if(fill(con_arr, target - (i * con_arr[layer].size), layer + 1, con_num)){
-            return 1;
-        }
+        fill(con_arr, target - (i * con_arr[layer].size), layer + 1, con_num, i + accum_pour);
     }
+    con_arr[layer].used_times = 0;
     
     return 0;
 }
 
 int main(){
-    int N = 0;
+    int N = 0, target = 0;
     scanf("%d", &N);
 
     Container *con_arr = (Container *)malloc(sizeof(Container) * N);
+    sol.cons_used_times = (int *)malloc(sizeof(int) * N);
+    sol.pours = Inf;
 
     for(int i = 0; i < N; i++){
         scanf("%d", &(con_arr[i].size));
         con_arr[i].used_times = 0;
-    }
+        con_arr[i].idx = i;
 
-    int target = 0;
+        sol.cons_used_times[i] = 0;
+    }
     scanf("%d", &target);
-    
-    sort_con(con_arr, N);
-    fill(con_arr, target, 0, N);
+
+    // The method that "Sort decreasingly and use larger number as many as you can" is not correct
+    // Sometimes you shouldn't use largest bucket because you may need more small buckets to fill the requirement
+    // EX: 10 5 3 to fill 32 => Best Sol: (10) * 2 + (3) * 4
+    // EX: 9 8 1 to fill 32 => Best Sol: (8) * 4
+    // qsort(con_arr, N, sizeof(Container), (int (*)(const void *, const void *))cmpSize);
+    fill(con_arr, target, 0, N, 0);
+    // qsort(con_arr, N, sizeof(Container), (int (*)(const void *, const void *))cmpIdx);
 
     printf("(");
     for(int i = 0; i < N - 1; i++){
-        printf("%d,", con_arr[i].used_times);
+        printf("%d,", sol.cons_used_times[i]);
     }
-    printf("%d)\n", con_arr[N - 1].used_times);
+    printf("%d)\n", sol.cons_used_times[N - 1]);
 
     return 0;
 }
