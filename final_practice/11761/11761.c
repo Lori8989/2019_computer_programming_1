@@ -61,14 +61,21 @@ long long int det(int **mat, const int n){
 
     long long int sum = 0;
     for(int i = 0; i < n; i++){
+        // pivot * sub-matrix
         int **matS = (int **)malloc2D(sizeof(int), n - 1, n - 1);
+        int pivot = i % 2? -mat[0][i] : mat[0][i];
+        // Copy sub-matrix
         for(int p = 0; p < n - 1; p++){
-            for(int q = 0; q < n - 1; q++){
-                matS[p][q] = mat[p + 1][q + 1];
+            int across = 0;
+            for(int q = 0; q < n; q++){
+                if(q == i){across = 1;continue;}
+                matS[p][q - across] = mat[p + 1][q];
             }
         }
+        // printf("%dth Sub-matrix with pivot %d\n", i, pivot);
+        // showMat(matS, n - 1, n - 1);
 
-        sum += det(matS, n - 1);
+        sum += (long long int)pivot * det(matS, n - 1);
         free2D((void **)matS, n - 1, n - 1);
     }
 

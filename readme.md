@@ -131,7 +131,7 @@ Final Exam
 
 > [11760 C - Stable Sort](./final_practice/11760/11760.c) Done
 
-> 11761	
+> [11761 D - Determinant](./final_practice/11761/11761.c) Done
 
 > 11762	
 
