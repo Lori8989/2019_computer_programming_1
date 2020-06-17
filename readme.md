@@ -133,7 +133,7 @@ Final Exam
 
 > [11761 D - Determinant](./final_practice/11761/11761.c) Done
 
-> 11762	
+> [11762 E - Reverse Linked List](./final_practice/11762/function.c) Done
 
 > 11763	
 
