@@ -115,19 +115,19 @@ Final Exam
 
 > 11758
 
-> 12662	
+> [Week15 12662 I got a perfect body](./final_practice/12662/12662.c)
 
-> 12254	
+> [Week15 12254 Thanos' Dilemma](./final_practice/12254/12254.c)	
 
-> 12146	
+> [Week15 12146 Too Many Things to Buy](./final_practice/12146/12146.c) Done
 
 > 11759
 
 > 12241	
 
-> 12301	
+> [12301 Uncle Huang choose Tutor(Easy version)](./final_practice/12301/function.c)
 
-> 11686	
+> [11686 more simple exercise of pointer on array](./final_practice/11686/function.c) Done
 
 > [11760 C - Stable Sort](./final_practice/11760/11760.c) Done
 
@@ -135,9 +135,9 @@ Final Exam
 
 > [11762 E - Reverse Linked List](./final_practice/11762/function.c) Done
 
-> [11763 F - Bipartite Graph](./final_practice/11763/11763.c)
+> [11763 F - Bipartite Graph](./final_practice/11763/11763.c) Done
 
-> 11770
+> [11770 G - XOR](./final_practice/11770/11770.c) Done
 
 > [12154 You shall not pass!](./final_practice/12154/function.c) Done
 

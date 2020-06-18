@@ -45,15 +45,69 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #define Red 1
 #define Blue 2
 #define Unlabel 0
+
+typedef struct node{
+    int data;
+    struct node *next;
+}Node;
+
+typedef struct queue{
+    Node *head;
+    Node *tail;
+}Queue;
+
+Queue *newQueue(){
+    Queue *q = (Queue *)malloc(sizeof(Queue));
+    q->head = (Node *)malloc(sizeof(Node));
+    q->tail = q->head;
+    // Set up dump head node
+    q->head->data = 0;
+    q->head->next = NULL;
+    return q;
+}
+
+int push(Queue *q, const int data){
+    // Allocate new Node
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    
+    // Push new node to tail
+    q->tail->next = newNode;
+    q->tail = newNode;
+    // printf("Push: %d, Head: %d\n", q->tail->data, q->head->data);
+    return data;
+}
+
+int pop(Queue *q){
+    if(q->head == q->tail){return -1;}
+
+    Node *del = q->head->next;
+    int delData = del->data;
+
+    // printf("Del: %d\n", delData);
+    if(q->head->next == q->tail){
+        q->tail = q->head;
+    }
+    q->head->next = del->next;
+    free(del);
+
+    return delData;
+}
+
+int isEmpty(Queue *q){
+    return q->head == q->tail;
+}
 
 void **malloc2d(const int unitSize, const int rows, const int cols){
     void **mat = (void **)malloc(sizeof(void*) * rows);
     for(int i = 0; i < rows; i++){
         mat[i] = (void *)malloc(unitSize * cols);
-        memset(mat[i], 0, cols);
+        memset(mat[i], 0, sizeof(int) * cols);
     }
     return mat;
 }
@@ -64,41 +118,71 @@ void free2d(void **mat ,const int rows){
     }
 }
 
+int reverseColor(const int currentColor){
+    if(currentColor == Red){return Blue;}
+    else if(currentColor == Blue){return Red;}
+    else{return Unlabel;}
+}
+
 int solve(int **graph, const int n){
     // Color: Red, Blue
     int current = 0;
     int *record = (int *)malloc(sizeof(int) * n);
+    Queue *q = newQueue();
 
-    memset(record, 0, n);
-    record[current] = 1;
-    while(){
-        int neighborNumber = 0;
-        int *buff = (int *)malloc(sizeof(int) * n);
-        memset(buff, 0, n);
+    memset(record, 0, sizeof(int) * n);
+    record[current] = Red;
+    push(q, current);
+    while(!isEmpty(q)){
+        int drawingColor = 0;
 
-        for(int neighbor = 0; neighbor < n; neighbor++){
-            if(graph[current][neighbor]){
-                buff[neighborNumber] = neighbor;
-                neighborNumber++;
+        current = pop(q);
+        // printf("Current: %d with Color: %d\n", current, record[current]);
+        drawingColor = reverseColor(record[current]);
+        
+        for(int i = 0; i < n; i++){
+            if(current == i || graph[current][i] == 0){continue;}
+            if(!record[i]){
+                // printf("Drawing Node: %d with Color: %d\n", i, drawingColor);
+                record[i] = drawingColor;
+            }else if(record[i] == record[current]){
+
+                return 0;
             }
+
+            graph[current][i] = graph[i][current] = 0;
+            push(q, i);
+            // printf("Push vertex: %d\n", i);
         }
     }
+
+    return 1;
 }
 
 int main(){
     int T = 0;
     scanf("%d\n", &T);
+    // printf("TestCase: %d\n", T);
     for(int i = 0; i < T; i++){
         // Read number of Vertice(n) and number of Edges(m)
         int n = 0, m = 0;
-        scnaf("%d %d\n", &n, &m);
+        scanf("%d %d\n", &n, &m);
+        // printf("======================\nVertice: %d Edges: %d\n", n, m);
         int **graph = (int **)malloc2d(sizeof(int), n, n);
 
         // Read Edges
         for(int j = 0; j < m; j++){
             int a = 0, b = 0;
             scanf("%d %d\n", &a, &b);
-            graph[a][b] = graph[b][a] = 1;
+            // printf("Edge: (%d, %d)\n", a, b);
+            graph[a - 1][b - 1] = graph[b - 1][a - 1] = 1;
+        }
+
+        int res = solve(graph, n);
+        if(res){
+            printf("Yes\n");
+        }else{
+            printf("No\n");
         }
 
         free2d((void **)graph, n);
