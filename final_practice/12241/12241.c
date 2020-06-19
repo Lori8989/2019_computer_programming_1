@@ -48,6 +48,31 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#define TransMatSize 2
+
+void **malloc2d(const int unitSize, const int rows, const int cols){
+    void **res = (void **)malloc((sizeof(void *) * rows));
+    for(int i = 0; i < cols; i++){
+        res[i] = (void *)malloc(unitSize * cols);
+    }
+
+    return res;
+}
+
+long long int *mulSq(long long int **a, const int n, const long long int mod){
+    long long int **res = (long long int **)malloc2d(sizeof(long long int) , n , n);
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            for(int k = 0; k < n; k++){
+                res[i][j] = ((res[i][j] % mod) + (((a[i][k] % mod) * (a[k][j] % mod)) % mod)) % mod;
+            }
+        }
+    }
+
+    return res;
+}
+
 
 int main(){
 

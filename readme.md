@@ -121,9 +121,9 @@ Final Exam
 
 > [Week15 12146 Too Many Things to Buy](./final_practice/12146/12146.c) Done
 
-> 11759
+> [11759 Great Depression Again](./final_practice/11759/11759.c)
 
-> 12241	
+> [12241 Restaurants in Hsinchu](./final_practice/12241/12241.c)
 
 > [12301 Uncle Huang choose Tutor(Easy version)](./final_practice/12301/function.c)
 
