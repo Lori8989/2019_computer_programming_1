@@ -105,7 +105,7 @@ Final Exam
 
 > [11665 World war](./final_practice/11665/11665.c)
 
-> [11728 Distance on 2D plane](./final_practice/11728/function.c)
+> [11728 Distance on 2D plane](./final_practice/11728/function.c) Done
 
 > [Week14 12141 Ugandan Knuckles's code](./final_practice/12141/12141.c) Done
 
@@ -113,7 +113,7 @@ Final Exam
 
 > [Week14 12305 Airplane Shooter](./final_practice/12305/12305.c) Done
 
-> 11758
+> [11758 A - Markov Matrix](./final_practice/11758/11758.c) Done
 
 > [Week15 12662 I got a perfect body](./final_practice/12662/12662.c) Done
 
@@ -123,7 +123,7 @@ Final Exam
 
 > [11759 Great Depression Again](./final_practice/11759/11759.c)
 
-> [12241 Restaurants in Hsinchu](./final_practice/12241/12241.c) Should Be Done
+> [12241 Restaurants in Hsinchu](./final_practice/12241/12241.c) Done
 
 > [12301 Uncle Huang choose Tutor(Easy version)](./final_practice/12301/function.c)
 

@@ -52,7 +52,7 @@
 #define Mod 1000000007
 #define F1 1
 #define F2 1
-
+// Formular:
 // |  Fi  | = | 1 1 | * | Fi-1 |
 // | Fi-1 |   | 1 0 |   | Fi-2 |
 
