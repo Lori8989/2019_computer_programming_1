@@ -1,11 +1,11 @@
 # NTHUOJ Solutions
-> [11119](./mid_practice/11119/11119.c)	Done
+> [11119 binary addition](./mid_practice/11119/11119.c)	Done
 
-> [11576](./mid_practice/11576/11576.c)	Done
+> [11576 Time conversion](./mid_practice/11576/11576.c)	Done
 
-> [11592](./mid_practice/11592/11592.c)	Done
+> [11592 Change the Cap](./mid_practice/11592/11592.c)	Done
 
-> [11606](./mid_practice/11606/11606.c) Done
+> [11606 Factor Counter](./mid_practice/11606/11606.c) Done
 
 > 12129	Done
 
@@ -13,7 +13,7 @@
 
 > 12139	Done
 
-> [10772](./mid_practice/10772/10772.c) Done
+> [10772 The number of occurrences](./mid_practice/10772/10772.c) Done
 
 > 12131	Done
 
