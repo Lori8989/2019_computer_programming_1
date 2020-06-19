@@ -115,7 +115,7 @@ Final Exam
 
 > 11758
 
-> [Week15 12662 I got a perfect body](./final_practice/12662/12662.c)
+> [Week15 12662 I got a perfect body](./final_practice/12662/12662.c) Done
 
 > [Week15 12254 Thanos' Dilemma](./final_practice/12254/12254.c) Done
 

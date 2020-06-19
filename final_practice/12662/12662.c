@@ -60,23 +60,74 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+int cmp(const int *a, const int *b){
+    return (*a) > (*b);
+}
+
+void showArrLong(long long int *a, const int n){
+    for(int i = 0; i < n; i++){
+        printf("%lld ", a[i]);
+    }
+    printf("\n");
+}
+
+void showArr(int *a, const int n){
+    for(int i = 0; i < n; i++){
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+}
+
 int main(){
     int t = 0;
     scanf("%d\n", &t);
 
     for(int i = 0; i < t; i++){
-        int n = 0, p = 0, k = 0;
-        scanf("%d %d %d\n", &n, &p, &k);
-        // printf("N: %d P: %d K: %d\n", n, p, k);
+        int n = 0, k = 0;
+        long long int p = 0;
+        scanf("%d %lld %d\n", &n, &p, &k);
+        // printf("N: %d P: %lld K: %d\n", n, p, k);
 
         int *a = (int *)malloc(sizeof(int) * n);
+        long long int *prefixSum = (long long int*)malloc(sizeof(long long int) * n);
         for(int j = 0; j < n; j++){
             scanf("%d", &(a[j]));
             // printf("%d ", a[j]);
         }
         // printf("\n");
 
+        qsort(a, n, sizeof(int), (int (*)(const void *, const void *))cmp);
+        // showArr(a, n);
+
+        prefixSum[0] = (long long int)a[0];
+        prefixSum[k - 1] = (long long int)a[k - 1];
+        for(int i = 1; i < k - 1; i++){
+            prefixSum[i] = prefixSum[i - 1] + (long long int)a[i];
+        }
+        
+        // showArrLong(prefixSum, n);
+
+        for(int i = 0; i < k; i++){ // Item [0] ~ [k - 1]
+            long long int sum = prefixSum[i];
+            for(int j = i + k; j < n; j += k){
+                sum = sum + (long long int)a[j];
+                prefixSum[j] = sum;
+            }
+        }
+        // printf("PrfixSum of Cost: ");
+        // showArrLong(prefixSum, n);
+
+        for(int i = n - 1; i >= -1; i--){
+            if(prefixSum[i] <= p){
+                printf("%d\n", i + 1);
+                break;
+            }else if(i < 0){
+                printf("0\n");
+            }
+        }
+
         free(a);
+        free(prefixSum);
     }
 
     return 0;
