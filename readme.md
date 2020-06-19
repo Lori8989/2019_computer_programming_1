@@ -19,25 +19,25 @@
 
 > 12672	Done
 
-> [11099](./mid_practice/11099/11099.c)	Done
+> [11099 Money Money](./mid_practice/11099/11099.c)	Done
 
-> [10786](./mid_practice/10786/10786.c)	Done
+> [10786 Progression](./mid_practice/10786/10786.c)	Done
 
 > 12675	Done
 
 > 12690 Done
 
-> [10716](./mid_practice/10716/10716.c)	Done
+> [10716 Arithmetic Sequence](./mid_practice/10716/10716.c)	Done
 
-> [11166](./mid_practice/11166/11166.c)	Done
+> [11166 Simple integer sorting](./mid_practice/11166/11166.c)	Done
 
 > 12125	Done
 
 > 12132	Done
  
-> [10728](./mid_practice/10728/10728.c)	Done
+> [10728 A simple set problem](./mid_practice/10728/10728.c) Done
 	
-> [11617](./mid_practice/11617/11617.c)	Done
+> [11617 pA - Arranging a Sequence](./mid_practice/11617/11617.c) Done
 
 > 12138	Done
 
@@ -45,13 +45,13 @@
 
 > 12674	Done
 
-> [11618](./mid_practice/11618/11618.c)	Done
+> [11618 pB - Birthday Party](./mid_practice/11618/11618.c)	Done
 
 > 12661	Done
 
 > 12127 Done
 
-> [11549](./mid_practice/11549/11549.c)	Done
+> [11549 Easy Palindrome](./mid_practice/11549/11549.c)	Done
 
 > 11619 Done
 
@@ -59,17 +59,17 @@
 
 > 12133	Done
 
-> [12135](./mid_practice/12135/12135.c)	Done
+> [12135 Ghoul Dawn](./mid_practice/12135/12135.c)	Done
 
-> [11620](./mid_practice/11620/11620.c)	Done
+> [11620 pD - Distrait](./mid_practice/11620/11620.c)	Done
 
 > 12733	Done
 
 > 12179	Done
 
-> [11567](./mid_practice/11567/11567.c)	Done
+> [11567 Hexadecimal to Binary](./mid_practice/11567/11567.c)	Done
 
-> [11621](./mid_practice/11621/11621.c)	Done
+> [11621 pE - Exquisite Substrings](./mid_practice/11621/11621.c)	Done
 
 Final Exam
 
