@@ -41,8 +41,8 @@ typedef struct character
 }Character;
 
 // Character character1;
-Character character2;
-Character character3;
+// Character character2;
+// Character character3;
 
 Role *hero = NULL;
 Role *client= NULL;
@@ -134,9 +134,11 @@ int process_event(){
     ALLEGRO_EVENT event;
     al_wait_for_event(event_queue, &event);
 
-    hero->update_keyboard_event(event);
-    client->update_timer_event(event);
-
+    if(client != NULL){
+        hero->update_keyboard_event(event);
+        client->update_timer_event(event);
+    }
+/**
     // Our setting for controlling animation
     if(event.timer.source == timer){
         if(character2.x < -150) dir = false;
@@ -152,7 +154,7 @@ int process_event(){
     if(event.timer.source == timer3){
         if(next) next = false;
         else ture = true;
-    }
+    }**/
 
     // Keyboard
     if(event.type == ALLEGRO_EVENT_KEY_UP)
@@ -184,6 +186,11 @@ int game_run() {
             error = process_event();
             if(judge_next_window) {
                 window = 2;
+                hero = new Role(100, 100, 200, WIDTH/2, HEIGHT/2+100, 30, 1.0, WIDTH, HEIGHT, event_queue, "tower.png");
+                client = new Role(100, 100, 200, WIDTH/2, HEIGHT/5, 10, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png");
+                background = al_load_bitmap("stage.jpg");
+
+                /**
                 // Setting Character
                 // character1.x = WIDTH / 2;
                 // character1.y = HEIGHT / 2 + 150;
@@ -192,9 +199,8 @@ int game_run() {
                 // character1.image_path = al_load_bitmap("tower.png");
                 character2.image_path = al_load_bitmap("teemo_left.png");
                 character3.image_path = al_load_bitmap("teemo_right.png");
-                background = al_load_bitmap("stage.jpg");
-                hero = new Role(100, 100, 200, WIDTH/2, HEIGHT/2+100, 30, 1.0, WIDTH, HEIGHT, event_queue, "tower.png");
-                client = new Role(100, 100, 200, WIDTH/2, HEIGHT/5, 30, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png");
+
+
 
                 //Initialize Timer
                 timer  = al_create_timer(1.0/15.0);
@@ -205,7 +211,7 @@ int game_run() {
                 al_register_event_source(event_queue, al_get_timer_event_source(timer3)) ;
                 al_start_timer(timer);
                 al_start_timer(timer2);
-                al_start_timer(timer3);
+                al_start_timer(timer3);**/
             }
         }
     }
@@ -215,10 +221,11 @@ int game_run() {
         al_draw_bitmap(background, 0,0, 0);
         hero->show();
         client->show();
+
         // sif(ture) al_draw_bitmap(character1.image_path, character1.x, character1.y, 0);
 
-        if(dir) al_draw_bitmap(character2.image_path, character2.x, character2.y, 0);
-        else al_draw_bitmap(character3.image_path, character2.x, character2.y, 0);
+        // if(dir) al_draw_bitmap(character2.image_path, character2.x, character2.y, 0);
+        // else al_draw_bitmap(character3.image_path, character2.x, character2.y, 0);
 
         al_flip_display();
         al_clear_to_color(al_map_rgb(0,0,0));

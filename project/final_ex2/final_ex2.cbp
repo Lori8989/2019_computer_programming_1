@@ -16,7 +16,8 @@
 					<Add directory="allegro-5.0.10-mingw-4.7.0/allegro-5.0.10-mingw-4.7.0/include" />
 				</Compiler>
 				<Linker>
-					<Add library="../final_ex/allegro-5.0.10-mingw-4.7.0/lib/liballegro-5.0.10-monolith-mt-debug.a" />
+					<Add library="allegro-5.0.10-mingw-4.7.0/allegro-5.0.10-mingw-4.7.0/lib/liballegro-5.0.10-monolith-mt-debug.a" />
+					<Add library="allegro-5.0.10-mingw-4.7.0/allegro-5.0.10-mingw-4.7.0/lib/liballegro-5.0.10-monolith-mt.a" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -37,7 +38,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="allegro_var.cpp" />
+		<Unit filename="allegro_var.h" />
+		<Unit filename="game_body.cpp" />
+		<Unit filename="game_body.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="main_page.cpp" />
+		<Unit filename="main_page.h" />
+		<Unit filename="util.cpp" />
+		<Unit filename="util.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

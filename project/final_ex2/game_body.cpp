@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-// #include <cstdlib>
-// #include <ctime>
-// #include <time.h>
+#include <iostream>
+#include <vector>
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
@@ -38,10 +37,8 @@ void Role::go_down(){this->pos_y += this->move_unit;}
 void Role::go_left(){this->pos_x -= this->move_unit;}
 void Role::go_right(){this->pos_x += this->move_unit;}
 void Role::random_walk(){
-    // srand( time(NULL) );
-    // this->pos_x = rand() % 800;
-    // srand( time(NULL) );
-    // this->pos_y = rand() % this->height;
+    this->pos_x = rand() %this->width;
+    this->pos_y = rand() % this->height;
 }
 void Role::lose_hp(int lose){this->hp -= lose;}
 bool Role::update_keyboard_event(ALLEGRO_EVENT event){
@@ -63,14 +60,11 @@ bool Role::update_keyboard_event(ALLEGRO_EVENT event){
     }
 }
 bool Role::update_timer_event(ALLEGRO_EVENT event){
-    // ALLEGRO_EVENT event;
-    // al_wait_for_event(this->event_queue, event);
-    // ALLEGRO_TIMER *a = event.timer.source;
     if(event.timer.source == this->event_timer){
-        // this->random_walk();
-        // printf("%d %d\n", this->pos_x, this->pos_y);
-        this->go_down();
+        this->random_walk();
+        return 1;
     }
+    return 0;
 }
 void Role::show(){al_draw_bitmap(this->role_bitmap, this->pos_x, this->pos_y, 0);}
 

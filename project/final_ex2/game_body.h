@@ -2,9 +2,25 @@
 #ifndef GAME_BODY_H // include guard
 #define GAME_BODY_H
 
+#include <vector>
+
 class Attack{
     public:
-        Attack();
+        Attack(int atk, double freq, char *atk_img_path);
+        void move();
+        void add(int pos_x, int pos_y);
+        bool is_hit(int pos_x, int pos_y, int r);
+        bool update_timer_event(ALLEGRO_EVENT event);
+        void show();
+    protected:
+        int atk;
+        int n;
+        double freq;
+        char *atk_img_path;
+        std::vector<int> pos_xs;
+        std::vector<int> pos_ys;
+        ALLEGRO_TIMER *event_timer;
+        ALLEGRO_BITMAP *atk_bitmap;
 };
 
 class Role{
