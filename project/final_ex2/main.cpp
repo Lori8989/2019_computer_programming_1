@@ -7,6 +7,10 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
+#include "allegro_var.h"
+#include "game_body.h"
+#include "main_page.h"
+
 #define GAME_TERMINATE -1
 
 // ALLEGRO Variables
@@ -36,9 +40,12 @@ typedef struct character
 
 }Character;
 
-Character character1;
+// Character character1;
 Character character2;
 Character character3;
+
+Role *hero = NULL;
+Role *client= NULL;
 
 int imageWidth = 0;
 int imageHeight = 0;
@@ -115,29 +122,20 @@ void game_init() {
     // Register event
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
+
 }
 
 void game_begin() {
-    // Load sound
-    song = al_load_sample( "hello.wav" );
-    if (!song){
-        printf( "Audio clip sample not loaded!\n" );
-        show_err_msg(-6);
-    }
-    // Loop the song until the display closes
-    al_play_sample(song, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
-    al_clear_to_color(al_map_rgb(100,100,100));
-    // Load and draw text
-    font = al_load_ttf_font("pirulen.ttf",12,0);
-    al_draw_text(font, al_map_rgb(255,255,255), WIDTH/2, HEIGHT/2+220 , ALLEGRO_ALIGN_CENTRE, "Press 'Enter' to start");
-    al_draw_rectangle(WIDTH/2-150, 510, WIDTH/2+150, 550, al_map_rgb(255, 255, 255), 0);
-    al_flip_display();
+    main_page(display, song, font, WIDTH, HEIGHT);
 }
 
 int process_event(){
     // Request the event
     ALLEGRO_EVENT event;
     al_wait_for_event(event_queue, &event);
+
+    hero->update_keyboard_event(event);
+    client->update_timer_event(event);
 
     // Our setting for controlling animation
     if(event.timer.source == timer){
@@ -161,23 +159,12 @@ int process_event(){
     {
         switch(event.keyboard.keycode)
         {
-            // Control
-            case ALLEGRO_KEY_W:
-                character1.y -= 30;
-                break;
-            case ALLEGRO_KEY_S:
-                character1.y += 30;
-                break;
-            case ALLEGRO_KEY_A:
-                character1.x -= 30;
-                break;
-            case ALLEGRO_KEY_D:
-                character1.x += 30;
-                break;
-
             // For Start Menu
             case ALLEGRO_KEY_ENTER:
                 judge_next_window = true;
+                break;
+            case ALLEGRO_KEY_ESCAPE:
+                return GAME_TERMINATE;
                 break;
         }
     }
@@ -198,14 +185,16 @@ int game_run() {
             if(judge_next_window) {
                 window = 2;
                 // Setting Character
-                character1.x = WIDTH / 2;
-                character1.y = HEIGHT / 2 + 150;
+                // character1.x = WIDTH / 2;
+                // character1.y = HEIGHT / 2 + 150;
                 character2.x = WIDTH + 100;
                 character2.y = HEIGHT / 2 - 280;
-                character1.image_path = al_load_bitmap("tower.png");
+                // character1.image_path = al_load_bitmap("tower.png");
                 character2.image_path = al_load_bitmap("teemo_left.png");
                 character3.image_path = al_load_bitmap("teemo_right.png");
                 background = al_load_bitmap("stage.jpg");
+                hero = new Role(100, 100, 200, WIDTH/2, HEIGHT/2+100, 30, 1.0, WIDTH, HEIGHT, event_queue, "tower.png");
+                client = new Role(100, 100, 200, WIDTH/2, HEIGHT/5, 30, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png");
 
                 //Initialize Timer
                 timer  = al_create_timer(1.0/15.0);
@@ -224,7 +213,9 @@ int game_run() {
     else if(window == 2){
         // Change Image for animation
         al_draw_bitmap(background, 0,0, 0);
-        if(ture) al_draw_bitmap(character1.image_path, character1.x, character1.y, 0);
+        hero->show();
+        client->show();
+        // sif(ture) al_draw_bitmap(character1.image_path, character1.x, character1.y, 0);
 
         if(dir) al_draw_bitmap(character2.image_path, character2.x, character2.y, 0);
         else al_draw_bitmap(character3.image_path, character2.x, character2.y, 0);

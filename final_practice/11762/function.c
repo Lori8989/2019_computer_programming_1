@@ -36,8 +36,8 @@
 // Partial Judge Header
 // 11762.h
 
-#include<stdio.h>
-#include<stdlib.h>
+// #include<stdio.h>
+// #include<stdlib.h>
 #include"function.h"
 
 // typedef struct _Node {
