@@ -113,7 +113,7 @@ Final Exam
 
 > [Week14 12305 Airplane Shooter](./final_practice/12305/12305.c) Done
 
-> [11758 A - Markov Matrix](./final_practice/11758/11758.c) Done
+> [11758 A - Markov Matrix](./final_practice/11758/11758.c)
 
 > [Week15 12662 I got a perfect body](./final_practice/12662/12662.c) Done
 
@@ -125,7 +125,7 @@ Final Exam
 
 > [12241 Restaurants in Hsinchu](./final_practice/12241/12241.c) Done
 
-> [12301 Uncle Huang choose Tutor(Easy version)](./final_practice/12301/function.c)
+> [12301 Uncle Huang choose Tutor(Easy version)](./final_practice/12301/function.c) Done
 
 > [11686 more simple exercise of pointer on array](./final_practice/11686/function.c) Done
 

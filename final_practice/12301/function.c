@@ -35,3 +35,48 @@
 
 // Partial Judge Header
 // 12301.h
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "function.h"
+
+// typedef struct _Node{
+//     int number;
+//     struct _Node* next;
+// }Node;
+
+// Reference: https://zh.wikipedia.org/wiki/%E7%BA%A6%E7%91%9F%E5%A4%AB%E6%96%AF%E9%97%AE%E9%A2%98
+//            https://www.itread01.com/content/1504374014.html
+Node *createList(int n){
+    Node *res = (Node *)malloc(sizeof(Node));
+    res->number = n;
+    return res;
+}
+
+void freeList(Node* head){
+    free(head);
+}
+
+int solveJosephus(Node **head, int step){
+    int n = (*head)->number;
+    // printf("N: %d K: %d\n", n, step);
+    // In computing, suppose index starts from 0;
+    int s = 0; // Survial of n = 1
+    for(int i = 2; i <= n; i++){
+        s = (s + step) % i;
+    }
+
+    return s + 1; // Index starts from 1
+}
+
+// int solveJosephus(Node **head, int step){
+//     int n = (*head)->number;
+//     // printf("N: %d K: %d\n", n, step);
+//     // In computing, suppose index starts from 0;
+//     int s = 1; // Survial of n = 1
+//     for(int i = 2; i <= n; i++){
+//         s = ((s + (step % i) + 1) % i) + 1;
+//     }
+
+//     return s; // Index starts from 1
+// }

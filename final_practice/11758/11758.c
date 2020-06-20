@@ -54,6 +54,25 @@
 #include <stdlib.h>
 
 int main(){
+    int T = 0;
+    scanf("%d\n", &T);
+
+    for(int i = 0; i < T; T++){
+        int n = 0, target = 0;
+        scanf("%d\n", &n);
+        double **transit = (double **)malloc(sizeof(double) * n * n);
+
+        for(int p = 0; p < n; p++){
+            for(int q = 0; q < n; q++){
+                scanf("%lf", &(transit[p][q]));
+            }
+        }
+        
+        scanf("%d", target);
+
+
+    }
+
 
     return 0;
 }

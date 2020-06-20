@@ -1,10 +1,14 @@
-//
-// Created by 贾松昊 on 2017/11/14.
-//
+#ifndef FUNC_H_INCLUDED
+#define FUNC_H_INCLUDED
+#include <stdio.h>
+#include <stdlib.h>
 
-#ifndef _FUNCTION_H
-#define _FUNCTION_H
+typedef struct _Node{
+    int number;
+    struct _Node* next;
+}Node;
+Node *createList(int n);
+void freeList(Node* head);
+int solveJosephus(Node **head, int step);
 
-void array_exchanger(int* array_a, int* array_b, int length);
-
-#endif //HW5_1_FUNCTION_H
+#endif
