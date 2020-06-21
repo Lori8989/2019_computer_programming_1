@@ -6,16 +6,20 @@
 
 class Attack{
     public:
-        Attack(int atk, double freq, char *atk_img_path);
-        void move();
+        Attack(int atk, int speed, double fps, int width, int height, char *atk_img_path, ALLEGRO_EVENT_QUEUE *event_queue);
+        void move(int x_dir, int y_dir);
         void add(int pos_x, int pos_y);
-        bool is_hit(int pos_x, int pos_y, int r);
-        bool update_timer_event(ALLEGRO_EVENT event);
+        int hit(int pos_x, int pos_y, int r);
+        bool update_timer_event(ALLEGRO_EVENT even);
         void show();
+        void disappear(int idx);
     protected:
         int atk;
         int n;
-        double freq;
+        int speed;
+        double fps;
+        int width;
+        int height;
         char *atk_img_path;
         std::vector<int> pos_xs;
         std::vector<int> pos_ys;
@@ -31,11 +35,17 @@ class Role{
         void go_left();
         void go_right();
         void random_walk();
+        void fire1();
+        void fire2();
         void lose_hp(int lose);
         bool update_keyboard_event(ALLEGRO_EVENT event);
+        bool update_atks_event(ALLEGRO_EVENT event, Role *enemy);
         bool update_timer_event(ALLEGRO_EVENT event);
         void show();
+        void die();
+
         int _hp();
+        int _is_alive();
         int _atk1();
         int _atk2();
         int _pos_x();
@@ -48,6 +58,7 @@ class Role{
         ALLEGRO_BITMAP *_role_bitmap();
     protected:
         int hp;
+        int is_alive;
         int atk1;
         int atk2;
         int pos_x;
@@ -57,6 +68,7 @@ class Role{
         int width;
         int height;
         char *role_img_path;
+        Attack *atks1;
         ALLEGRO_EVENT_QUEUE *event_queue;
         ALLEGRO_TIMER *event_timer;
         ALLEGRO_BITMAP *role_bitmap;
