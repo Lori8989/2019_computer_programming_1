@@ -35,6 +35,7 @@ const int HEIGHT = 600;
 
 Role *hero = NULL;
 Role *client= NULL;
+Game_Body *game = NULL;
 
 int imageWidth = 0;
 int imageHeight = 0;
@@ -111,24 +112,28 @@ void game_init() {
     // Register event
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
-
 }
 
 void game_begin() {
-    main_page(display, song, font, WIDTH, HEIGHT);
+    main_page(&display, &song, &font, WIDTH, HEIGHT);
+    game = new Game_Body(event_queue, display, song, font, WIDTH, HEIGHT);
 }
 
 int process_event(){
     // Request the event
     ALLEGRO_EVENT event;
     al_wait_for_event(event_queue, &event);
-
+/**
     if(client != NULL){
+        client->fire1();
         client->update_timer_event(event);
+        client->update_atks_event(event, hero);
         hero->update_keyboard_event(event);
         hero->update_atks_event(event, client);
 
-    }
+    }**/
+
+    //game->update_stage1(event);
     // Our setting for controlling animation
     // Keyboard
     if(event.type == ALLEGRO_EVENT_KEY_UP)
@@ -137,6 +142,7 @@ int process_event(){
         {
             // For Start Menu
             case ALLEGRO_KEY_ENTER:
+                game->set_to_start_stage1();
                 judge_next_window = true;
                 break;
             case ALLEGRO_KEY_ESCAPE:
@@ -160,21 +166,24 @@ int game_run() {
             error = process_event();
             if(judge_next_window) {
                 window = 2;
-                hero = new Role(100, 100, 200, WIDTH/2, HEIGHT/2+100, 30, 1.0, WIDTH, HEIGHT, event_queue, "tower.png");
-                client = new Role(100, 100, 200, WIDTH/2, HEIGHT/5, 10, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png");
-                background = al_load_bitmap("stage.jpg");
+                //hero = new Role(100, 100, 200, WIDTH/2, HEIGHT/2+100, 30, 0.1, WIDTH, HEIGHT, event_queue, "tower.png");
+                //client = new Role(100, 100, 200, WIDTH/2, HEIGHT/5, 10, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png");
+                //background = al_load_bitmap("stage.jpg");
+                printf("HHHi\n");
+                game->start_stage1();
             }
         }
     }
     // Second window(Main Game)
     else if(window == 2){
         // Change Image for animation
+        /**
         al_draw_bitmap(background, 0,0, 0);
         hero->show();
         client->show();
 
         al_flip_display();
-        al_clear_to_color(al_map_rgb(0,0,0));
+        al_clear_to_color(al_map_rgb(0,0,0));**/
 
         // Listening for new event
         if (!al_is_event_queue_empty(event_queue)) {

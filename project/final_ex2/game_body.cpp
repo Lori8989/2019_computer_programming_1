@@ -183,3 +183,52 @@ ALLEGRO_EVENT_QUEUE *Role::_event_queue(){return this->event_queue;}
 ALLEGRO_TIMER *Role::_event_timer(){return this->event_timer;}
 ALLEGRO_BITMAP *Role::_role_bitmap(){return this->role_bitmap;}
 
+
+
+Game_Body::Game_Body(ALLEGRO_EVENT_QUEUE *event_queue, ALLEGRO_DISPLAY *display, ALLEGRO_SAMPLE *song, ALLEGRO_FONT *font, const int width, const int height){
+    this->width = width;
+    this->height = height;
+    this->window = 0;
+    this->stage = 1;
+    this->hero = new Role(100, 100, 200, width/2, height/2+100, 30, 0.1, width, height, event_queue, "tower.png");
+    this->client = new Role(100, 100, 200, width/2, height/5, 10, 0.1, width, height, event_queue, "teemo_right.png");
+    this->event_queue = event_queue;
+    this->display = display;
+    this->song = song;
+    this->font = font;
+    this->background = al_load_bitmap("stage.jpg");
+}
+void Game_Body::set_to_start_stage1(){this->window = 2; this->stage = 1;}
+void Game_Body::start_stage1(){
+    //if(this->window != 1 || this->stage != 1){return;}
+    this->hero = new Role(100, 100, 200, this->width/2, this->height/2+100, 30, 0.1, this->width, this->height, this->event_queue, "tower.png");
+    this->client = new Role(100, 100, 200, this->width/2, this->height/5, 10, 0.1, this->width, this->height, this->event_queue, "teemo_right.png");
+
+    al_clear_to_color(al_map_rgb(100,100,100));
+    // Load and draw text
+    //al_draw_text(this->font, al_map_rgb(255,255,255), width/2, height/2+100 , ALLEGRO_ALIGN_CENTRE, "Press 'Space' to start next level");
+    al_draw_rectangle(this->width/2-150, this->height/2+88, this->width/2+150, this->height/2+124, al_map_rgb(255, 255, 255), 0);
+    al_flip_display();
+}
+
+void Game_Body::update_stage1(ALLEGRO_EVENT event){
+    if(this->window != 2 || this->stage != 1){return;}
+    this->background = al_load_bitmap("stage.jpg");
+    al_draw_bitmap(this->background, 0, 0, 0);
+    this->hero->show();
+    this->client->show();
+
+    al_flip_display();
+    al_clear_to_color(al_map_rgb(0, 0, 0));
+
+    if(this->hero != NULL){
+        this->hero->update_keyboard_event(event);
+        this->hero->update_atks_event(event, this->client);
+    }
+
+    if(this->client != NULL){
+        this->client->fire1();
+        this->client->update_timer_event(event);
+        this->client->update_atks_event(event, this->hero);
+    }
+}
