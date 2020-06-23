@@ -123,7 +123,7 @@ int process_event(){
     // Request the event
     ALLEGRO_EVENT event;
     al_wait_for_event(event_queue, &event);
-/**
+
     if(client != NULL){
         client->fire1();
         client->update_timer_event(event);
@@ -131,7 +131,7 @@ int process_event(){
         hero->update_keyboard_event(event);
         hero->update_atks_event(event, client);
 
-    }**/
+    }
 
     //game->update_stage1(event);
     // Our setting for controlling animation
@@ -166,9 +166,9 @@ int game_run() {
             error = process_event();
             if(judge_next_window) {
                 window = 2;
-                //hero = new Role(100, 100, 200, WIDTH/2, HEIGHT/2+100, 30, 0.1, WIDTH, HEIGHT, event_queue, "tower.png");
-                //client = new Role(100, 100, 200, WIDTH/2, HEIGHT/5, 10, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png");
-                //background = al_load_bitmap("stage.jpg");
+                hero = new Role(100, 100, 200, WIDTH/2, HEIGHT/2+100, 30, 0.1, WIDTH, HEIGHT, event_queue, "tower.png");
+                client = new Role(100, 100, 200, WIDTH/2, HEIGHT/5, 10, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png");
+                background = al_load_bitmap("stage.jpg");
                 printf("HHHi\n");
                 game->start_stage1();
             }
@@ -177,13 +177,13 @@ int game_run() {
     // Second window(Main Game)
     else if(window == 2){
         // Change Image for animation
-        /**
+
         al_draw_bitmap(background, 0,0, 0);
         hero->show();
         client->show();
 
         al_flip_display();
-        al_clear_to_color(al_map_rgb(0,0,0));**/
+        al_clear_to_color(al_map_rgb(0,0,0));
 
         // Listening for new event
         if (!al_is_event_queue_empty(event_queue)) {

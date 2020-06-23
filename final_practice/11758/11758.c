@@ -52,25 +52,100 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+void *malloc1d(const int unitSize, const int n){
+    void *res = (void *)malloc(unitSize * n);
+    memset(res, 0, unitSize * n);
+    return res;
+}
+
+void **malloc2d(const int unitSize, const int rows, const int cols){
+    void **res = (void **)malloc(sizeof(void *) * rows);
+    for(int i = 0; i < rows; i++){
+        res[i] = (void *)malloc1d(unitSize, cols);
+        // res[i] = (void *)malloc(unitSize * cols);
+        // memset(res[i], 0, unitSize * cols);
+    }
+    return res;
+}
+
+// Multiply Square
+long double **mulSq(long double **a, long double **b, const int n){
+    long double **res = (long double **)malloc2d(sizeof(long  double), n, n);
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            for(int k = 0; k < n; k++){
+                res[i][j] = res[i][j] + a[i][k] * b[k][j];
+            }
+        }
+    }
+
+    return res;
+}
+
+// Multiply Vertex
+long double mulVer(long double  *a, long double *b, const int n){
+    long double res = 0;
+    for(int i = 0; i < n; i++){
+        res = res + a[i] * b[i];
+    }
+
+    return res;
+}
+
+void freeSq(long double **a, const int n){
+    for(int i = 0; i < n; i++){
+        free(a[i]);
+    }
+}
 
 int main(){
     int T = 0;
     scanf("%d\n", &T);
 
-    for(int i = 0; i < T; T++){
-        int n = 0, target = 0;
+    for(int i = 0; i < T; i++){
+        int n = 0;
+        long double target = 0;
         scanf("%d\n", &n);
-        double **transit = (double **)malloc(sizeof(double) * n * n);
+        long double **transit = (long double **)malloc2d(sizeof(long double), n, n);
+        long double **mulTransit = (long double **)malloc2d(sizeof(long double), n, n);
+        long double *init = (long double *)malloc1d(sizeof(long double),  n);
 
-        for(int p = 0; p < n; p++){
-            for(int q = 0; q < n; q++){
-                scanf("%lf", &(transit[p][q]));
+        for(int j = 0; j < n; j++){
+            for(int k = 0; k < n; k++){
+                scanf("%Lf", &(transit[j][k]));
+                mulTransit[j][k] = transit[j][k];
+                // printf("%d\n")
             }
         }
-        
-        scanf("%d", target);
+        for(int j = 0; j < n; j++){
+            scanf("%Lf", &(init[j]));
+        }
+        scanf("%Lf\n", &target);
 
+        // Solve
+        int iters = 0;
+        long double prevP = init[0] + 1;
+        long double p = init[0];
+        long double **freeTransit = mulTransit;
+        while(p > target && prevP > p){
+            prevP = p;
+            p = mulVer(mulTransit[0], init, n);
+            mulTransit = mulSq(mulTransit, transit, n);
+            iters++;
+            // Free Memory
+            freeSq(freeTransit, n);
+            freeTransit = mulTransit;
+            // printf("Iters: %d -> %Lf\n", iters, p);
+        }
 
+        if(p <= target){
+            printf("%d\n", iters);
+        }else{
+            printf("Never\n");
+        }
     }
 
 

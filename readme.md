@@ -113,7 +113,7 @@ Final Exam
 
 > [Week14 12305 Airplane Shooter](./final_practice/12305/12305.c) Done
 
-> [11758 A - Markov Matrix](./final_practice/11758/11758.c)
+> [11758 A - Markov Matrix](./final_practice/11758/11758.c) Done
 
 > [Week15 12662 I got a perfect body](./final_practice/12662/12662.c) Done
 
@@ -121,7 +121,7 @@ Final Exam
 
 > [Week15 12146 Too Many Things to Buy](./final_practice/12146/12146.c) Done
 
-> [11759 Great Depression Again](./final_practice/11759/11759.c)
+> [11759 B - Great Depression Again](./final_practice/11759/11759.c)
 
 > [12241 Restaurants in Hsinchu](./final_practice/12241/12241.c) Done
 
