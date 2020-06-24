@@ -259,47 +259,68 @@ int forward(char (*map)[MaxMapSize], Pos *head, Pos *head1, Pos *head2, Pos *cen
 }
 
 int jump(char (*map)[MaxMapSize], const int rows, const int cols, Pos *head, Pos *head1, Pos *head2, Pos *cen){
-    Pos startPos, endPos, scanDir, jumpDir;
+    Pos startPos, endPos, scanDir, jumpDir, scanDis;
     int addSecret = 0;
-    jumpDir.r = 2 * (head->r - cen->r);
-    jumpDir.c = 2 * (head->c - cen->c);
+    jumpDir.r = head->r - cen->r;
+    jumpDir.c = head->c - cen->c;
 
-    startPos.r = head1->r + jumpDir.r;
-    startPos.c = head1->c + jumpDir.c;
+    startPos.r = head1->r + 2 * jumpDir.r;
+    startPos.c = head1->c + 2 * jumpDir.c;
 
-    endPos.r = head2->r + (head->r - cen->r);
-    endPos.c = head2->c + (head->c - cen->c);
+    endPos.r = head2->r + jumpDir.r;
+    endPos.c = head2->c + jumpDir.c;
 
-    scanDir.r = head1->r - cen->r;
-    scanDir.c = head1->c - cen->c;
+    scanDir.r = cen->r - head1->r;
+    scanDir.c = cen->c - head1->c;
 
-    for(int r = startPos.r; r != endPos.r; r += scanDir.r){
-        for(int c = startPos.c; c != endPos.c; r += scanDir.c){
-            if(r >= 0 && r < rows && c >= 0 && cols <= cols){
-                if(map[r][c] == Border || map[r][c] == Hill){return 0;}
+    scanDis.r = endPos.r - startPos.r;
+    scanDis.c = endPos.c - startPos.c;
+    scanDis.r = scanDis.r < 0? -scanDis.r + 1 : scanDis.r + 1;
+    scanDis.c = scanDis.c < 0? -scanDis.c + 1 : scanDis.c + 1;
+
+    printf("Start: (%d, %d) End: (%d, %d) ScanDis: (%d, %d) ScanDir: (%d, %d)\n", startPos.r, startPos.c, endPos.r, endPos.c, scanDis.r, scanDis.c, scanDir.r, scanDir.c);
+
+    for(int r = 0; r < scanDis.r; r++){
+        for(int c = 0; c < scanDis.c; c++){
+            int rIdx = startPos.r + r * scanDir.r;
+            int cIdx = startPos.c + c * scanDir.c;
+
+            if(rIdx >= 0 && rIdx < rows && cIdx >= 0 && cIdx < cols){
+                if(map[rIdx][cIdx] == Border || map[rIdx][cIdx] == Hill){return 0;}
             }else{return 0;}
         }
     }
 
     // if(isPass){
-        for(int r = startPos.r; r != endPos.r; r += scanDir.r){
-            for(int c = startPos.c; c != endPos.c; r += scanDir.c){
-                if(map[r][c] == Secret){
-                    addSecret++;
-                    map[r][c] = Ground;
-                }
+    for(int r = 0; r < scanDis.r; r++){
+        for(int c = 0; c < scanDis.c; c++){
+            int rIdx = startPos.r + r * scanDir.r;
+            int cIdx = startPos.c + c * scanDir.c;
+            
+            if(map[rIdx][cIdx] == Secret){
+                addSecret++;
+                map[rIdx][cIdx] = Ground;
             }
         }
+    }
+        // for(int r = startPos.r; r != endPos.r; r += scanDir.r){
+        //     for(int c = startPos.c; c != endPos.c; r += scanDir.c){
+        //         if(map[r][c] == Secret){
+        //             addSecret++;
+        //             map[r][c] = Ground;
+        //         }
+        //     }
+        // }
         
         (*head1) = startPos;
-        head->r += jumpDir.r;
-        head->c += jumpDir.c;
+        head->r += 2 * jumpDir.r;
+        head->c += 2 * jumpDir.c;
 
-        head2->r += jumpDir.r;
-        head2->c += jumpDir.c;
+        head2->r += 2 * jumpDir.r;
+        head2->c += 2 * jumpDir.c;
 
-        cen->r += jumpDir.r;
-        cen->c += jumpDir.c;
+        cen->r += 2 * jumpDir.r;
+        cen->c += 2 * jumpDir.c;
     // }
     return addSecret;
 }
@@ -352,10 +373,6 @@ int main(){
         scanf("%s", tempbuff);
         for(int j = 0; j < cols; j++){
             char tempC = tempbuff[j];
-            // scanf("%c", &tempC);
-            // printf("%c", tempC);
-
-            // if(tempC == '\n'){continue;}
 
             if(tempC == 'o'){
                 head.r = i;
@@ -376,7 +393,6 @@ int main(){
                 map[i][j] = tempC;
             }
         }
-        // scanf("\n");
     }
 
     if(dir == North){cen.r = head.r + 1; cen.c = head.c;}
@@ -390,7 +406,6 @@ int main(){
         printf("%dth %c\n", i, instrs[i]);
         switch(instrs[i]){
             case Forward:
-                // printf("%dth %c\n", i, instrs[i]);
                 secretsCount += forward(map, &head, &head1, &head2, &cen);
                 break;
             case Right:
