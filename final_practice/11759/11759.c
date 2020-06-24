@@ -45,12 +45,6 @@
 #include <string.h>
 #define NameLen 25
 
-// typedef struct fact{
-//     char name[NameLen];
-//     int a;
-//     int b;
-// }Fact;
-
 typedef struct item{
     int idx;
     char name[NameLen];
@@ -65,7 +59,6 @@ int cmp(const Item *a, const Item *b){
         return 0;
     }else{
         if(b->p == 0){return 1;}
-        // else{}
     }
     return 0;
 }
@@ -81,7 +74,6 @@ int main(){
     int n = 0, x = 0, y = 0;
     scanf("%d %d %d\n", &n, &x, &y);
     // printf("N: %d X: %d Y: %d\n", n, x, y);
-    // Fact *facts = (Fact *)malloc(sizeof(Fact) * n);
     Item *order = (Item *)malloc(sizeof(Item) * n * 2);
     
     int *record = (int *)malloc(sizeof(int) * n);
@@ -97,8 +89,6 @@ int main(){
         char tempName[NameLen] = {0};
         int tempA = 0, tempB = 0;
         scanf("%s %d %d\n", tempName, &(tempA), &(tempB));
-        // scanf("%s %d %d\n", facts[i].name, &(facts[i].a), &(facts[i].b));
-        // printf("Factory: %s %d %d\n", facts[i].name, facts[i].a, facts[i].b);
         // Record Value a
         order[2 * i].idx = i;
         strncpy(order[2 * i].name, tempName, NameLen);
