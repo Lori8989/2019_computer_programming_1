@@ -261,12 +261,15 @@ int forward(char (*map)[MaxMapSize], Pos *head, Pos *head1, Pos *head2, Pos *cen
 int jump(char (*map)[MaxMapSize], const int rows, const int cols, Pos *head, Pos *head1, Pos *head2, Pos *cen){
     Pos startPos, endPos, scanDir, jumpDir, scanDis;
     int addSecret = 0;
+    // Set up jump forward direction
     jumpDir.r = head->r - cen->r;
     jumpDir.c = head->c - cen->c;
 
+    // Setup first position to start scaning
     startPos.r = head1->r + 2 * jumpDir.r;
     startPos.c = head1->c + 2 * jumpDir.c;
 
+    // Setup the last position to end scaning
     endPos.r = head2->r + jumpDir.r;
     endPos.c = head2->c + jumpDir.c;
 
@@ -279,7 +282,7 @@ int jump(char (*map)[MaxMapSize], const int rows, const int cols, Pos *head, Pos
     scanDis.c = scanDis.c < 0? -scanDis.c + 1 : scanDis.c + 1;
 
     printf("Start: (%d, %d) End: (%d, %d) ScanDis: (%d, %d) ScanDir: (%d, %d)\n", startPos.r, startPos.c, endPos.r, endPos.c, scanDis.r, scanDis.c, scanDir.r, scanDir.c);
-
+    // If colide hill or border, return directly
     for(int r = 0; r < scanDis.r; r++){
         for(int c = 0; c < scanDis.c; c++){
             int rIdx = startPos.r + r * scanDir.r;
