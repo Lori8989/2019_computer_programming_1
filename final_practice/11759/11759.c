@@ -45,25 +45,27 @@
 #include <string.h>
 #define NameLen 25
 
+typedef struct Fact{
+    char name[NameLen];
+    int a;
+    int b;
+    int aMinusB;
+}Fact;
+
 typedef struct item{
     int idx;
-    char name[NameLen];
-    char p;
     int val;
 }Item;
 
-int cmp(const Item *a, const Item *b){
-    if(b->val > a->val){
-        return 1;
-    }else if(b->val < a->val){
-        return 0;
-    }else{
-        if(b->p == 0){return 1;}
-    }
-    return 0;
+int aMinusBCmp(const Fact *a, const Fact *b){
+    return b->aMinusB > a->aMinusB;
 }
 
-int lexicalCmp(const Item *a, const Item *b){
+int aCmp(const Item *a, const Item *b){
+    return b->val < a->val;
+}
+
+int lexicalCmp(const Fact *a, const Fact *b){
     if(strcmp(a->name, b->name) >= 0){
         return 1;
     }
@@ -71,68 +73,59 @@ int lexicalCmp(const Item *a, const Item *b){
 }
 
 int main(){
-    int n = 0, x = 0, y = 0;
+    int n = 0, x = 0, y = 0, ySeqLen = 0;
     scanf("%d %d %d\n", &n, &x, &y);
+    ySeqLen = n - y;
     // printf("N: %d X: %d Y: %d\n", n, x, y);
-    Item *order = (Item *)malloc(sizeof(Item) * n * 2);
-    
+    Fact *facts = (Fact *)malloc(sizeof(Fact) * n);
+    // Fact *ySeq = (Fact *)malloc(sizeof(Fact) * ySeqLen);
+    Item *assemble = (Item *)malloc(sizeof(Item) * n);
     int *record = (int *)malloc(sizeof(int) * n);
-    Item *xSeq = (Item *)malloc(sizeof(Item) * x);
-    Item *ySeq = (Item *)malloc(sizeof(Item) * y);
-    int aCount = 0, bCount = 0;
-    memset((Item *)order, sizeof(Item) * n * 2, 0);
+    Fact *res = (Fact *)malloc(sizeof(Fact) * x);
+    memset((void *)facts, sizeof(Fact) * n, 0);
+    // memset((void *)ySeq, sizeof(Fact) * ySeqLen, 0);
+    memset((void *)assemble, sizeof(Item) * n, 0);
     memset((void *)record, sizeof(int) * n, 0);
-    memset((void *)xSeq, sizeof(Item) * x, 0);
-    memset((void *)ySeq, sizeof(Item) * y, 0);
+    memset((void *)res, sizeof(Fact) * x, 0);
 
-    // Put all Factories into same array and seperate the net profit of product a and b
     for(int i = 0; i < n; i++){
-        char tempName[NameLen] = {0};
-        int tempA = 0, tempB = 0;
-        scanf("%s %d %d\n", tempName, &(tempA), &(tempB));
-        // Record Value a
-        order[2 * i].idx = i;
-        strncpy(order[2 * i].name, tempName, NameLen);
-        order[2 * i].p = 0;
-        order[2 * i].val = tempA;
-
-        // Record Value b
-        order[2 * i + 1].idx = i;
-        strncpy(order[2 * i + 1].name, tempName, NameLen);
-        order[2 * i + 1].p = 1;
-        order[2 * i + 1].val = tempB;
+        scanf("%s %d %d\n", facts[i].name, &(facts[i].a), &(facts[i].b));
+        facts[i].aMinusB = facts[i].a - facts[i].b;
     }
-    // Sort with the net profit in decreasing order, combine product a and b
-    qsort(order, 2 * n, sizeof(Item), (int (*)(const void *, const void *))cmp);
-    
-    for(int i = 0; i < 2 * n; i++){
-        int factIdx = order[i].idx;
-        // If the factory is picked before, skip this round and continue
-        if(record[factIdx]){continue;}
-        // Always pick larger profit
-        if(order[i].p == 0 && aCount < x){
-            xSeq[aCount].idx = factIdx;
-            strncpy(xSeq[aCount].name, order[i].name, NameLen);
-            xSeq[aCount].p = 0;
-            xSeq[aCount].val = order[i].val;
 
-            record[factIdx] = 1;
-            aCount++;
-        }else if(order[i].p == 1 && bCount < y){
-            ySeq[bCount].idx = factIdx;
-            strncpy(ySeq[aCount].name, order[i].name, NameLen);
-            ySeq[bCount].p = 1;
-            ySeq[bCount].val = order[i].val;
+    // Sort with the value a - b in decreasing order
+    qsort(facts, n, sizeof(Fact), (int (*)(const void *, const void *))aMinusBCmp);
+    for(int i = 0; i < n; i++){
+        assemble[i].idx = i;
+        if(i < x){
+            assemble[i].val = facts[i].a;
+        }else{
+            assemble[i].val = facts[i].b;
+        }
+        // printf("%d ", ySeq[i].aMinusB);
+    }
 
-            record[factIdx] = 1;
-            bCount++;
+    // printf("\n");
+
+    // Sort with the value a in increasing order
+    qsort(assemble, n, sizeof(Item), (int (*)(const void *, const void *))aCmp);
+    for(int i = 0; i < n - x - y; i++){
+        record[assemble[i].idx] = 1;
+        // printf("%d ", res[i].a);
+    }
+    int count = 0;
+    for(int i = 0; i < n && count < x; i++){
+        if(!record[i]){
+            strncpy(res[count].name, facts[i].name, NameLen);
+            count++;
         }
     }
+    // printf("\n");
+    
     // Sort in lexical order
-    qsort(xSeq, x, sizeof(Item), (int (*)(const void *, const void *))lexicalCmp);
-
+    qsort(res, x, sizeof(Fact), (int (*)(const void *, const void *))lexicalCmp);
     for(int i = 0; i < x; i++){
-        printf("%s\n", xSeq[i].name);
+        printf("%s\n", res[i].name);
     }
 
 
