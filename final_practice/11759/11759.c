@@ -85,6 +85,7 @@ int main(){
     memset((void *)xSeq, sizeof(Item) * x, 0);
     memset((void *)ySeq, sizeof(Item) * y, 0);
 
+    // Put all Factories into same array and seperate the net profit of product a and b
     for(int i = 0; i < n; i++){
         char tempName[NameLen] = {0};
         int tempA = 0, tempB = 0;
@@ -101,13 +102,14 @@ int main(){
         order[2 * i + 1].p = 1;
         order[2 * i + 1].val = tempB;
     }
-
+    // Sort with the net profit in decreasing order, combine product a and b
     qsort(order, 2 * n, sizeof(Item), (int (*)(const void *, const void *))cmp);
     
     for(int i = 0; i < 2 * n; i++){
         int factIdx = order[i].idx;
+        // If the factory is picked before, skip this round and continue
         if(record[factIdx]){continue;}
-
+        // Always pick larger profit
         if(order[i].p == 0 && aCount < x){
             xSeq[aCount].idx = factIdx;
             strncpy(xSeq[aCount].name, order[i].name, NameLen);
@@ -126,7 +128,7 @@ int main(){
             bCount++;
         }
     }
-
+    // Sort in lexical order
     qsort(xSeq, x, sizeof(Item), (int (*)(const void *, const void *))lexicalCmp);
 
     for(int i = 0; i < x; i++){
