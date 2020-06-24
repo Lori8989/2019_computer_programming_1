@@ -222,6 +222,7 @@ void showMap(char (*map)[MaxMapSize], const Pos head, Pos head1, Pos head2, Pos 
 int forward(char (*map)[MaxMapSize], Pos *head, Pos *head1, Pos *head2, Pos *cen){
     Pos forward, tempHead, tempHead1, tempHead2;
     int addSecret = 0;
+    // Calculate Forward Direction
     forward.r = head->r - cen->r;
     forward.c = head->c - cen->c;
 
@@ -254,6 +255,52 @@ int forward(char (*map)[MaxMapSize], Pos *head, Pos *head1, Pos *head2, Pos *cen
 
     printf("Forward Head: (%d, %d) Cent: (%d, %d)\n", head->r, head->c, cen->r, cen->c);
 
+    return addSecret;
+}
+
+int jump(char (*map)[MaxMapSize], const int rows, const int cols, Pos *head, Pos *head1, Pos *head2, Pos *cen){
+    Pos startPos, endPos, scanDir, jumpDir;
+    int addSecret = 0;
+    jumpDir.r = 2 * (head->r - cen->r);
+    jumpDir.c = 2 * (head->c - cen->c);
+
+    startPos.r = head1->r + jumpDir.r;
+    startPos.c = head1->c + jumpDir.c;
+
+    endPos.r = head2->r + (head->r - cen->r);
+    endPos.c = head2->c + (head->c - cen->c);
+
+    scanDir.r = head1->r - cen->r;
+    scanDir.c = head1->c - cen->c;
+
+    for(int r = startPos.r; r != endPos.r; r += scanDir.r){
+        for(int c = startPos.c; c != endPos.c; r += scanDir.c){
+            if(r >= 0 && r < rows && c >= 0 && cols <= cols){
+                if(map[r][c] == Border || map[r][c] == Hill){return 0;}
+            }else{return 0;}
+        }
+    }
+
+    // if(isPass){
+        for(int r = startPos.r; r != endPos.r; r += scanDir.r){
+            for(int c = startPos.c; c != endPos.c; r += scanDir.c){
+                if(map[r][c] == Secret){
+                    addSecret++;
+                    map[r][c] = Ground;
+                }
+            }
+        }
+        
+        (*head1) = startPos;
+        head->r += jumpDir.r;
+        head->c += jumpDir.c;
+
+        head2->r += jumpDir.r;
+        head2->c += jumpDir.c;
+
+        cen->r += jumpDir.r;
+        cen->c += jumpDir.c;
+    // }
     return addSecret;
 }
 
@@ -357,8 +404,9 @@ int main(){
                 turnLeft(&head2, cen);
                 break;
             case Jump:
-                secretsCount += forward(map, &head, &head1, &head2, &cen);
-                secretsCount += forward(map, &head, &head1, &head2, &cen);
+                // secretsCount += forward(map, &head, &head1, &head2, &cen);
+                // secretsCount += forward(map, &head, &head1, &head2, &cen);
+                secretsCount += jump(map, rows, cols, &head, &head1, &head2, &cen);
                 break;
         }
         showMap(map, head, head1, head2, cen, rows, cols);

@@ -45,11 +45,11 @@
 #include <string.h>
 #define NameLen 25
 
-typedef struct fact{
-    char name[NameLen];
-    int a;
-    int b;
-}Fact;
+// typedef struct fact{
+//     char name[NameLen];
+//     int a;
+//     int b;
+// }Fact;
 
 typedef struct item{
     int idx;
@@ -81,7 +81,7 @@ int main(){
     int n = 0, x = 0, y = 0;
     scanf("%d %d %d\n", &n, &x, &y);
     // printf("N: %d X: %d Y: %d\n", n, x, y);
-    Fact *facts = (Fact *)malloc(sizeof(Fact) * n);
+    // Fact *facts = (Fact *)malloc(sizeof(Fact) * n);
     Item *order = (Item *)malloc(sizeof(Item) * n * 2);
     
     int *record = (int *)malloc(sizeof(int) * n);
@@ -94,28 +94,33 @@ int main(){
     memset((void *)ySeq, sizeof(Item) * y, 0);
 
     for(int i = 0; i < n; i++){
-        scanf("%s %d %d\n", facts[i].name, &(facts[i].a), &(facts[i].b));
+        char tempName[NameLen] = {0};
+        int tempA = 0, tempB = 0;
+        scanf("%s %d %d\n", tempName, &(tempA), &(tempB));
+        // scanf("%s %d %d\n", facts[i].name, &(facts[i].a), &(facts[i].b));
         // printf("Factory: %s %d %d\n", facts[i].name, facts[i].a, facts[i].b);
         // Record Value a
         order[2 * i].idx = i;
+        strncpy(order[2 * i].name, tempName, NameLen);
         order[2 * i].p = 0;
-        order[2 * i].val = facts[i].a;
+        order[2 * i].val = tempA;
 
         // Record Value b
         order[2 * i + 1].idx = i;
+        strncpy(order[2 * i + 1].name, tempName, NameLen);
         order[2 * i + 1].p = 1;
-        order[2 * i + 1].val = facts[i].b;
+        order[2 * i + 1].val = tempB;
     }
 
     qsort(order, 2 * n, sizeof(Item), (int (*)(const void *, const void *))cmp);
     
     for(int i = 0; i < 2 * n; i++){
-        if(record[order[i].idx]){continue;}
-
         int factIdx = order[i].idx;
+        if(record[factIdx]){continue;}
+
         if(order[i].p == 0 && aCount < x){
             xSeq[aCount].idx = factIdx;
-            strncpy(xSeq[aCount].name, facts[factIdx].name, NameLen);
+            strncpy(xSeq[aCount].name, order[i].name, NameLen);
             xSeq[aCount].p = 0;
             xSeq[aCount].val = order[i].val;
 
@@ -123,7 +128,7 @@ int main(){
             aCount++;
         }else if(order[i].p == 1 && bCount < y){
             ySeq[bCount].idx = factIdx;
-            strncpy(ySeq[aCount].name, facts[factIdx].name, NameLen);
+            strncpy(ySeq[aCount].name, order[i].name, NameLen);
             ySeq[bCount].p = 1;
             ySeq[bCount].val = order[i].val;
 

@@ -123,9 +123,9 @@ Final Exam
 
 > [11759 B - Great Depression Again](./final_practice/11759/11759.c)
 
-> [12241 Restaurants in Hsinchu](./final_practice/12241/12241.c) Done
+> [Week16 12241 Restaurants in Hsinchu](./final_practice/12241/12241.c) Done
 
-> [12301 Uncle Huang choose Tutor(Easy version)](./final_practice/12301/function.c) Done
+> [Week16 12301 Uncle Huang choose Tutor(Easy version)](./final_practice/12301/function.c) Done
 
 > [11686 more simple exercise of pointer on array](./final_practice/11686/function.c) Done
 
