@@ -166,8 +166,8 @@ int game_run() {
             error = process_event();
             if(judge_next_window) {
                 window = 2;
-                hero = new Role(100, 100, 200, WIDTH/2, HEIGHT/2+100, 30, 0.1, WIDTH, HEIGHT, event_queue, "tower.png");
-                client = new Role(100, 100, 200, WIDTH/2, HEIGHT/5, 10, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png");
+                hero = new Role(100, 100, 200, 0, -1, WIDTH/2, HEIGHT/2+100, 30, 0.1, WIDTH, HEIGHT, event_queue, "tower.png", "pipi.png", "pupu.png");
+                client = new Role(100, 100, 200, 0, 1, WIDTH/2, HEIGHT/5, 10, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png", "pipi.png", "pupu.png");
                 background = al_load_bitmap("stage.jpg");
                 printf("HHHi\n");
                 game->start_stage1();

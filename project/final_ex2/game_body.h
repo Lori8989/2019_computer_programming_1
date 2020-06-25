@@ -6,8 +6,8 @@
 
 class Attack{
     public:
-        Attack(int atk, int speed, double fps, int width, int height, char *atk_img_path, ALLEGRO_EVENT_QUEUE *event_queue);
-        void move(int x_dir, int y_dir);
+        Attack(int atk, int speed, int atk_dir_x, int atk_dir_y, double fps, int width, int height, char *atk_img_path, ALLEGRO_EVENT_QUEUE *event_queue);
+        void move();
         void add(int pos_x, int pos_y);
         int hit(int pos_x, int pos_y, int r);
         bool update_timer_event(ALLEGRO_EVENT even);
@@ -17,6 +17,8 @@ class Attack{
         int atk;
         int n;
         int speed;
+        int atk_dir_x;
+        int atk_dir_y;
         double fps;
         int width;
         int height;
@@ -29,7 +31,7 @@ class Attack{
 
 class Role{
     public:
-        Role(int hp, int atk1, int atk2, int pos_x, int pos_y, int move_unit, double fps, int width, int height, ALLEGRO_EVENT_QUEUE *event_queue, char *role_img_path);
+        Role(int hp, int atk1, int atk2, int atk_dir_x, int atk_dir_y, int pos_x, int pos_y, int move_unit, double fps, int width, int height, ALLEGRO_EVENT_QUEUE *event_queue, char *role_img_path, char *atk1_img_path, char *atk2_img_path);
         void go_up();
         void go_down();
         void go_left();
@@ -61,6 +63,8 @@ class Role{
         int is_alive;
         int atk1;
         int atk2;
+        int atk_dir_x;
+        int atk_dir_y;
         int pos_x;
         int pos_y;
         int move_unit;
@@ -68,7 +72,10 @@ class Role{
         int width;
         int height;
         char *role_img_path;
+        char *atk1_img_path;
+        char *atk2_img_path;
         Attack *atks1;
+        Attack *atks2;
         ALLEGRO_EVENT_QUEUE *event_queue;
         ALLEGRO_TIMER *event_timer;
         ALLEGRO_BITMAP *role_bitmap;

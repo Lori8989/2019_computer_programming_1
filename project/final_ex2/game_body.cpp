@@ -13,9 +13,11 @@
 
 #include "game_body.h"
 
-Attack::Attack(int atk, int speed, double fps, int width, int height, char *atk_img_path, ALLEGRO_EVENT_QUEUE *event_queue){
+Attack::Attack(int atk, int speed, int atk_dir_x, int atk_dir_y, double fps, int width, int height, char *atk_img_path, ALLEGRO_EVENT_QUEUE *event_queue){
     this->atk = atk;
     this->speed = speed;
+    this->atk_dir_x = atk_dir_x;
+    this->atk_dir_y = atk_dir_y;
     this->fps = fps;
     this->width = width;
     this->height = height;
@@ -27,18 +29,18 @@ Attack::Attack(int atk, int speed, double fps, int width, int height, char *atk_
     al_register_event_source(event_queue, al_get_timer_event_source(this->event_timer));
     al_start_timer(this->event_timer);
 }
-void Attack::move(int x_dir, int y_dir){
+void Attack::move(){
     for(int i = 0; i < this->pos_ys.size(); i++){
-        if(x_dir == 1){
-            this->pos_xs.at(i) += this->speed;
-        }else if(x_dir == -1){
-            this->pos_xs.at(i) -= this->speed;
-        }
-        if(y_dir == 1){
-            this->pos_ys.at(i) += this->speed;
-        }else if(y_dir == -1){
-            this->pos_ys.at(i) -= this->speed;
-        }
+        //if(x_dir == 1){
+            this->pos_xs.at(i) += this->atk_dir_x * this->speed;
+        //}else if(x_dir == -1){
+          //  this->pos_xs.at(i) -= this->atk_dir_y * this->speed;
+        //}
+        //if(y_dir == 1){
+            this->pos_ys.at(i) += this->atk_dir_y * this->speed;
+        //}else if(y_dir == -1){
+          //  this->pos_ys.at(i) -= this->speed;
+        //}
 
         if(this->pos_ys.at(i) > this->height || this->pos_xs.at(i) > this->width || this->pos_ys.at(i) < 0 || this->pos_xs.at(i) < 0){
             this->pos_xs.erase(this->pos_xs.begin() + i);
@@ -65,7 +67,7 @@ int Attack::hit(int pos_x, int pos_y, int r){
 }
 bool Attack::update_timer_event(ALLEGRO_EVENT event){
     if(event.timer.source == this->event_timer){
-        this->move(0, -1);
+        this->move();
         return 1;
     }
     return 0;
@@ -81,11 +83,13 @@ void Attack::disappear(int idx){
 }
 
 
-Role::Role(int hp, int atk1, int atk2, int pos_x, int pos_y, int move_unit, double fps, int width, int height, ALLEGRO_EVENT_QUEUE *event_queue, char *role_img_path){
+Role::Role(int hp, int atk1, int atk2, int atk_dir_x, int atk_dir_y, int pos_x, int pos_y, int move_unit, double fps, int width, int height, ALLEGRO_EVENT_QUEUE *event_queue, char *role_img_path, char *atk1_img_path, char *atk2_img_path){
     this->hp = hp;
     this->is_alive = 1;
     this->atk1 = atk1;
     this->atk2 = atk2;
+    this->atk_dir_x = atk_dir_x;
+    this->atk_dir_y = atk_dir_y;
     this->pos_x = pos_x;
     this->pos_y = pos_y;
     this->move_unit = move_unit;
@@ -95,7 +99,10 @@ Role::Role(int hp, int atk1, int atk2, int pos_x, int pos_y, int move_unit, doub
     this->event_queue = event_queue;
     this->event_timer = al_create_timer(fps);
     this->role_img_path = role_img_path;
-    this->atks1 = new Attack(atk1, move_unit, fps, width, height, "explosion.png", event_queue);
+    this->atk1_img_path = atk1_img_path;
+    this->atk2_img_path = atk2_img_path;
+    this->atks1 = new Attack(atk1, move_unit, atk_dir_x, atk_dir_y, fps, width, height, this->atk1_img_path, event_queue);
+    this->atks2 = new Attack(atk2, move_unit, atk_dir_x, atk_dir_y, fps, width, height, this->atk2_img_path, event_queue);
     this->role_bitmap = al_load_bitmap(role_img_path);
 
     al_register_event_source(event_queue, al_get_timer_event_source(this->event_timer));
@@ -123,6 +130,9 @@ void Role::random_walk(){
 void Role::fire1(){
     if(this->is_alive){this->atks1->add(this->pos_x, this->pos_y);}
 }
+void Role::fire2(){
+    if(this->is_alive){this->atks2->add(this->pos_x, this->pos_y);}
+}
 void Role::lose_hp(int lose){
     if(this->is_alive){this->hp -= lose;}
     if(this->hp <= 0){this->die();}
@@ -145,13 +155,18 @@ bool Role::update_keyboard_event(ALLEGRO_EVENT event){
             case ALLEGRO_KEY_A:
                 this->fire1();
                 break;
+            case ALLEGRO_KEY_S:
+                this->fire2();
+               break;
         }
     }
 }
 bool Role::update_atks_event(ALLEGRO_EVENT event, Role *enemy){
-    int res = this->atks1->update_timer_event(event);
+    int res1 = this->atks1->update_timer_event(event);
+    int res2 = this->atks2->update_timer_event(event);
     enemy->lose_hp(this->atks1->hit(enemy->pos_x, enemy->pos_y, 50));
-    return res;
+    enemy->lose_hp(this->atks2->hit(enemy->pos_x, enemy->pos_y, 50));
+    return res1 + res2;
 }bool Role::update_timer_event(ALLEGRO_EVENT event){
     if(event.timer.source == this->event_timer){
         this->random_walk();
@@ -164,6 +179,7 @@ void Role::show(){
         al_draw_bitmap(this->role_bitmap, this->pos_x, this->pos_y, 0);
     }
     this->atks1->show();
+    this->atks2->show();
 }
 void Role::die(){
     this->pos_x = -100;
@@ -190,8 +206,10 @@ Game_Body::Game_Body(ALLEGRO_EVENT_QUEUE *event_queue, ALLEGRO_DISPLAY *display,
     this->height = height;
     this->window = 0;
     this->stage = 1;
-    this->hero = new Role(100, 100, 200, width/2, height/2+100, 30, 0.1, width, height, event_queue, "tower.png");
-    this->client = new Role(100, 100, 200, width/2, height/5, 10, 0.1, width, height, event_queue, "teemo_right.png");
+    this->hero = new Role(100, 100, 200, 0, -1, width/2, height/2+100, 30, 0.1, width, height, event_queue, "tower.png", "pipi.png", "pupu.png");
+    this->client = new Role(100, 100, 200, 0, -1, width/2, height/5, 10, 0.1, width, height, event_queue, "teemo_right.png", "pipi.png", "pupu.png");
+    // this->hero = new Role(100, 100, 200, width/2, height/2+100, 30, 0.1, width, height, event_queue, "tower.png");
+    // this->client = new Role(100, 100, 200, width/2, height/5, 10, 0.1, width, height, event_queue, "teemo_right.png");
     this->event_queue = event_queue;
     this->display = display;
     this->song = song;
@@ -201,8 +219,10 @@ Game_Body::Game_Body(ALLEGRO_EVENT_QUEUE *event_queue, ALLEGRO_DISPLAY *display,
 void Game_Body::set_to_start_stage1(){this->window = 2; this->stage = 1;}
 void Game_Body::start_stage1(){
     //if(this->window != 1 || this->stage != 1){return;}
-    this->hero = new Role(100, 100, 200, this->width/2, this->height/2+100, 30, 0.1, this->width, this->height, this->event_queue, "tower.png");
-    this->client = new Role(100, 100, 200, this->width/2, this->height/5, 10, 0.1, this->width, this->height, this->event_queue, "teemo_right.png");
+    this->hero = new Role(100, 100, 200, 0, -1, width/2, height/2+100, 30, 0.1, width, height, event_queue, "tower.png", "pipi.png", "pupu.png");
+    this->client = new Role(100, 100, 200, 0, -1, width/2, height/5, 10, 0.1, width, height, event_queue, "teemo_right.png", "pipi.png", "pupu.png");
+    // this->hero = new Role(100, 100, 200, this->width/2, this->height/2+100, 30, 0.1, this->width, this->height, this->event_queue, "tower.png");
+    // this->client = new Role(100, 100, 200, this->width/2, this->height/5, 10, 0.1, this->width, this->height, this->event_queue, "teemo_right.png");
 
     al_clear_to_color(al_map_rgb(100,100,100));
     // Load and draw text
