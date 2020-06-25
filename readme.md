@@ -23,9 +23,9 @@
 
 > [10786 Progression](./mid_practice/10786/10786.c)	Done
 
-> 12675	Done
+> [Week3 12675 Get the number](./mid_practice/12675/12675.c) Done
 
-> 12690 Done
+> [Week3 12690 Skate Shoes Sliding](./mid_practice/12690/12690.c) Done
 
 > [10716 Arithmetic Sequence](./mid_practice/10716/10716.c)	Done
 
