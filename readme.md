@@ -153,4 +153,4 @@ Final Exam
 
 > [Bonus4 12178 Queens and Castles](./final_practice/12178/12178.c) Done
 
-> [Bonus5 12712 Got flunked](./final_practice/12712/12712.c) 
+> [Bonus5 12712 Got flunked](./final_practice/12712/12712.c) Done
