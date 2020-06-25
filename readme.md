@@ -7,17 +7,17 @@
 
 > [11606 Factor Counter](./mid_practice/11606/11606.c) Done
 
-> 12129	Done
+> [Week1 12129 Do you know de way?](./mid_practice/12129/12129.c)
 
-> 12134	Done
+> [Week1 12134 The Big Hammer Rise](./mid_practice/12134/12134.c) Done
 
-> 12139	Done
+> 12139
 
 > [10772 The number of occurrences](./mid_practice/10772/10772.c) Done
 
-> 12131	Done
+> [Week2 12131 No, I don't know the way, but....](./mid_practice/12131/12131.c) Done
 
-> 12672	Done
+> [Week2 12672 Three number](./mid_practice/12672/12672.c) Done
 
 > [11099 Money Money](./mid_practice/11099/11099.c)	Done
 
