@@ -103,7 +103,7 @@ Final Exam
 
 > [Week13 12142 Ugandan Knuckles's adventure](./final_practice/12142/12142.c) Done	
 
-> [11665 World war](./final_practice/11665/11665.c)
+> [11665 World war](./final_practice/11665/11665.c) Done
 
 > [11728 Distance on 2D plane](./final_practice/11728/function.c) Done
 
@@ -152,3 +152,5 @@ Final Exam
 > [Bonus3 12801 Poorgrammer](./final_practice/12801/12801.c) Done
 
 > [Bonus4 12178 Queens and Castles](./final_practice/12178/12178.c) Done
+
+> [Bonus5 12712 Got flunked](./final_practice/12712/12712.c) 

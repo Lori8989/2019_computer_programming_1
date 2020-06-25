@@ -253,7 +253,7 @@ int forward(char (*map)[MaxMapSize], Pos *head, Pos *head1, Pos *head2, Pos *cen
            if(map[tempHead2.r][tempHead2.c] == Secret){addSecret++; map[tempHead2.r][tempHead2.c] = Ground;}
     }
 
-    printf("Forward Head: (%d, %d) Cent: (%d, %d)\n", head->r, head->c, cen->r, cen->c);
+    // printf("Forward Head: (%d, %d) Cent: (%d, %d)\n", head->r, head->c, cen->r, cen->c);
 
     return addSecret;
 }
@@ -281,7 +281,7 @@ int jump(char (*map)[MaxMapSize], const int rows, const int cols, Pos *head, Pos
     scanDis.r = scanDis.r < 0? -scanDis.r + 1 : scanDis.r + 1;
     scanDis.c = scanDis.c < 0? -scanDis.c + 1 : scanDis.c + 1;
 
-    printf("Start: (%d, %d) End: (%d, %d) ScanDis: (%d, %d) ScanDir: (%d, %d)\n", startPos.r, startPos.c, endPos.r, endPos.c, scanDis.r, scanDis.c, scanDir.r, scanDir.c);
+    // printf("Start: (%d, %d) End: (%d, %d) ScanDis: (%d, %d) ScanDir: (%d, %d)\n", startPos.r, startPos.c, endPos.r, endPos.c, scanDis.r, scanDis.c, scanDir.r, scanDir.c);
     // If colide hill or border, return directly
     for(int r = 0; r < scanDis.r; r++){
         for(int c = 0; c < scanDis.c; c++){
@@ -340,7 +340,7 @@ void turnRight(Pos *head, const Pos cen){
     int headPosC = head->c - cen.c;
     head->c = cen.c - headPosR;
     head->r = cen.r + headPosC;
-    printf("Turn Right Head: R: %d = cen.:r%d + headPosC:%d, C: %d = cen.c:%d - headPosR:%d\n", head->r, cen.r, headPosC, head->c, cen.c, headPosR);
+    // printf("Turn Right Head: R: %d = cen.r: %d + headPosC: %d, C: %d = cen.c:%d - headPosR:%d\n", head->r, cen.r, headPosC, head->c, cen.c, headPosR);
 }
 
 void turnLeft(Pos *head, const Pos cen){
@@ -355,23 +355,24 @@ void turnLeft(Pos *head, const Pos cen){
     int headPosC = head->c - cen.c;
     head->c = cen.c + headPosR;
     head->r = cen.r - headPosC;
-    printf("Turn Left Head: R: %d = cen.:r%d - headPosC:%d, C: %d = cen.c:%d + headPosR:%d\n", head->r, cen.r, headPosC, head->c, cen.c, headPosR);
+    // printf("Turn Left Head: R: %d = cen.r: %d - headPosC: %d, C: %d = cen.c:%d + headPosR:%d\n", head->r, cen.r, headPosC, head->c, cen.c, headPosR);
 }
 
 int main(){
     char dir = North;
     int rows = 0, cols = 0, n = 0;
     int secretsCount = 0;
+    int isHead1Occur = 0;
     Pos cen, head, head1, head2;
     char map[MaxMapSize][MaxMapSize] = {0};
     char instrs[MaxInstrSize] = {0};
     scanf("%d %d %d %c\n", &rows, &cols, &n, &dir);
     scanf("%s", instrs);
 
-    printf("Rows:%d Cols:%d N:%d Dir:%c\n", rows, cols, n, dir);
+    // printf("Rows:%d Cols:%d N:%d Dir:%c\n", rows, cols, n, dir);
 
     for(int i = 0; i < rows; i++){
-        int isHead1Occur = 0;
+        
         char tempbuff[105] = {0};
         scanf("%s", tempbuff);
         for(int j = 0; j < cols; j++){
@@ -397,16 +398,17 @@ int main(){
             }
         }
     }
+    // printf("head1 (%d, %d) head (%d, %d) head2 (%d, %d) cen (%d, %d)\n", head1.r, head1.c, head.r, head.c, head2.r, head2.c, cen.r, cen.c);
 
     if(dir == North){cen.r = head.r + 1; cen.c = head.c;}
     else if(dir == South){cen.r = head.r - 1; cen.c = head.c;}
     else if(dir == East){cen.r = head.r; cen.c = head.c - 1;}
-    else if(dir == West){cen.r = head.r; cen.r = head.c + 1;}
+    else if(dir == West){cen.r = head.r; cen.c = head.c + 1;}
 
-    showMap(map, head, head1, head2, cen, rows, cols);
+    // showMap(map, head, head1, head2, cen, rows, cols);
 
     for(int i = 0; i < n; i++){
-        printf("%dth %c\n", i, instrs[i]);
+        // printf("%dth %c\n", i, instrs[i]);
         switch(instrs[i]){
             case Forward:
                 secretsCount += forward(map, &head, &head1, &head2, &cen);
@@ -427,7 +429,7 @@ int main(){
                 secretsCount += jump(map, rows, cols, &head, &head1, &head2, &cen);
                 break;
         }
-        showMap(map, head, head1, head2, cen, rows, cols);
+        // showMap(map, head, head1, head2, cen, rows, cols);
     }
 
     printf("%d\n", secretsCount);

@@ -28,7 +28,7 @@ int lexicalCmp(const Fact *a, const Fact *b){
 int main(){
     int n = 0, x = 0, y = 0, xSeqLen = 0;
     scanf("%d %d %d\n", &n, &x, &y);
-    xSeqLen = n - y;
+    xSeqLen = n - y > n - x? n - y : n - x;
     // printf("N: %d X: %d Y: %d\n", n, x, y);
     Fact *facts = (Fact *)malloc(sizeof(Fact) * n);
     Fact *xSeq = (Fact *)malloc(sizeof(Fact) * xSeqLen);
