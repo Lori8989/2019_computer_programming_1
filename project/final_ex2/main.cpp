@@ -9,6 +9,7 @@
 
 #include "allegro_var.h"
 #include "game_body.h"
+#include "stage.h"
 #include "main_page.h"
 
 #define GAME_TERMINATE -1
@@ -16,14 +17,11 @@
 // ALLEGRO Variables
 ALLEGRO_DISPLAY* display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
-ALLEGRO_BITMAP *image = NULL;
-ALLEGRO_BITMAP *image2 = NULL;
-ALLEGRO_BITMAP *image3 = NULL;
 ALLEGRO_BITMAP *background = NULL;
-ALLEGRO_KEYBOARD_STATE keyState ;
+//ALLEGRO_KEYBOARD_STATE keyState ;
 ALLEGRO_TIMER *timer = NULL;
-ALLEGRO_TIMER *timer2 = NULL;
-ALLEGRO_TIMER *timer3 = NULL;
+//ALLEGRO_TIMER *timer2 = NULL;
+//ALLEGRO_TIMER *timer3 = NULL;
 ALLEGRO_SAMPLE *song=NULL;
 ALLEGRO_FONT *font = NULL;
 
@@ -35,7 +33,7 @@ const int HEIGHT = 600;
 
 Role *hero = NULL;
 Role *client= NULL;
-Game_Body *game = NULL;
+Stage *game = NULL;
 
 int imageWidth = 0;
 int imageHeight = 0;
@@ -77,6 +75,9 @@ void show_err_msg(int msg) {
 }
 
 void game_init() {
+    game = new Stage(WIDTH, HEIGHT);
+   // game->init();
+
     if (!al_init()) {
         show_err_msg(-1);
     }
@@ -112,11 +113,11 @@ void game_init() {
     // Register event
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
+
 }
 
 void game_begin() {
     main_page(&display, &song, &font, WIDTH, HEIGHT);
-    game = new Game_Body(event_queue, display, song, font, WIDTH, HEIGHT);
 }
 
 int process_event(){
@@ -126,7 +127,8 @@ int process_event(){
 
     if(client != NULL){
         client->fire1();
-        client->update_timer_event(event);
+        client->update_random_walk_event(event);
+        //client->update_horizontal_walk_event(event);
         client->update_atks_event(event, hero);
         hero->update_keyboard_event(event);
         hero->update_atks_event(event, client);
@@ -142,7 +144,7 @@ int process_event(){
         {
             // For Start Menu
             case ALLEGRO_KEY_ENTER:
-                game->set_to_start_stage1();
+                //game->set_to_start_stage1();
                 judge_next_window = true;
                 break;
             case ALLEGRO_KEY_ESCAPE:
@@ -166,11 +168,13 @@ int game_run() {
             error = process_event();
             if(judge_next_window) {
                 window = 2;
+
                 hero = new Role(100, 100, 200, 0, -1, WIDTH/2, HEIGHT/2+100, 30, 0.1, WIDTH, HEIGHT, event_queue, "tower.png", "pipi.png", "pupu.png");
                 client = new Role(100, 100, 200, 0, 1, WIDTH/2, HEIGHT/5, 10, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png", "pipi.png", "pupu.png");
                 background = al_load_bitmap("stage.jpg");
+
                 printf("HHHi\n");
-                game->start_stage1();
+                //game->set_up_stage1();
             }
         }
     }
@@ -198,7 +202,7 @@ void game_destroy() {
     al_destroy_event_queue(event_queue);
     al_destroy_display(display);
     al_destroy_timer(timer);
-    al_destroy_timer(timer2);
-    al_destroy_bitmap(image);
+    //al_destroy_timer(timer2);
+    //al_destroy_bitmap(image);
     al_destroy_sample(song);
 }

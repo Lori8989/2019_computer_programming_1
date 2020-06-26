@@ -37,12 +37,14 @@ class Role{
         void go_left();
         void go_right();
         void random_walk();
+        void horizontal_walk();
         void fire1();
         void fire2();
         void lose_hp(int lose);
         bool update_keyboard_event(ALLEGRO_EVENT event);
         bool update_atks_event(ALLEGRO_EVENT event, Role *enemy);
-        bool update_timer_event(ALLEGRO_EVENT event);
+        bool update_random_walk_event(ALLEGRO_EVENT event);
+        bool update_horizontal_walk_event(ALLEGRO_EVENT event);
         void show();
         void die();
 
@@ -68,6 +70,7 @@ class Role{
         int pos_x;
         int pos_y;
         int move_unit;
+        int move_dir;
         double fps;
         int width;
         int height;
@@ -80,7 +83,7 @@ class Role{
         ALLEGRO_TIMER *event_timer;
         ALLEGRO_BITMAP *role_bitmap;
 };
-
+/**
 class Game_Body{
     public:
         Game_Body(ALLEGRO_EVENT_QUEUE *event_queue, ALLEGRO_DISPLAY *display, ALLEGRO_SAMPLE *song, ALLEGRO_FONT *font, const int width, const int height);
@@ -106,5 +109,5 @@ class Game_Body{
         ALLEGRO_BITMAP *background;
 
 };
-
+**/
 #endif

@@ -93,6 +93,7 @@ Role::Role(int hp, int atk1, int atk2, int atk_dir_x, int atk_dir_y, int pos_x, 
     this->pos_x = pos_x;
     this->pos_y = pos_y;
     this->move_unit = move_unit;
+    this->move_dir = 1;// move_unit = 1: move right, = -1 move left
     this->fps = fps;
     this->width = width;
     this->height = height;
@@ -125,6 +126,17 @@ void Role::random_walk(){
     if(this->is_alive){
         this->pos_x = rand() %this->width;
         this->pos_y = rand() % this->height;
+    }
+}
+void Role::horizontal_walk(){
+    if(this->is_alive){
+        if(this->pos_x >= this->width || this->pos_x <= 0){
+            this->move_unit = -this->move_unit;
+
+        }
+
+        this->pos_x = this->pos_x + this->move_unit;
+
     }
 }
 void Role::fire1(){
@@ -167,9 +179,17 @@ bool Role::update_atks_event(ALLEGRO_EVENT event, Role *enemy){
     enemy->lose_hp(this->atks1->hit(enemy->pos_x, enemy->pos_y, 50));
     enemy->lose_hp(this->atks2->hit(enemy->pos_x, enemy->pos_y, 50));
     return res1 + res2;
-}bool Role::update_timer_event(ALLEGRO_EVENT event){
+}
+bool Role::update_random_walk_event(ALLEGRO_EVENT event){
     if(event.timer.source == this->event_timer){
         this->random_walk();
+        return 1;
+    }
+    return 0;
+}
+bool Role::update_horizontal_walk_event(ALLEGRO_EVENT event){
+    if(event.timer.source == this->event_timer){
+        this->horizontal_walk();
         return 1;
     }
     return 0;
@@ -200,7 +220,7 @@ ALLEGRO_TIMER *Role::_event_timer(){return this->event_timer;}
 ALLEGRO_BITMAP *Role::_role_bitmap(){return this->role_bitmap;}
 
 
-
+/**
 Game_Body::Game_Body(ALLEGRO_EVENT_QUEUE *event_queue, ALLEGRO_DISPLAY *display, ALLEGRO_SAMPLE *song, ALLEGRO_FONT *font, const int width, const int height){
     this->width = width;
     this->height = height;
@@ -248,7 +268,8 @@ void Game_Body::update_stage1(ALLEGRO_EVENT event){
 
     if(this->client != NULL){
         this->client->fire1();
-        this->client->update_timer_event(event);
+        this->client->update_random_walk_event(event);
         this->client->update_atks_event(event, this->hero);
     }
 }
+**/
