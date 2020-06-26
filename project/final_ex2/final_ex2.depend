@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1593162333 source:d:\data_\2019_computer_programming_1\project\final_ex2\main.cpp
+1593168400 source:d:\data_\2019_computer_programming_1\project\final_ex2\main.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_primitives.h>
@@ -317,11 +317,11 @@
 
 1592666818 d:\data_\2019_computer_programming_1\project\final_ex2\allegro_var.h
 
-1593161610 d:\data_\2019_computer_programming_1\project\final_ex2\stage.h
+1593173764 d:\data_\2019_computer_programming_1\project\final_ex2\stage.h
 	<vector>
 	"game_body.h"
 
-1593161731 source:d:\data_\2019_computer_programming_1\project\final_ex2\stage.cpp
+1593174632 source:d:\data_\2019_computer_programming_1\project\final_ex2\stage.cpp
 	<stdio.h>
 	<stdlib.h>
 	<iostream>

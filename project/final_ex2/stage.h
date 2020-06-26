@@ -9,10 +9,21 @@ class Stage{
     public:
         Stage(const int width, const int height);
         int init();
+        int terminate();
         int destroy();
         void show_err(int msg);
         void main_page();
+        void page(int is_win, char *img_path);
+        void run();
+        int is_current_level_over();
+        int set_window(int window_code, int is_conti_update);
+        int updater(ALLEGRO_EVENT event);
+        int set_game_over();
         void set_up_stage1();
+        void show_stage1();
+        void set_up_stage2();
+        void show_stage2();
+
         void start_stage1();
         void update_stage1(ALLEGRO_EVENT event);
         void start_stage2();
@@ -34,6 +45,9 @@ class Stage{
         int height;
         int window;
         int stage;
+        int is_terminate;
+        int is_continue_update;
+        int is_able_next_page;
         Role *hero;
         Role *client;
         ALLEGRO_EVENT_QUEUE *event_queue;

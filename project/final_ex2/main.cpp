@@ -54,6 +54,11 @@ void game_destroy();
 
 int main(int argc, char *argv[]) {
     int msg = 0;
+    game = new Stage(WIDTH, HEIGHT);
+    game->init();
+
+    //game->main_page();
+    game->run();
 
     /**
     game_init();
