@@ -45,6 +45,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="main_page.cpp" />
 		<Unit filename="main_page.h" />
+		<Unit filename="stage.cpp" />
+		<Unit filename="stage.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Extensions />
