@@ -6,7 +6,8 @@
 
 class Attack{
     public:
-        Attack(int atk, int speed, int atk_dir_x, int atk_dir_y, double fps, int width, int height, char *atk_img_path, ALLEGRO_EVENT_QUEUE *event_queue);
+        Attack(int atk, int speed, int is_auto_fire, int atk_dir_x, int atk_dir_y, double fps, int width, int height, char *atk_img_path, ALLEGRO_EVENT_QUEUE *event_queue);
+        ~Attack();
         void move();
         void add(int pos_x, int pos_y);
         int hit(int pos_x, int pos_y, int r);
@@ -17,6 +18,7 @@ class Attack{
         int atk;
         int n;
         int speed;
+        int is_auto_fire;
         int atk_dir_x;
         int atk_dir_y;
         double fps;
@@ -31,7 +33,8 @@ class Attack{
 
 class Role{
     public:
-        Role(int hp, int atk1, int atk2, int atk_dir_x, int atk_dir_y, int pos_x, int pos_y, int move_unit, double fps, int width, int height, ALLEGRO_EVENT_QUEUE *event_queue, char *role_img_path, char *atk1_img_path, char *atk2_img_path);
+        Role(int hp, int atk1, int atk2, int is_auto_fire, int atk_dir_x, int atk_dir_y, int pos_x, int pos_y, int move_unit, int move_type, double fps, int width, int height, ALLEGRO_EVENT_QUEUE *event_queue, char *role_img_path, char *atk1_img_path, char *atk2_img_path);
+        ~Role();
         void go_up();
         void go_down();
         void go_left();
@@ -41,6 +44,7 @@ class Role{
         void fire1();
         void fire2();
         void lose_hp(int lose);
+        void start_timer();
         bool update_keyboard_event(ALLEGRO_EVENT event);
         bool update_atks_event(ALLEGRO_EVENT event, Role *enemy);
         bool update_random_walk_event(ALLEGRO_EVENT event);
@@ -65,11 +69,13 @@ class Role{
         int is_alive;
         int atk1;
         int atk2;
+        int is_auto_fire;
         int atk_dir_x;
         int atk_dir_y;
         int pos_x;
         int pos_y;
         int move_unit;
+        int move_type;
         int move_dir;
         double fps;
         int width;

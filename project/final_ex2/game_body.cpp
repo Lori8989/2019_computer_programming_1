@@ -13,7 +13,7 @@
 
 #include "game_body.h"
 
-Attack::Attack(int atk, int speed, int atk_dir_x, int atk_dir_y, double fps, int width, int height, char *atk_img_path, ALLEGRO_EVENT_QUEUE *event_queue){
+Attack::Attack(int atk, int speed, int is_auto_fire, int atk_dir_x, int atk_dir_y, double fps, int width, int height, char *atk_img_path, ALLEGRO_EVENT_QUEUE *event_queue){
     this->atk = atk;
     this->speed = speed;
     this->atk_dir_x = atk_dir_x;
@@ -28,6 +28,13 @@ Attack::Attack(int atk, int speed, int atk_dir_x, int atk_dir_y, double fps, int
 
     al_register_event_source(event_queue, al_get_timer_event_source(this->event_timer));
     al_start_timer(this->event_timer);
+}
+Attack::~Attack(){
+    delete(this->event_timer);
+    delete(this->atk_bitmap);
+    delete(this->atk_img_path);
+    this->pos_xs.clear();
+    this->pos_ys.clear();
 }
 void Attack::move(){
     for(int i = 0; i < this->pos_ys.size(); i++){
@@ -59,6 +66,7 @@ int Attack::hit(int pos_x, int pos_y, int r){
     for(int i = 0; i < this->pos_ys.size(); i++){
         int  dis = (this->pos_xs.at(i) - pos_x) * (this->pos_xs.at(i) - pos_x) + (this->pos_ys.at(i) - pos_y) * (this->pos_ys.at(i) - pos_y);
         if(dis <= r * r){
+            printf("ATK: %d in %d\n", this->atk, this->pos_ys.size());
             accum_atk += this->atk;
             this->disappear(i);
         }
@@ -68,12 +76,14 @@ int Attack::hit(int pos_x, int pos_y, int r){
 bool Attack::update_timer_event(ALLEGRO_EVENT event){
     if(event.timer.source == this->event_timer){
         this->move();
+        //if(this->is_auto_fire){this->add();}
         return 1;
     }
     return 0;
 }
 void Attack::show(){
     for(int i = 0; i < this->pos_xs.size(); i++){
+        //if()
         al_draw_bitmap(this->atk_bitmap, this->pos_xs.at(i), this->pos_ys.at(i), 0);
     }
 }
@@ -83,16 +93,18 @@ void Attack::disappear(int idx){
 }
 
 
-Role::Role(int hp, int atk1, int atk2, int atk_dir_x, int atk_dir_y, int pos_x, int pos_y, int move_unit, double fps, int width, int height, ALLEGRO_EVENT_QUEUE *event_queue, char *role_img_path, char *atk1_img_path, char *atk2_img_path){
+Role::Role(int hp, int atk1, int atk2, int is_auto_fire, int atk_dir_x, int atk_dir_y, int pos_x, int pos_y, int move_unit, int move_type, double fps, int width, int height, ALLEGRO_EVENT_QUEUE *event_queue, char *role_img_path, char *atk1_img_path, char *atk2_img_path){
     this->hp = hp;
     this->is_alive = 1;
     this->atk1 = atk1;
     this->atk2 = atk2;
+    this->is_auto_fire = is_auto_fire;
     this->atk_dir_x = atk_dir_x;
     this->atk_dir_y = atk_dir_y;
     this->pos_x = pos_x;
     this->pos_y = pos_y;
     this->move_unit = move_unit;
+    this->move_type = move_type;
     this->move_dir = 1;// move_unit = 1: move right, = -1 move left
     this->fps = fps;
     this->width = width;
@@ -102,14 +114,23 @@ Role::Role(int hp, int atk1, int atk2, int atk_dir_x, int atk_dir_y, int pos_x, 
     this->role_img_path = role_img_path;
     this->atk1_img_path = atk1_img_path;
     this->atk2_img_path = atk2_img_path;
-    this->atks1 = new Attack(atk1, move_unit, atk_dir_x, atk_dir_y, fps, width, height, this->atk1_img_path, event_queue);
-    this->atks2 = new Attack(atk2, move_unit, atk_dir_x, atk_dir_y, fps, width, height, this->atk2_img_path, event_queue);
+    this->atks1 = new Attack(atk1, move_unit, is_auto_fire, atk_dir_x, atk_dir_y, fps, width, height, this->atk1_img_path, event_queue);
+    this->atks2 = new Attack(atk2, move_unit, is_auto_fire, atk_dir_x, atk_dir_y, fps, width, height, this->atk2_img_path, event_queue);
     this->role_bitmap = al_load_bitmap(role_img_path);
 
     al_register_event_source(event_queue, al_get_timer_event_source(this->event_timer));
-    al_start_timer(this->event_timer);
+    //al_start_timer(this->event_timer);
 }
-
+Role::~Role(){
+    delete(this->role_img_path);
+    delete(this->atk1_img_path);
+    delete(this->atk2_img_path);
+    delete(this->atks1);
+    delete(this->atks2);
+    delete(this->event_queue);
+    delete(this->event_timer);
+    delete(this->role_bitmap);
+}
 void Role::go_up(){
     if(this->is_alive){this->pos_y -= this->move_unit;}
 }
@@ -149,6 +170,9 @@ void Role::lose_hp(int lose){
     if(this->is_alive){this->hp -= lose;}
     if(this->hp <= 0){this->die();}
 }
+void Role::start_timer(){
+    al_start_timer(this->event_timer);
+}
 bool Role::update_keyboard_event(ALLEGRO_EVENT event){
     if(event.type == ALLEGRO_EVENT_KEY_UP){
         switch(event.keyboard.keycode){
@@ -174,6 +198,9 @@ bool Role::update_keyboard_event(ALLEGRO_EVENT event){
     }
 }
 bool Role::update_atks_event(ALLEGRO_EVENT event, Role *enemy){
+    if(event.timer.source == this->event_timer && this->is_auto_fire){
+        this->fire1();
+    }
     int res1 = this->atks1->update_timer_event(event);
     int res2 = this->atks2->update_timer_event(event);
     enemy->lose_hp(this->atks1->hit(enemy->pos_x, enemy->pos_y, 50));

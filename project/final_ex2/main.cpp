@@ -59,6 +59,7 @@ int main(int argc, char *argv[]) {
 
     //game->main_page();
     game->run();
+    delete(game);
 
     /**
     game_init();
@@ -175,8 +176,9 @@ int game_run() {
             if(judge_next_window) {
                 window = 2;
 
-                hero = new Role(100, 100, 200, 0, -1, WIDTH/2, HEIGHT/2+100, 30, 0.1, WIDTH, HEIGHT, event_queue, "tower.png", "pipi.png", "pupu.png");
-                client = new Role(100, 100, 200, 0, 1, WIDTH/2, HEIGHT/5, 10, 0.1, WIDTH, HEIGHT, event_queue, "teemo_right.png", "pipi.png", "pupu.png");
+                hero = new Role(100000, 10, 3, 0, 0, -1, WIDTH/2, HEIGHT/2+100, 30, 0, 0.1, WIDTH, HEIGHT, event_queue, "./img/hero.png", "./img/pee.png", "./img/poop.png");
+                client = new Role(10, 5, 5, 1, 0, 1, WIDTH/2, HEIGHT/5, 10, 1, 1, WIDTH, HEIGHT, event_queue, "./img/monster1.png", "./img/monster_attack.png", "./img/monster_attack.png");
+
                 background = al_load_bitmap("stage.jpg");
 
                 printf("HHHi\n");

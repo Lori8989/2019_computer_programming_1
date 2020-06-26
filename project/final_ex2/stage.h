@@ -8,6 +8,7 @@
 class Stage{
     public:
         Stage(const int width, const int height);
+        ~Stage();
         int init();
         int terminate();
         int destroy();
@@ -16,20 +17,19 @@ class Stage{
         void page(int is_win, char *img_path);
         void run();
         int is_current_level_over();
+        int is_win();
         int set_window(int window_code, int is_conti_update);
         int updater(ALLEGRO_EVENT event);
         int set_game_over();
+        void delete_current_stage();
+        void delete_roles();
+        // Set up stages
         void set_up_stage1();
         void show_stage1();
         void set_up_stage2();
         void show_stage2();
-
-        void start_stage1();
-        void update_stage1(ALLEGRO_EVENT event);
-        void start_stage2();
-        void update_stage2(ALLEGRO_EVENT event);
-        void start_stage3();
-        void update_stage3(ALLEGRO_EVENT event);
+        void set_up_stage3();
+        void show_stage3();
 
         int _stage();
         int _window();

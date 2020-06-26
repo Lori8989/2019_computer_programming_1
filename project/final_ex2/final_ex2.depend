@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1593168400 source:d:\data_\2019_computer_programming_1\project\final_ex2\main.cpp
+1593184288 source:d:\data_\2019_computer_programming_1\project\final_ex2\main.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_primitives.h>
@@ -286,7 +286,7 @@
 	<allegro5/allegro_ttf.h>
 	"main_page.h"
 
-1593154090 source:d:\data_\2019_computer_programming_1\project\final_ex2\game_body.cpp
+1593185140 source:d:\data_\2019_computer_programming_1\project\final_ex2\game_body.cpp
 	<stdio.h>
 	<stdlib.h>
 	<iostream>
@@ -300,7 +300,7 @@
 	<allegro5/allegro_ttf.h>
 	"game_body.h"
 
-1593154002 d:\data_\2019_computer_programming_1\project\final_ex2\game_body.h
+1593185103 d:\data_\2019_computer_programming_1\project\final_ex2\game_body.h
 	<vector>
 
 1592667153 source:d:\data_\2019_computer_programming_1\project\final_ex2\allegro_var.cpp
@@ -317,11 +317,11 @@
 
 1592666818 d:\data_\2019_computer_programming_1\project\final_ex2\allegro_var.h
 
-1593173764 d:\data_\2019_computer_programming_1\project\final_ex2\stage.h
+1593179052 d:\data_\2019_computer_programming_1\project\final_ex2\stage.h
 	<vector>
 	"game_body.h"
 
-1593174632 source:d:\data_\2019_computer_programming_1\project\final_ex2\stage.cpp
+1593185466 source:d:\data_\2019_computer_programming_1\project\final_ex2\stage.cpp
 	<stdio.h>
 	<stdlib.h>
 	<iostream>

@@ -34,6 +34,15 @@ Stage::Stage(const int width, const int height){
     this->font = NULL;
     this->background = NULL;
 }
+Stage::~Stage(){
+    delete(this->hero);
+    delete(this->client);
+    delete(this->event_queue);
+    delete(this->display);
+    delete(this->song);
+    delete(this->font);
+    delete(this->background);
+}
 int Stage::init(){
     if (!al_init()) {
         this->show_err(-1);
@@ -115,6 +124,12 @@ void Stage::main_page(){
     al_flip_display();
 }
 void Stage::page(int is_win, char *img_path){
+    al_clear_to_color(al_map_rgb(100,100,100));
+    if(is_win){
+        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+100 , ALLEGRO_ALIGN_CENTRE, "You WIN");
+    }else{
+        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+100 , ALLEGRO_ALIGN_CENTRE, "You LOSE");
+    }
     al_draw_rectangle(this->width/2-150, this->height/2+88, this->width/2+150, this->height/2+124, al_map_rgb(255, 255, 255), 0);
     al_draw_rectangle(this->width/2-150, this->height/2+138, this->width/2+150, this->height/2+174, al_map_rgb(255, 255, 255), 0);
     al_draw_rectangle(this->width/2-150, this->height/2+188, this->width/2+150, this->height/2+224, al_map_rgb(255, 255, 255), 0);
@@ -122,52 +137,107 @@ void Stage::page(int is_win, char *img_path){
     al_flip_display();
 }
 int Stage::is_current_level_over(){
+    if(this->hero == NULL|| this->client == NULL){return 1;}
     return !(this->hero->_is_alive() && this->client->_is_alive());
+}
+int Stage::is_win(){
+    if(this->hero == NULL|| this->client == NULL){return 1;}
+    return !this->client->_is_alive();
 }
 void Stage::run(){
     while(!this->is_terminate){
         if(this->is_continue_update){
             if(this->window == 0){
                 // Main Page
+                this->is_continue_update = 0;
+                this->is_able_next_page = 1;
+
                 this->main_page();
                 this->set_up_stage1();
 
-                this->is_continue_update = 0;
-                this->is_able_next_page = 1;
+
             }else if(this->window == 1){
                 // Level 1 Gaming
-                //this->set_up_stage1();
+                this->hero->start_timer();
+                this->client->start_timer();
                 this->is_continue_update = 1;
                 this->is_able_next_page = 0;
 
                 if(!this->is_current_level_over()){
                     this->show_stage1();
                 }else{
+                    printf("Auto Page1\n");
                     this->set_window(this->window+1, 1);
                 }
             }else if(this->window == 2){
                 // Level 1 Finished
+
                 this->is_continue_update = 0;
                 this->is_able_next_page = 1;
 
-                this->page(1, "hi");
+                this->page(this->is_win(), "hi");
                 this->set_up_stage2();
+                //this->delete_current_stage();
+                //this->delete_roles();
+
+
             }else if(this->window == 3){
                 // Level 2 Gaming
+                this->hero->start_timer();
+                this->client->start_timer();
                 this->is_continue_update = 1;
                 this->is_able_next_page = 0;
 
                 if(!this->is_current_level_over()){
                     this->show_stage2();
                 }else{
+                    //this->delete_current_stage();
+                    printf("Auto Page2\n");
                     this->set_window(this->window+1, 1);
                 }
+            }else if(this->window == 4){
+                // Level 2 Finished
+                //this->delete_current_stage();
+                this->is_continue_update = 0;
+                this->is_able_next_page = 1;
+
+                this->page(this->is_win(), "hi");
+                this->set_up_stage3();
+
+
+            }else if(this->window == 5){
+                // Level 3 Gaming
+                this->hero->start_timer();
+                this->client->start_timer();
+                this->is_continue_update = 1;
+                this->is_able_next_page = 0;
+
+                if(!this->is_current_level_over()){
+                    this->show_stage3();
+                }else{
+                    //this->delete_current_stage();
+                    printf("Auto Page3\n");
+                    this->set_window(this->window+1, 1);
+                }
+            }else if(this->window == 6){
+                // Level 3 Finished
+                //this->delete_current_stage();
+                this->is_continue_update = 0;
+                this->is_able_next_page = 1;
+
+                this->page(this->is_win(), "hi");
+                this->set_up_stage1();
+
+
             }else{
-                this->main_page();
+                this->is_continue_update = 1;
+                this->is_able_next_page = 1;
+                this->window = 0;
+                //this->delete_current_stage();
+
+                //this->main_page();
             }
         }
-
-
 
         if (!al_is_event_queue_empty(this->event_queue)) {
             //error = process_event();
@@ -189,9 +259,13 @@ int Stage::set_window(int window_code, int is_conti_update){
 int Stage::updater(ALLEGRO_EVENT event){
     //printf("Is_terminate: %d\n", this->is_terminate);
     if(this->client != NULL){
-        this->client->fire1();
-        this->client->update_random_walk_event(event);
-        this->client->update_horizontal_walk_event(event);
+        //this->client->fire1();
+        if(this->window == 5){
+            this->client->update_random_walk_event(event);
+        }else{
+            this->client->update_horizontal_walk_event(event);
+        }
+
         this->client->update_atks_event(event, this->hero);
     }
 
@@ -231,20 +305,38 @@ int Stage::set_game_over(){
     this->is_terminate = 1;
     return 1;
 }
+void Stage::delete_current_stage(){
+    delete(this->hero);
+    delete(this->client);
+    //delete(this->background);
+}
+void Stage::delete_roles(){
+    if(this->hero != NULL){
+        delete(this->hero);
+    }
+    if(this->client != NULL){
+        delete(this->client);
+    }
+    //delete(this->background);
+}
 void Stage::set_up_stage1(){
-    //this->window = 1;
-    //this->stage = 1;
-    this->hero = new Role(100, 100, 200, 0, -1, this->width/2, this->height/2+100, 30, 0.1, this->width, this->height, this->event_queue, "tower.png", "pipi.png", "pupu.png");
-    this->client = new Role(100, 100, 200, 0, 1, this->width/2, this->height/5, 10, 0.1, this->width, this->height, this->event_queue, "teemo_right.png", "pipi.png", "pupu.png");
-    this->background = al_load_bitmap("stage.jpg");
-
+    //this->delete_roles();
+    this->hero = new Role(50, 10, 3, 0, 0, -1, this->width/2, this->height/2+100, 30, 0, 0.1, this->width, this->height, this->event_queue, "./img/hero.png", "./img/pee.png", "./img/poop.png");
+    this->client = new Role(10, 5, 5, 1, 0, 1, this->width/2, this->height/5, 10, 1, 1, this->width, this->height, this->event_queue, "./img/monster1.png", "./img/monster_attack.png", "./img/monster_attack.png");
+    this->background = al_load_bitmap("./img/background.jpg");
 }
 void Stage::set_up_stage2(){
-    //this->window = 1;
-    //this->stage = 1;
-    this->hero = new Role(100, 100, 200, 0, -1, this->width/2, this->height/2+100, 30, 0.1, this->width, this->height, this->event_queue, "tower.png", "pipi.png", "pupu.png");
-    this->client = new Role(100, 100, 200, 0, 1, this->width/2, this->height/5, 10, 0.1, this->width, this->height, this->event_queue, "teemo_right.png", "pipi.png", "pupu.png");
-    this->background = al_load_bitmap("stage.jpg");
+    //this->delete_roles();
+    this->hero = new Role(50, 10, 3, 0, 0, -1, this->width/2, this->height/2+100, 30, 0, 0.1, this->width, this->height, this->event_queue, "./img/hero.png", "./img/pee.png", "./img/poop.png");
+    this->client = new Role(20, 5, 5, 1, 0, 1, this->width/2, this->height/5, 10, 1, 0.5, this->width, this->height, this->event_queue, "./img/monster2.png", "./img/monster_attack.png", "./img/monster_attack.png");
+    this->background = al_load_bitmap("./img/background2.jpg");
+
+}
+void Stage::set_up_stage3(){
+    //this->delete_roles();
+    this->hero = new Role(50, 10, 3, 0, 0, -1, this->width/2, this->height/2+100, 30, 0, 0.1, this->width, this->height, this->event_queue, "./img/hero.png", "./img/pee.png", "./img/poop.png");
+    this->client = new Role(30, 5, 5, 1, 0, 1, this->width/2, this->height/5, 10, 2, 0.1, this->width, this->height, this->event_queue, "./img/boss.png", "./img/monster_attack.png", "./img/monster_attack.png");
+    this->background = al_load_bitmap("./img/background3.jpg");
 
 }
 void Stage::show_stage1(){
@@ -263,46 +355,13 @@ void Stage::show_stage2(){
     al_flip_display();
     //al_clear_to_color(al_map_rgb(0,0,0));
 }
-
-
-
-
-
-
-void Stage::start_stage1(){
-    //if(this->window != 1 || this->stage != 1){return;}
-    this->hero = new Role(100, 100, 200, 0, -1, width/2, height/2+100, 30, 0.1, width, height, event_queue, "tower.png", "pipi.png", "pupu.png");
-    this->client = new Role(100, 100, 200, 0, -1, width/2, height/5, 10, 0.1, width, height, event_queue, "teemo_right.png", "pipi.png", "pupu.png");
-    // this->hero = new Role(100, 100, 200, this->width/2, this->height/2+100, 30, 0.1, this->width, this->height, this->event_queue, "tower.png");
-    // this->client = new Role(100, 100, 200, this->width/2, this->height/5, 10, 0.1, this->width, this->height, this->event_queue, "teemo_right.png");
-
-    al_clear_to_color(al_map_rgb(200,200,200));
-    // Load and draw text
-    //al_draw_text(this->font, al_map_rgb(255,255,255), width/2, height/2+100 , ALLEGRO_ALIGN_CENTRE, "Press 'Space' to start next level");
-    al_draw_rectangle(this->width/2-150, this->height/2+88, this->width/2+150, this->height/2+124, al_map_rgb(255, 255, 255), 0);
-    al_flip_display();
-}
-
-void Stage::update_stage1(ALLEGRO_EVENT event){
-    if(this->window != 2 || this->stage != 1){return;}
-    this->background = al_load_bitmap("stage.jpg");
-    al_draw_bitmap(this->background, 0, 0, 0);
+void Stage::show_stage3(){
+    al_draw_bitmap(this->background, 0,0, 0);
     this->hero->show();
     this->client->show();
 
     al_flip_display();
-    al_clear_to_color(al_map_rgb(0, 0, 0));
-
-    if(this->hero != NULL){
-        this->hero->update_keyboard_event(event);
-        this->hero->update_atks_event(event, this->client);
-    }
-
-    if(this->client != NULL){
-        this->client->fire1();
-        this->client->update_random_walk_event(event);
-        this->client->update_atks_event(event, this->hero);
-    }
+    //al_clear_to_color(al_map_rgb(0,0,0));
 }
 
 
