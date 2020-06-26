@@ -11,6 +11,7 @@ class Stage{
         int init();
         int destroy();
         void show_err(int msg);
+        void main_page();
         void set_up_stage1();
         void start_stage1();
         void update_stage1(ALLEGRO_EVENT event);

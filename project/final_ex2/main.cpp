@@ -55,6 +55,7 @@ void game_destroy();
 int main(int argc, char *argv[]) {
     int msg = 0;
 
+    /**
     game_init();
     game_begin();
 
@@ -64,7 +65,7 @@ int main(int argc, char *argv[]) {
             printf("Game Over\n");
     }
 
-    game_destroy();
+    game_destroy();**/
     return 0;
 }
 
