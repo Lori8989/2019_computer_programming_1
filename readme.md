@@ -109,7 +109,7 @@ Final Exam
 
 > [Week14 12141 Ugandan Knuckles's code](./final_practice/12141/12141.c) Done
 
-> [Week14 12144 Dark Souls](./final_practice/12144/12144.c)
+> [Week14 12144 Dark Souls](./final_practice/12144/12144.c) Done
 
 > [Week14 12305 Airplane Shooter](./final_practice/12305/12305.c) Done
 
@@ -121,7 +121,7 @@ Final Exam
 
 > [Week15 12146 Too Many Things to Buy](./final_practice/12146/12146.c) Done
 
-> [11759 B - Great Depression Again](./final_practice/11759/11759.c)
+> [11759 B - Great Depression Again](./final_practice/11759/11759.c) Done
 
 > [Week16 12241 Restaurants in Hsinchu](./final_practice/12241/12241.c) Done
 
