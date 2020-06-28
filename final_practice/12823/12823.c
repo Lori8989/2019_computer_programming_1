@@ -89,15 +89,17 @@ int dfs(Node *ps, const int startIdx, const int n, const int r, const int label)
 void solve(Node *ps, const int n, const int r, const int k){
     int groupS = 0; // The number of groups that size < k
     int groupL = 0; // The number of groups that size >= k
-    int labelCount = 0;
+    int labelCount = 1;
 
     for(int i = 0; i < n; i++){
         int groupSize = dfs(ps, i, n, r, labelCount);
         if(groupSize > 0) labelCount++;
-        if(groupSize < k){
-            groupS++;
-        }else{
-            groupL++;
+        if(groupSize > 0){
+            if(groupSize < k){
+                groupS++;
+            }else{
+                groupL++;
+            }
         }
     }
 
