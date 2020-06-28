@@ -139,13 +139,17 @@ Final Exam
 
 > [11770 G - XOR](./final_practice/11770/11770.c) Done
 
+> [12825 knuckle's name](./final_practice/12823/12823.c)
+
+> [12823 Nyan Cat Crisis](./final_practice/12825/12825.c)
+
 > [12154 You shall not pass!](./final_practice/12154/function.c) Done
 
 > [12194 de way to home](./final_practice/12194/12194.c) Done
 
 > [12289 after rain](./final_practice/12289/12289.c) Done
 
-> [12303 Operation on Sequence](./final_practice/12303/12303.c)
+> [12303 Operation on Sequence](./final_practice/12303/12303.c) Done
 
 > [Week11 12797 Unlimited Triangle Work](./final_practice/12797/12797.c) Done
 

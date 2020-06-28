@@ -87,13 +87,17 @@ void erase(const int val, Node *pos, int *count){
     nextTemp->prev = pos;
 }
 
-void move(const int val, Node **pos){ 
-    if(val >= 0){
-        for(int i = 0; i < val; i++){
+void move(const int val, Node **pos, const int count){
+    // Mod the move steps
+    if(count <= 0) return;
+
+    int modedVal = val % count;
+    if(modedVal >= 0){
+        for(int i = 0; i < modedVal; i++){
             (*pos) = (*pos)->next;
         }
     }else{
-        for(int i = 0; i > val; i--){
+        for(int i = 0; i > modedVal; i--){
             (*pos) = (*pos)->prev;
         }
     }
@@ -105,7 +109,7 @@ void show(Node *pos, int *count){
 
     printf("%d", pos->value);
     // while(temp->next != pos){
-    for(int i = 0; i < (*count); i++){
+    for(int i = 0; i < (*count) - 1; i++){
         printf(" %d", temp->next->value);
         temp = temp->next;
     }
@@ -113,7 +117,7 @@ void show(Node *pos, int *count){
 }
 
 int main(){
-    int x = 0, n = 0, count = 0;
+    int x = 0, n = 0, count = 1;
     Node *init = (Node *)malloc(sizeof(Node));
     Node *pos = init;
 
@@ -140,13 +144,11 @@ int main(){
                 break;
             case 'm': // Move
                 scanf("%d\n", &val);
-                move(val, &pos);
+                move(val, &pos, count);
                 break;
             case 's': // Show
                 show(pos, &count);
                 break;
-        // default:
-            // break;
         }
     }
 
