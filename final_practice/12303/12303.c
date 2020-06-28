@@ -48,6 +48,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Double Circular linked List
 typedef struct node{
     int value;
     struct node *next;

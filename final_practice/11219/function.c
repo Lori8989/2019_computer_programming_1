@@ -43,7 +43,18 @@ void mergeSort(int *seq, int start, int end){
 
 }
 
+int cmp(const int *a, const int *b){
+    return (*b) < (*a);
+}
+
+void sort(int *seq){
+    int n = seq[0];
+    qsort(&(seq[1]), n, sizeof(int), (int (*)(const void *, const void *))cmp);
+}
+
 void my_sort(int* B){
     // mergeSort(B)
-    printf("%d\n", sizeof(&B));
+    
+    int **k = (int **)B;
+    sort(*k);
 }

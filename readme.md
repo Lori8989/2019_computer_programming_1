@@ -97,7 +97,7 @@ Final Exam
 
 > [11679 Flattening the Tree](./final_practice/11679/11679.c) Done
 
-> [11219 Get your array and then sort it!](./final_practice/11219/function.c)
+> [11219 Get your array and then sort it!](./final_practice/11219/function.c) Done
 
 > [Week13 12155 Cat-Toast crisis](./final_practice/12155/12155.c) Done	
 
@@ -143,7 +143,7 @@ Final Exam
 
 > [12194 de way to home](./final_practice/12194/12194.c) Done
 
-> [12289 after rain](./final_practice/12289/12289.c)
+> [12289 after rain](./final_practice/12289/12289.c) Done
 
 > [12303 Operation on Sequence](./final_practice/12303/12303.c)
 
