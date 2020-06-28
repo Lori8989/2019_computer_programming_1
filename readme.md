@@ -139,7 +139,7 @@ Final Exam
 
 > [11770 G - XOR](./final_practice/11770/11770.c) Done
 
-> [12825 knuckle's name](./final_practice/12823/12823.c)
+> [12825 knuckle's name](./final_practice/12825/12825.c)
 
 > [12823 Nyan Cat Crisis](./final_practice/12825/12825.c) Done
 
