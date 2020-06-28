@@ -51,31 +51,12 @@
 long long int binSearch(long long int *seq, long long int target, long long int start, long long int end){
     long long int mid = (start + end) / 2;
     if(end - start > 0){
-        
         if(target <= seq[mid]){
             return binSearch(seq, target, start, mid);
         }else if(target > seq[mid]){
             return binSearch(seq, target, mid + 1, end);
         }
-        // else{
-        //     return mid;
-        // }
     }else{
-
-        // long long int minDis = Inf;
-        // long long int idx = start;
-        // for(long long int i = end; i >= start; i--){
-        //     long long int tempDis = target < seq[i]? seq[i] - target : target - seq[i];
-        //     // printf("[%lld]%lld : [%lld]%lld : [%lld]%lld, idx: %lld, MinDis: %lld, TempDis: %lld\n", start, seq[start], i, seq[i], end, seq[end], idx, minDis, tempDis);
-        //     if(target <= seq[i] && minDis >= tempDis){
-        //         idx = i;
-        //         minDis = tempDis;
-        //     }
-        // }
-
-        // // printf("Idx: %lld, MinDis: %lld\n", idx, minDis);
-
-        // return idx;
         return mid;
     }
     
@@ -112,10 +93,7 @@ int main(){
             }else{
                 printf("%lld\n", outputLeft + 1 - k + n);
             }
-            
-            
             // printf("Idx: %lld\n", output - 1);
-            
         }   
     }
 

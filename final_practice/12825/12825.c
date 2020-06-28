@@ -63,13 +63,28 @@
 #include <stdlib.h>
 #include <string.h>
 #define StrSize 1005
-#define RecordSize 250
+#define RecordSize 130
 
 typedef struct node{
     char str[StrSize];
     int label; // if = 0, no one visit before. If >= 1, represent the Label of the group belongs to.
     // char *record;
 }Node;
+
+void strComp(char *str){ // String Compression
+    char record[RecordSize] = {0};
+    for(int i = 0; str[i] != '\0' && i < StrSize; i++){
+        record[str[i]] = 1;
+    }
+    int strCount = 0;
+    for(int i = 0; i < RecordSize; i++){
+        if(record[i]){
+            str[strCount] = i;
+            strCount++;
+        }
+    }
+    str[strCount] = '\0';
+}
 
 void recordStr(Node *a, char *record){
     for(int k = 0; a->str[k] != '\0'; k++){
@@ -104,13 +119,14 @@ int dfs(Node *nodes, const int n, const int startIdx, char *record, const int la
 
 int solve(Node *nodes, const int n){
     int labelCount = 0;
-    char record[RecordSize] = {0};
+    
     for(int i = 0; i < n; i++){
         if(!nodes[i].label){
+            char record[RecordSize] = {0};
             int dfsRes = 0;
             labelCount++;
             dfsRes = dfs(nodes, n, i, record, labelCount);
-            memset(record, sizeof(char) * RecordSize, 0);
+            // memset(record, sizeof(char) * RecordSize, 0);
         }
     }
     printf("%d\n", labelCount);
@@ -128,6 +144,7 @@ int main(){
 
         for(int j = 0; j < n; j++){
             scanf("%s\n", nodes[j].str);
+            strComp(nodes[i].str);
         }
 
         solve(nodes, n);
