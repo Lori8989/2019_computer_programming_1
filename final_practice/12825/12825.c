@@ -71,7 +71,7 @@ typedef struct node{
     // char *record;
 }Node;
 
-void strComp(char *str){ // String Compression
+void strComp(char *dest, char *str){ // String Compression
     char record[RecordSize] = {0};
     for(int i = 0; str[i] != '\0' && i < StrSize; i++){
         record[str[i]] = 1;
@@ -79,11 +79,11 @@ void strComp(char *str){ // String Compression
     int strCount = 0;
     for(int i = 0; i < RecordSize; i++){
         if(record[i]){
-            str[strCount] = i;
+            dest[strCount] = i;
             strCount++;
         }
     }
-    str[strCount] = '\0';
+    dest[strCount] = '\0';
 }
 
 void recordStr(Node *a, char *record){
@@ -93,7 +93,7 @@ void recordStr(Node *a, char *record){
 }
 
 int isJoin(Node *a, char *record){
-    for(int i = 0; a->str[i] != '\0' && i < StrSize; i++){
+    for(int i = 0; a->str[i] != '\0' && i < RecordSize; i++){
         if(record[a->str[i]]){
             return 1;
         }
@@ -139,16 +139,19 @@ int main(){
     for(int i = 0; i < t; i++){
         int n = 0;
         scanf("%d\n", &n);
-        Node *nodes = (Node *)malloc(sizeof(Node) * n);
-        memset(nodes, sizeof(Node) * n, 0);
+        Node nodes[2005] = {0};
+        // Node *nodes = (Node *)malloc(sizeof(Node) * n);
+        // memset(nodes, sizeof(Node) * n, 0);
 
         for(int j = 0; j < n; j++){
-            scanf("%s\n", nodes[j].str);
-            strComp(nodes[i].str);
+            char temp[StrSize] = {0};
+            scanf("%s\n", temp);
+            strComp(nodes[j].str, temp);
         }
 
         solve(nodes, n);
 
+        // free(nodes);
     }
 
     return 0;
