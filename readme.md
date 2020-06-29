@@ -11,7 +11,7 @@
 
 > [Week1 12134 The Big Hammer Rise](./mid_practice/12134/12134.c) Done
 
-> 12139
+> [Week8 12139 HA HA HA](./mid_practice/12139/12139.c) Done
 
 > [10772 The number of occurrences](./mid_practice/10772/10772.c) Done
 
@@ -47,25 +47,25 @@
 
 > [11618 pB - Birthday Party](./mid_practice/11618/11618.c)	Done
 
-> 12661	Done
+> [Week6 12661 The night's watch](./mid_practice/12661/12661.c) Done
 
-> 12127 Done
+> [Week6 12127 too many words](./mid_practice/12127/12127.c) Done
 
 > [11549 Easy Palindrome](./mid_practice/11549/11549.c)	Done
 
 > 11619 Done
 
-> 12137	Done
+> [Week7 12137 Johnny Johnny](./mid_practice/12137/12137.c) Done
 
-> 12133	Done
+> [Week7 12133  Yes papa](./mid_practice/12133/12133.c) Done
 
-> [12135 Ghoul Dawn](./mid_practice/12135/12135.c)	Done
+> [12135 Ghoul Dawn](./mid_practice/12135/12135.c) Done
 
-> [11620 pD - Distrait](./mid_practice/11620/11620.c)	Done
+> [11620 pD - Distrait](./mid_practice/11620/11620.c) Done
 
-> 12733	Done
+> [Week7 12733 Salary thief](./mid_practice/12733/12733.c) Done
 
-> 12179	Done
+> [Week8 12179 Queens](./mid_practice/12179/12179.c) Done
 
 > [11567 Hexadecimal to Binary](./mid_practice/11567/11567.c)	Done
 

@@ -21,76 +21,52 @@
 // abcd
 // abab
 // aaaaa
+// cdabaafbaabaa
+// cdabaafcddcdcddc
 
 // Sample Output  
 // 0
 // 2
 // 10
+// 7
+// 12
 
 // 2020/05/01 SYC
 
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#define BuffSize 2005
 
-#define BuffSize 3000
-
-void countPalindrome(char *buff, int buffCount){
-    long long int panlidromeCount = 0;
-    
-    for(int i = 1; i < buffCount; i++){
-        int panlidromeSize = 0;
-        int currentIdct = i;
-
-        // Even Panlidrome
-        int evenIdct = i - 1;
-        while(evenIdct >= 0 && currentIdct < buffCount){
-            if(buff[currentIdct] == buff[evenIdct]){
-                panlidromeSize += 2;
-                // printf("EVEN[%d]%c = [%d]%c: %d\n", currentIdct, buff[currentIdct], evenIdct, buff[evenIdct], panlidromeSize);
-                evenIdct--;
-                currentIdct++;
-                panlidromeCount++;
-            }else{break;}
-        }
-
-        // Odd Panlidrome
-        int oddIdct = i - 2;
-        currentIdct = i;
-        panlidromeSize = 1;
-        while(oddIdct >= 0 && currentIdct < buffCount){
-            if(buff[currentIdct] == buff[oddIdct]){
-                panlidromeSize += 2;
-                // printf("ODD [%d]%c = [%d]%c: %d\n", currentIdct, buff[currentIdct], oddIdct, buff[oddIdct], panlidromeSize);
-                oddIdct--;
-                currentIdct++;
-                panlidromeCount++;
-            }else{break;}
-        }
-        panlidromeSize = 0;
+int solve(char *buff){
+    int strSize = 0;
+    int panlidromeCount = 0;
+    for(strSize = 0; strSize < BuffSize; strSize++){
+        if(!buff[strSize]) break;
     }
-    // printf("Count: %d\n", panlidromeCount);
-    printf("%lld\n", panlidromeCount);
+    // printf("%d\n", strSize);
+
+    for(int i = 1; i < strSize; i++){
+        // Even
+        for(int l = i - 1, r = i; l >= 0 && r < strSize; l--, r++){
+            if(buff[l] == buff[r]){panlidromeCount++;}
+            else{break;}
+        }
+        // Odd
+        for(int l = i - 2, r = i; l >= 0 && r < strSize; l--, r++){
+            if(buff[l] == buff[r]){panlidromeCount++;}
+            else{break;}
+        }
+    }
+
+    printf("%d\n", panlidromeCount);
 }
 
 int main(){
-    char temp = '0';
     char buff[BuffSize] = {0};
-    int buffCount = 0;
 
-    while((temp = getchar()) != EOF){
-        if(temp != '\n'){
-            // printf("%c", temp);
-            buff[buffCount] = temp;
-            buffCount++;
-        }else{
-            // printf("\n");
-            countPalindrome(buff, buffCount);
-            for(int i = 0; i < buffCount; i++){
-                // printf("%c",buff[i]);
-                buff[i] = 0;
-            }
-            buffCount = 0;
-        }
+    while(scanf("%s", buff) != EOF){
+        // printf("%s\n", buff);
+        solve(buff);
     }
 
     return 0;
