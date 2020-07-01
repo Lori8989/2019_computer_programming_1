@@ -3,22 +3,20 @@
 #include<stdio.h>
 
 #define MaxLen 1000005
+#define Inf 9223372036854775807
 
-int binSearch(long long int *seq, const int start, const int end, const long long int target){
-    int startI = start;
-    int endI = end;
-    int midI = (startI + endI) / 2;
-    // You need to ensure that the potential answer is in the picked section
-    while(endI - startI > 0){
-        if(target <= seq[midI]){
-            endI = midI;
-        }else{
-            startI = midI + 1;
+long long int binSearch(long long int *seq, long long int target, long long int start, long long int end){
+    long long int mid = (start + end) / 2;
+    if(end - start > 0){
+        if(target <= seq[mid]){
+            return binSearch(seq, target, start, mid);
+        }else if(target > seq[mid]){
+            return binSearch(seq, target, mid + 1, end);
         }
-        midI = (startI + endI) / 2;
+    }else{
+        return mid;
     }
-
-    return midI;
+    
 }
 
 int main(){
@@ -35,30 +33,25 @@ int main(){
         
         scanf("%lld", &f);
 
-        if(seq[n - 1] < f){
+        if(f > seq[n - 1]){
             printf("gan ni nya sai bau\n");
         }else{
-            int resIdxLeft = binSearch(seq, 0, k - 1, f);
-            int resIdxRight = binSearch(seq, k, n - 1, f);
-            int ans = 0;
+            long long int outputLeft = 0, outputRight = 0;
+            long long int rightDis = 0, leftDis = 0;
+            
+            outputRight = binSearch(seq, f, k, n - 1);
+            outputLeft = binSearch(seq, f, 0, k - 1);
+            // printf("OutputRight: %lld OutputLeft: %lld\n", outputRight, outputLeft);
+            rightDis = seq[outputRight] - f >= 0? seq[outputRight] - f : f - seq[outputRight];
+            leftDis = seq[outputLeft] - f >= 0? seq[outputLeft] - f : f - seq[outputLeft];
 
-            // Conditions:
-            // 1. ai >= f
-            // 2. |ai - f| is smallest
-            // 3. ai has smallest index after shift
-
-            if(seq[resIdxRight] >= f && seq[resIdxLeft] >= f){
-                if((seq[resIdxLeft] - f) < (seq[resIdxRight] - f)){
-                    ans = resIdxLeft + 1 + (n - k);
-                }else{
-                    ans = resIdxRight - k + 1;
-                }
+            if((seq[k - 1] == seq[k] && rightDis <= leftDis) || (seq[k - 1] != seq[k] && f > seq[k - 1])){
+                printf("%lld\n", outputRight + 1 - k);
             }else{
-                ans = resIdxRight - k + 1;
+                printf("%lld\n", outputLeft + 1 - k + n);
             }
-
-            printf("%d\n", ans);
-        }
+            // printf("Idx: %lld\n", output - 1);
+        }   
     }
 
     return 0;
