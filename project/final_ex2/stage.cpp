@@ -103,7 +103,7 @@ void Stage::main_page(){
     printf("Here is main_page\n");
 
     // Load sound
-    song = al_load_sample( "hello1.wav" );
+    song = al_load_sample( "cs.wav" );
     if (!this->song){
         printf( "Audio clip sample not loaded!\n" );
         // show_err_msg(-6);
