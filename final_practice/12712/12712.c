@@ -47,7 +47,7 @@
 #include <stdlib.h>
 #define MaxI 60 // 10^3 ~ 2^10 -> 10^18 ~ 2^60
 #define MaxK 1000000000000000000 // 10^18
-#define MaxKI 499
+// #define MaxKI 499
 #define Error -1
 
 // Compute the number of the competitions needed to be held from given the number of students

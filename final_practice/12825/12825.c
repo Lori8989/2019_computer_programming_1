@@ -61,97 +61,85 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #define StrSize 1005
 #define RecordSize 130
+#define MaxNodes 2010
 
 typedef struct node{
     char str[StrSize];
-    int label; // if = 0, no one visit before. If >= 1, represent the Label of the group belongs to.
-    // char *record;
+    char isVisited;
 }Node;
 
-void strComp(char *dest, char *str){ // String Compression
-    char record[RecordSize] = {0};
-    for(int i = 0; str[i] != '\0' && i < StrSize; i++){
+void strComp(char *str){
+    char record[RecordSize] = {0}, count = 0;
+    for(int i = 0; i < StrSize; i++){
+        if(str[i] == '\0') break;
         record[str[i]] = 1;
+        str[i] = '\0';
     }
-    int strCount = 0;
     for(int i = 0; i < RecordSize; i++){
         if(record[i]){
-            dest[strCount] = i;
-            strCount++;
+            str[count] = i;
+            count++;
         }
     }
-    dest[strCount] = '\0';
+    str[count] = '\0';
 }
 
-void recordStr(Node *a, char *record){
-    for(int k = 0; a->str[k] != '\0'; k++){
-        record[a->str[k]] = 1;
-    }
-}
-
-int isJoin(Node *a, char *record){
-    for(int i = 0; a->str[i] != '\0' && i < RecordSize; i++){
-        if(record[a->str[i]]){
-            return 1;
-        }
+int isJoin(char *str, char *record){
+    for(int i = 0; i < RecordSize && str[i] != '\0'; i++){
+        if(record[str[i]]) return 1;
     }
     return 0;
 }
 
-int dfs(Node *nodes, const int n, const int startIdx, char *record, const int label){
-    if(nodes[startIdx].label) return 0;
-    nodes[startIdx].label = label;
-    recordStr(&(nodes[startIdx]), record);
-
-    int nodeSum = 1;
-    for(int i = 0; i < n; i++){
-        if(nodes[i].label) continue;
-        if(isJoin(&(nodes[i]), record)){
-            nodeSum += dfs(nodes, n, i, record, label);
-        }
+void join(char *str, char *record){
+    for(int i = 0; i < StrSize && str[i] != '\0'; i++){
+        record[str[i]] = 1;
     }
-
-    return nodeSum;
 }
 
-int solve(Node *nodes, const int n){
-    int labelCount = 0;
-    
-    for(int i = 0; i < n; i++){
-        if(!nodes[i].label){
-            char record[RecordSize] = {0};
-            int dfsRes = 0;
-            labelCount++;
-            dfsRes = dfs(nodes, n, i, record, labelCount);
-            // memset(record, sizeof(char) * RecordSize, 0);
+void dfs(Node *nodes, const int n, const int start, char *record){
+    for(int i = 0 ; i < n; i++){
+        if(!nodes[i].isVisited){
+            if(isJoin(nodes[i].str, record)){
+                join(nodes[i].str, record);
+                nodes[i].isVisited = 1;
+                dfs(nodes, n, i, record);
+            }
         }
     }
-    printf("%d\n", labelCount);
+}
+
+void solve(Node *nodes, const int n){
+    int groupCount = 0;
+    for(int i = 0; i < n; i++){
+        if(!nodes[i].isVisited){
+            char record[RecordSize] = {0};
+            nodes[i].isVisited = 1;
+            join(nodes[i].str, record);
+            dfs(nodes, n, i, record);
+            groupCount++;
+        }
+    }
+    printf("%d\n", groupCount);
 }
 
 int main(){
     int t = 0;
-    scanf("%d\n", &t);
+    scanf("%d", &t);
 
     for(int i = 0; i < t; i++){
         int n = 0;
-        scanf("%d\n", &n);
-        Node nodes[2005] = {0};
-        // Node *nodes = (Node *)malloc(sizeof(Node) * n);
-        // memset(nodes, sizeof(Node) * n, 0);
-
+        scanf("%d", &n);
+        Node nodes[MaxNodes] = {0};
         for(int j = 0; j < n; j++){
-            char temp[StrSize] = {0};
-            scanf("%s\n", temp);
-            strComp(nodes[j].str, temp);
+            scanf("%s", nodes[j].str);
+            strComp(nodes[j].str);
+            nodes[j].isVisited = 0;
         }
-
         solve(nodes, n);
 
-        // free(nodes);
     }
 
     return 0;
