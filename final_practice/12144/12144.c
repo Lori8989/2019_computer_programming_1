@@ -72,11 +72,12 @@ int fight(const You you, const Monster mon){
     if(you.attack <= 0 && mon.hp > 0){
         return 0;
     }else{
+        // Since the hero attack first, so the rounds that hero was attacked minus 1
         return you.hp - (((mon.hp / you.attack) + (mon.hp % you.attack > 0) - 1) * mon.attack);
         // return you - ((mon.hp / youAttack + 1) * mon.attack);
     }
 }
-
+// the following way can do the same thing as the previous function
 // int fight(const You you, const Monster mon){
 //     // Return HP of hero after fight with monster
 //     if(you.attack <= 0 && mon.hp > 0){

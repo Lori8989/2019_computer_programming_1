@@ -58,7 +58,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-void oldWay(int n, long int m, long int *coffees){
+void oldWay(int n, long int m, long int *coffees){// Seems correct, but too slow
     int d = 1;
     int is_done = 0;
 
