@@ -286,7 +286,7 @@
 	<allegro5/allegro_ttf.h>
 	"main_page.h"
 
-1593185140 source:d:\data_\2019_computer_programming_1\project\final_ex2\game_body.cpp
+1593622075 source:d:\data_\2019_computer_programming_1\project\final_ex2\game_body.cpp
 	<stdio.h>
 	<stdlib.h>
 	<iostream>
@@ -321,7 +321,7 @@
 	<vector>
 	"game_body.h"
 
-1593185466 source:d:\data_\2019_computer_programming_1\project\final_ex2\stage.cpp
+1593622603 source:d:\data_\2019_computer_programming_1\project\final_ex2\stage.cpp
 	<stdio.h>
 	<stdlib.h>
 	<iostream>

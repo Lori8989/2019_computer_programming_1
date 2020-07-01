@@ -103,36 +103,40 @@ void Stage::main_page(){
     printf("Here is main_page\n");
 
     // Load sound
-    /**
-    song = al_load_sample( "hello.wav" );
-    if (!song){
+    song = al_load_sample( "hello1.wav" );
+    if (!this->song){
         printf( "Audio clip sample not loaded!\n" );
         // show_err_msg(-6);
-    }**/
+    }
     // Loop the song until the display closes
-    // al_play_sample(song, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
-    al_clear_to_color(al_map_rgb(100,100,100));
+    al_play_sample(this->song, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+
+    al_clear_to_color(al_map_rgb(234,193,000));
     // Load and draw text
-    this->font = al_load_ttf_font("pirulen.ttf",12,0);
+    this->font = al_load_ttf_font("pirulen.ttf",18,0);
+    al_draw_text(this->font, al_map_rgb(255,88,9), this->width/2, this->height/2-100 , ALLEGRO_ALIGN_CENTRE, "corporate slave's");
+    al_draw_text(this->font, al_map_rgb(255,88,9), this->width/2, this->height/2-80 , ALLEGRO_ALIGN_CENTRE, "counterattack");
     al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+100 , ALLEGRO_ALIGN_CENTRE, "Press 'Enter' to start");
     al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+150 , ALLEGRO_ALIGN_CENTRE, "Press 'Esc' to exit");
     al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+200 , ALLEGRO_ALIGN_CENTRE, "Press 'Q' for more detail");
-    al_draw_rectangle(this->width/2-150, this->height/2+88, this->width/2+150, this->height/2+124, al_map_rgb(255, 255, 255), 0);
-    al_draw_rectangle(this->width/2-150, this->height/2+138, this->width/2+150, this->height/2+174, al_map_rgb(255, 255, 255), 0);
-    al_draw_rectangle(this->width/2-150, this->height/2+188, this->width/2+150, this->height/2+224, al_map_rgb(255, 255, 255), 0);
-
+    al_draw_rectangle(this->width/2-180, this->height/2+88, this->width/2+180, this->height/2+124, al_map_rgb(255, 255, 255), 0);
+    al_draw_rectangle(this->width/2-180, this->height/2+138, this->width/2+180, this->height/2+174, al_map_rgb(255, 255, 255), 0);
+    al_draw_rectangle(this->width/2-180, this->height/2+188, this->width/2+180, this->height/2+224, al_map_rgb(255, 255, 255), 0);
     al_flip_display();
 }
 void Stage::page(int is_win, char *img_path){
-    al_clear_to_color(al_map_rgb(100,100,100));
+
+    al_clear_to_color(al_map_rgb(234,193,000));
     if(is_win){
-        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+100 , ALLEGRO_ALIGN_CENTRE, "You WIN");
+        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2 - 100, ALLEGRO_ALIGN_CENTRE, "You WIN");
     }else{
-        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+100 , ALLEGRO_ALIGN_CENTRE, "You LOSE");
+        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2 - 100, ALLEGRO_ALIGN_CENTRE, "You LOSE");
     }
-    al_draw_rectangle(this->width/2-150, this->height/2+88, this->width/2+150, this->height/2+124, al_map_rgb(255, 255, 255), 0);
-    al_draw_rectangle(this->width/2-150, this->height/2+138, this->width/2+150, this->height/2+174, al_map_rgb(255, 255, 255), 0);
-    al_draw_rectangle(this->width/2-150, this->height/2+188, this->width/2+150, this->height/2+224, al_map_rgb(255, 255, 255), 0);
+    ALLEGRO_BITMAP *magicImg = al_load_bitmap("./img/goodsong.png");
+    al_draw_bitmap(magicImg, this->width/2  - 230, this->height/2 - 50, 0);
+    //al_draw_rectangle(this->width/2-150, this->height/2+88, this->width/2+150, this->height/2+124, al_map_rgb(255, 255, 255), 0);
+    //al_draw_rectangle(this->width/2-150, this->height/2+138, this->width/2+150, this->height/2+174, al_map_rgb(255, 255, 255), 0);
+    //al_draw_rectangle(this->width/2-150, this->height/2+188, this->width/2+150, this->height/2+224, al_map_rgb(255, 255, 255), 0);
 
     al_flip_display();
 }
