@@ -28,6 +28,7 @@ Stage::Stage(const int width, const int height){
     this->hero_add_atk = 0;
     this->is_able_upgrade = 0;
     this->is_stage_setup = 0;
+    this->is_in_about_page = 0;
 
     this->hero = NULL;
     this->client = NULL;
@@ -93,9 +94,6 @@ int Stage::destroy(){
     // Make sure you destroy all things
     al_destroy_event_queue(this->event_queue);
     al_destroy_display(this->display);
-    //al_destroy_timer(timer);
-    //al_destroy_timer(timer2);
-    //al_destroy_bitmap(image);
     al_destroy_sample(this->song);
     al_destroy_font(this->font);
 }
@@ -124,9 +122,35 @@ void Stage::main_page(){
     al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+100 , ALLEGRO_ALIGN_CENTRE, "Press 'Enter' to start");
     al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+150 , ALLEGRO_ALIGN_CENTRE, "Press 'Esc' to exit");
     al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+200 , ALLEGRO_ALIGN_CENTRE, "Press 'Q' for more detail");
-    al_draw_rectangle(this->width/2-180, this->height/2+88, this->width/2+180, this->height/2+124, al_map_rgb(255, 255, 255), 0);
-    al_draw_rectangle(this->width/2-180, this->height/2+138, this->width/2+180, this->height/2+174, al_map_rgb(255, 255, 255), 0);
-    al_draw_rectangle(this->width/2-180, this->height/2+188, this->width/2+180, this->height/2+224, al_map_rgb(255, 255, 255), 0);
+    al_draw_rectangle(this->width/2 - 180, this->height/2 + 100, this->width/2 + 180, this->height/2 + 136, al_map_rgb(255, 255, 255), 0);
+    al_draw_rectangle(this->width/2 - 180, this->height/2 + 150, this->width/2 + 180, this->height/2 + 186, al_map_rgb(255, 255, 255), 0);
+    al_draw_rectangle(this->width/2 - 180, this->height/2 + 200, this->width/2 + 180, this->height/2 + 236, al_map_rgb(255, 255, 255), 0);
+    al_flip_display();
+}
+void Stage::about_page(){
+    printf("Here is main_page\n");
+
+    // Load sound
+    /**
+    song = al_load_sample( "./song/cs.wav" );
+    if (!this->song){
+        printf( "Audio clip sample not loaded!\n" );
+        // show_err_msg(-6);
+    }
+    // Loop the song until the display closes
+    al_play_sample(this->song, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+    **/
+    al_clear_to_color(al_map_rgb(234,193,000));
+    // Load and draw text
+    //this->font = al_load_ttf_font("./font/lemon_juice.otf",30,0);
+    al_draw_text(this->font, al_map_rgb(255,88,9), this->width/2, this->height/2-100 , ALLEGRO_ALIGN_CENTRE, "corporate slave's");
+    al_draw_text(this->font, al_map_rgb(255,88,9), this->width/2, this->height/2-80 , ALLEGRO_ALIGN_CENTRE, "counterattack");
+    al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+100 , ALLEGRO_ALIGN_CENTRE, "NTHU Computer Programming Final Project");
+    al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+150 , ALLEGRO_ALIGN_CENTRE, "HT Chen");
+    al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+200 , ALLEGRO_ALIGN_CENTRE, "Author: SYC, CHH");
+    //al_draw_rectangle(this->width/2 - 180, this->height/2 + 100, this->width/2 + 180, this->height/2 + 136, al_map_rgb(255, 255, 255), 0);
+    //al_draw_rectangle(this->width/2 - 180, this->height/2 + 150, this->width/2 + 180, this->height/2 + 186, al_map_rgb(255, 255, 255), 0);
+    //al_draw_rectangle(this->width/2 - 180, this->height/2 + 200, this->width/2 + 180, this->height/2 + 236, al_map_rgb(255, 255, 255), 0);
     al_flip_display();
 }
 void Stage::page(int is_win, char *img_path){
@@ -139,13 +163,13 @@ void Stage::page(int is_win, char *img_path){
 
         // Upgrade HP Image
         ALLEGRO_BITMAP *hpImg = al_load_bitmap("./img/hp.png");
-        al_draw_bitmap(hpImg, this->width/2 - 200, this->height/2 + 100, 0);
-        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2 - 200, ALLEGRO_ALIGN_CENTRE, "You WIN");
+        al_draw_bitmap(hpImg, this->width/2 - 190, this->height/2 + 100, 0);
+        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2 - 110, this->height/2 + 250, ALLEGRO_ALIGN_CENTRE, "HP + 20 (Z)");
 
         // Upgrade ATK Image
         ALLEGRO_BITMAP *atkImg = al_load_bitmap("./img/atk.png");
         al_draw_bitmap(atkImg, this->width/2 + 40, this->height/2 + 100, 0);
-        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2 - 200, ALLEGRO_ALIGN_CENTRE, "You WIN");
+        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2 + 110, this->height/2 + 250, ALLEGRO_ALIGN_CENTRE, "ATK + 20 (X)");
 
         this->is_able_upgrade = 1;
     }else{
@@ -165,7 +189,13 @@ int Stage::is_win(){
 void Stage::run(){
     while(!this->is_terminate){
         if(this->is_continue_update){
-            if(this->window == 0){
+            if(this->is_in_about_page){
+                // About Page
+                this->is_continue_update = 0;
+                this->is_able_next_page = 0;
+                this->is_stage_setup = 0;
+                this->about_page();
+            }else if(this->window == 0){
                 // Main Page
                 this->is_continue_update = 0;
                 this->is_able_next_page = 1;
@@ -173,7 +203,7 @@ void Stage::run(){
 
                 // Setup parameter
                 this->clear_upgrade();
-                this->delete_roles();
+                //this->delete_roles();
 
                 this->main_page();
                 //this->set_up_stage1();
@@ -375,11 +405,18 @@ int Stage::updater(ALLEGRO_EVENT event){
                     this->set_window(this->window+1, 1);
                 }
                 break;
+            case ALLEGRO_KEY_Q:
+                this->is_continue_update = 1;
+                if(!this->is_in_about_page){
+                    this->is_in_about_page = 1;
+                }else{
+                    this->is_in_about_page = 0;
+                }
             case ALLEGRO_KEY_Z:
-                this->upgrade_atk(20);
+                this->upgrade_hp(20);
                 break;
             case ALLEGRO_KEY_X:
-                this->upgrade_hp(20);
+                this->upgrade_atk(20);
                 break;
             case ALLEGRO_KEY_ESCAPE:
                 int res = this->set_game_over();
@@ -418,7 +455,7 @@ void Stage::delete_roles(){
 }
 void Stage::upgrade_hp(int add_hp){
     if(this->is_able_upgrade){
-        al_draw_rectangle(this->width/2-180, this->height/2+88, this->width/2+180, this->height/2+124, al_map_rgb(255, 255, 255), 0);
+        al_draw_rectangle(this->width/2 - 185, this->height/2 + 100, this->width/2 - 35, this->height/2 + 250, al_map_rgb(255, 255, 255), 0);
         al_flip_display();
         this->hero_add_hp += add_hp;
         this->is_able_upgrade = 0;
@@ -426,7 +463,7 @@ void Stage::upgrade_hp(int add_hp){
 }
 void Stage::upgrade_atk(int add_atk){
     if(this->is_able_upgrade){
-        al_draw_rectangle(this->width/2-180, this->height/2+88, this->width/2+180, this->height/2+124, al_map_rgb(255, 255, 255), 0);
+        al_draw_rectangle(this->width/2 + 35, this->height/2 + 100, this->width/2 + 185, this->height/2 + 250, al_map_rgb(255, 255, 255), 0);
         al_flip_display();
         this->hero_add_atk += add_atk;
         this->is_able_upgrade = 0;

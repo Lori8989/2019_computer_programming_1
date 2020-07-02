@@ -14,6 +14,7 @@ class Stage{
         int destroy();
         void show_err(int msg);
         void main_page();
+        void about_page();
         void page(int is_win, char *img_path);
         void run();
         int is_current_level_over();
@@ -60,6 +61,7 @@ class Stage{
         int is_continue_update;
         int is_able_next_page;
         int is_stage_setup;
+        int is_in_about_page;
         Role *hero;
         Role *client;
         ALLEGRO_EVENT_QUEUE *event_queue;

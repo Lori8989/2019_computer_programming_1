@@ -90,31 +90,4 @@ class Role{
         ALLEGRO_TIMER *event_timer;
         ALLEGRO_BITMAP *role_bitmap;
 };
-/**
-class Game_Body{
-    public:
-        Game_Body(ALLEGRO_EVENT_QUEUE *event_queue, ALLEGRO_DISPLAY *display, ALLEGRO_SAMPLE *song, ALLEGRO_FONT *font, const int width, const int height);
-        void set_to_start_stage1();
-        void start_stage1();
-        void update_stage1(ALLEGRO_EVENT event);
-        void start_stage2();
-        void update_stage2(ALLEGRO_EVENT event);
-        void start_stage3();
-        void update_stage3(ALLEGRO_EVENT event);
-
-    protected:
-        int width;
-        int height;
-        int window;
-        int stage;
-        Role *hero;
-        Role *client;
-        ALLEGRO_EVENT_QUEUE *event_queue;
-        ALLEGRO_DISPLAY *display;
-        ALLEGRO_SAMPLE *song;
-        ALLEGRO_FONT *font;
-        ALLEGRO_BITMAP *background;
-
-};
-**/
 #endif
