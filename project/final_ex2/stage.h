@@ -23,6 +23,9 @@ class Stage{
         int set_game_over();
         void delete_current_stage();
         void delete_roles();
+        // Upgrade
+        void upgrade_atk(int);
+        void upgrade_hp(int);
         // Set up stages
         void set_up_stage1();
         void show_stage1();
@@ -30,6 +33,10 @@ class Stage{
         void show_stage2();
         void set_up_stage3();
         void show_stage3();
+        void set_up_stage4();
+        void show_stage4();
+        void set_up_stage5();
+        void show_stage5();
 
         int _stage();
         int _window();
@@ -45,9 +52,13 @@ class Stage{
         int height;
         int window;
         int stage;
+        int hero_add_hp;
+        int hero_add_atk;
+        int is_able_upgrade;
         int is_terminate;
         int is_continue_update;
         int is_able_next_page;
+        int is_stage_setup;
         Role *hero;
         Role *client;
         ALLEGRO_EVENT_QUEUE *event_queue;

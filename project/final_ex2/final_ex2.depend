@@ -317,15 +317,16 @@
 
 1592666818 d:\data_\2019_computer_programming_1\project\final_ex2\allegro_var.h
 
-1593179052 d:\data_\2019_computer_programming_1\project\final_ex2\stage.h
+1593661763 d:\data_\2019_computer_programming_1\project\final_ex2\stage.h
 	<vector>
 	"game_body.h"
 
-1593622803 source:d:\data_\2019_computer_programming_1\project\final_ex2\stage.cpp
+1593661222 source:d:\data_\2019_computer_programming_1\project\final_ex2\stage.cpp
 	<stdio.h>
 	<stdlib.h>
 	<iostream>
 	<vector>
+	<string>
 	<allegro5/allegro.h>
 	<allegro5/allegro_primitives.h>
 	<allegro5/allegro_image.h>
