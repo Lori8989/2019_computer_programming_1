@@ -15,7 +15,7 @@ class Stage{
         void show_err(int msg);
         void main_page();
         void about_page();
-        void page(int is_win, char *img_path);
+        void page(int is_win, char *img_path, int is_last_page);
         void run();
         int is_current_level_over();
         int is_win();
