@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     game_destroy();**/
     return 0;
 }
-
+/**
 void show_err_msg(int msg) {
     fprintf(stderr, "unexpected msg: %d\n", msg);
     game_destroy();
@@ -214,3 +214,4 @@ void game_destroy() {
     //al_destroy_bitmap(image);
     al_destroy_sample(song);
 }
+**/

@@ -26,6 +26,7 @@ class Stage{
         // Upgrade
         void upgrade_atk(int);
         void upgrade_hp(int);
+        void clear_upgrade();
         // Set up stages
         void set_up_stage1();
         void show_stage1();

@@ -49,6 +49,7 @@ class Role{
         bool update_atks_event(ALLEGRO_EVENT event, Role *enemy);
         bool update_random_walk_event(ALLEGRO_EVENT event);
         bool update_horizontal_walk_event(ALLEGRO_EVENT event);
+        bool update_walk_event(ALLEGRO_EVENT event);
         void show();
         void die();
 

@@ -72,7 +72,7 @@ int Stage::init(){
     }
     // Initialize Allegro settings
     al_set_window_position(this->display, 0, 0);
-    al_set_window_title(this->display, "title");
+    al_set_window_title(this->display, "Corporate Slave's Counterattack");
     al_init_primitives_addon();
     al_install_keyboard();
     al_install_audio();
@@ -108,7 +108,7 @@ void Stage::main_page(){
     printf("Here is main_page\n");
 
     // Load sound
-    song = al_load_sample( "cs.wav" );
+    song = al_load_sample( "./song/cs.wav" );
     if (!this->song){
         printf( "Audio clip sample not loaded!\n" );
         // show_err_msg(-6);
@@ -118,7 +118,7 @@ void Stage::main_page(){
 
     al_clear_to_color(al_map_rgb(234,193,000));
     // Load and draw text
-    this->font = al_load_ttf_font("pirulen.ttf",18,0);
+    this->font = al_load_ttf_font("./font/lemon_juice.otf",30,0);
     al_draw_text(this->font, al_map_rgb(255,88,9), this->width/2, this->height/2-100 , ALLEGRO_ALIGN_CENTRE, "corporate slave's");
     al_draw_text(this->font, al_map_rgb(255,88,9), this->width/2, this->height/2-80 , ALLEGRO_ALIGN_CENTRE, "counterattack");
     al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2+100 , ALLEGRO_ALIGN_CENTRE, "Press 'Enter' to start");
@@ -132,9 +132,21 @@ void Stage::main_page(){
 void Stage::page(int is_win, char *img_path){
     al_clear_to_color(al_map_rgb(234,193,000));
     if(is_win){
-        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2 - 100, ALLEGRO_ALIGN_CENTRE, "You WIN");
+        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2 - 200, ALLEGRO_ALIGN_CENTRE, "You WIN");
+
         ALLEGRO_BITMAP *magicImg = al_load_bitmap(img_path);
-        al_draw_bitmap(magicImg, this->width/2  - 230, this->height/2 - 50, 0);
+        al_draw_bitmap(magicImg, this->width/2  - 160, this->height/2 - 100, 0);
+
+        // Upgrade HP Image
+        ALLEGRO_BITMAP *hpImg = al_load_bitmap("./img/hp.png");
+        al_draw_bitmap(hpImg, this->width/2 - 200, this->height/2 + 100, 0);
+        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2 - 200, ALLEGRO_ALIGN_CENTRE, "You WIN");
+
+        // Upgrade ATK Image
+        ALLEGRO_BITMAP *atkImg = al_load_bitmap("./img/atk.png");
+        al_draw_bitmap(atkImg, this->width/2 + 40, this->height/2 + 100, 0);
+        al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2 - 200, ALLEGRO_ALIGN_CENTRE, "You WIN");
+
         this->is_able_upgrade = 1;
     }else{
         al_draw_text(this->font, al_map_rgb(255,255,255), this->width/2, this->height/2 - 100, ALLEGRO_ALIGN_CENTRE, "You LOSE");
@@ -159,13 +171,18 @@ void Stage::run(){
                 this->is_able_next_page = 1;
                 this->is_stage_setup = 0;
 
+                // Setup parameter
+                this->clear_upgrade();
+                this->delete_roles();
+
                 this->main_page();
-                this->set_up_stage1();
+                //this->set_up_stage1();
 
 
             }else if(this->window == 1){
                 //Level 1 Setup
                 if(!this->is_stage_setup){
+                    this->delete_roles();
                     this->set_up_stage1();
                     this->is_stage_setup = 1;
                 }
@@ -189,11 +206,11 @@ void Stage::run(){
 
                 this->page(this->is_win(), "./img/goodsong.png");
 
-                //this->delete_current_stage();
-                //this->delete_roles();
+                // ============================================
             }else if(this->window == 3){
                 //Level 2 Setup
                 if(!this->is_stage_setup){
+                    this->delete_roles();
                     this->set_up_stage2();
                     this->is_stage_setup = 1;
                 }
@@ -218,10 +235,12 @@ void Stage::run(){
                 this->is_stage_setup = 0;
 
                 this->page(this->is_win(), "./img/goodsong.png");
-                this->set_up_stage3();
+
+                // ============================================
             }else if(this->window == 5){
                 //Level 3 Setup
                 if(!this->is_stage_setup){
+                    this->delete_roles();
                     this->set_up_stage3();
                     this->is_stage_setup = 1;
                 }
@@ -247,13 +266,75 @@ void Stage::run(){
 
                 this->page(this->is_win(), "./img/goodsong.png");
                 this->set_up_stage1();
-            }else{
+
+                // ============================================
+            }else if(this->window == 7){
+                //Level 4 Setup
+                if(!this->is_stage_setup){
+                    this->delete_roles();
+                    this->set_up_stage4();
+                    this->is_stage_setup = 1;
+                }
+                // Level 4 Gaming
+                this->hero->start_timer();
+                this->client->start_timer();
+                this->is_continue_update = 1;
+                this->is_able_next_page = 0;
+
+                if(!this->is_current_level_over()){
+                    this->show_stage1();
+                }else{
+                    //this->delete_current_stage();
+                    printf("Auto Page3\n");
+                    this->set_window(this->window+1, 1);
+                }
+            }else if(this->window == 8){
+                // Level 4 Finished
+                //this->delete_current_stage();
+                this->is_continue_update = 0;
+                this->is_able_next_page = 1;
+                this->is_stage_setup = 0;
+
+                this->page(this->is_win(), "./img/goodsong.png");
+                this->set_up_stage1();
+
+                // ============================================
+            }else if(this->window == 9){
+                //Level 5 Setup
+                if(!this->is_stage_setup){
+                    this->delete_roles();
+                    this->set_up_stage5();
+                    this->is_stage_setup = 1;
+                }
+                // Level 5 Gaming
+                this->hero->start_timer();
+                this->client->start_timer();
+                this->is_continue_update = 1;
+                this->is_able_next_page = 0;
+
+                if(!this->is_current_level_over()){
+                    this->show_stage1();
+                }else{
+                    //this->delete_current_stage();
+                    printf("Auto Page3\n");
+                    this->set_window(this->window+1, 1);
+                }
+            }else if(this->window == 10){
+                // Level 5 Finished
+                //this->delete_current_stage();
+                this->is_continue_update = 0;
+                this->is_able_next_page = 1;
+                this->is_stage_setup = 0;
+
+                this->page(this->is_win(), "./img/goodsong.png");
+                this->set_up_stage1();
+
+                // ============================================
+            }
+            else{
                 this->is_continue_update = 1;
                 this->is_able_next_page = 1;
                 this->window = 0;
-                //this->delete_current_stage();
-
-                //this->main_page();
             }
         }
 
@@ -277,13 +358,7 @@ int Stage::set_window(int window_code, int is_conti_update){
 int Stage::updater(ALLEGRO_EVENT event){
     //printf("Is_terminate: %d\n", this->is_terminate);
     if(this->client != NULL){
-        //this->client->fire1();
-        if(this->window == 5){
-            this->client->update_random_walk_event(event);
-        }else{
-            this->client->update_horizontal_walk_event(event);
-        }
-
+        this->client->update_walk_event(event);
         this->client->update_atks_event(event, this->hero);
     }
 
@@ -343,32 +418,54 @@ void Stage::delete_roles(){
 }
 void Stage::upgrade_hp(int add_hp){
     if(this->is_able_upgrade){
+        al_draw_rectangle(this->width/2-180, this->height/2+88, this->width/2+180, this->height/2+124, al_map_rgb(255, 255, 255), 0);
+        al_flip_display();
         this->hero_add_hp += add_hp;
+        this->is_able_upgrade = 0;
     }
 }
 void Stage::upgrade_atk(int add_atk){
     if(this->is_able_upgrade){
+        al_draw_rectangle(this->width/2-180, this->height/2+88, this->width/2+180, this->height/2+124, al_map_rgb(255, 255, 255), 0);
+        al_flip_display();
         this->hero_add_atk += add_atk;
+        this->is_able_upgrade = 0;
     }
+}
+void Stage::clear_upgrade(){
+    this->hero_add_atk = 0;
+    this->hero_add_hp = 0;
 }
 void Stage::set_up_stage1(){
     //this->delete_roles();
     this->hero = new Role(20, 5, 3, 0, 0, -1, this->width/2, this->height/2+100, 30, 0, 0.1, this->width, this->height, this->event_queue, "./img/hero.png", "./img/pee.png", "./img/poop.png");
-    this->client = new Role(10, 5, 5, 1, 0, 1, this->width/2, this->height/5, 10, 1, 1, this->width, this->height, this->event_queue, "./img/monster1.png", "./img/monster_attack.png", "./img/monster_attack.png");
+    this->client = new Role(10, 5, 5, 1, 0, 1, this->width/2, this->height/5, 10, 1, 1, this->width, this->height, this->event_queue, "./img/monster1.png", "./img/monster_attack1.png", "./img/monster_attack1.png");
     this->background = al_load_bitmap("./img/background.jpg");
 }
 void Stage::set_up_stage2(){
     //this->delete_roles();
     this->hero = new Role(20 + this->hero_add_hp, 10 + this->hero_add_atk, 3 + this->hero_add_atk, 0, 0, -1, this->width/2, this->height/2+100, 30, 0, 0.1, this->width, this->height, this->event_queue, "./img/hero.png", "./img/pee.png", "./img/poop.png");
-    this->client = new Role(20, 5, 5, 1, 0, 1, this->width/2, this->height/5, 10, 1, 0.5, this->width, this->height, this->event_queue, "./img/monster2.png", "./img/monster_attack.png", "./img/monster_attack.png");
+    this->client = new Role(20, 5, 5, 1, 0, 1, this->width/2, this->height/5, 20, 1, 0.5, this->width, this->height, this->event_queue, "./img/monster2.png", "./img/monster_attack2.png", "./img/monster_attack2.png");
     this->background = al_load_bitmap("./img/background2.jpg");
 
 }
 void Stage::set_up_stage3(){
     //this->delete_roles();
     this->hero = new Role(20 + this->hero_add_hp, 10 + this->hero_add_atk, 3 + this->hero_add_atk, 0, 0, -1, this->width/2, this->height/2+100, 30, 0, 0.1, this->width, this->height, this->event_queue, "./img/hero.png", "./img/pee.png", "./img/poop.png");
-    this->client = new Role(30, 5, 5, 1, 0, 1, this->width/2, this->height/5, 10, 2, 0.1, this->width, this->height, this->event_queue, "./img/boss.png", "./img/monster_attack.png", "./img/monster_attack.png");
+    this->client = new Role(40, 5, 5, 1, 0, 1, this->width/2, this->height/5, 10, 2, 0.3, this->width, this->height, this->event_queue, "./img/monster3.png", "./img/monster_attack3.png", "./img/monster_attack3.png");
     this->background = al_load_bitmap("./img/background3.jpg");
+}
+void Stage::set_up_stage4(){
+    //this->delete_roles();
+    this->hero = new Role(20 + this->hero_add_hp, 10 + this->hero_add_atk, 3 + this->hero_add_atk, 0, 0, -1, this->width/2, this->height/2+100, 30, 0, 0.1, this->width, this->height, this->event_queue, "./img/hero.png", "./img/pee.png", "./img/poop.png");
+    this->client = new Role(80, 5, 5, 1, 0, 1, this->width/2, this->height/5, 10, 2, 0.2, this->width, this->height, this->event_queue, "./img/monster4.png", "./img/monster_attack4.png", "./img/monster_attack4.png");
+    this->background = al_load_bitmap("./img/background4.jpg");
+}
+void Stage::set_up_stage5(){
+    //this->delete_roles();
+    this->hero = new Role(20 + this->hero_add_hp, 10 + this->hero_add_atk, 3 + this->hero_add_atk, 0, 0, -1, this->width/2, this->height/2+100, 30, 0, 0.1, this->width, this->height, this->event_queue, "./img/hero.png", "./img/pee.png", "./img/poop.png");
+    this->client = new Role(160, 5, 5, 1, 0, 1, this->width/2, this->height/5, 10, 2, 0.1, this->width, this->height, this->event_queue, "./img/monster5.png", "./img/monster_attack5.png", "./img/monster_attack5.png");
+    this->background = al_load_bitmap("./img/background5.jpg");
 
 }
 void Stage::show_stage1(){

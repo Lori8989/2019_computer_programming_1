@@ -104,7 +104,7 @@ Role::Role(int hp, int atk1, int atk2, int is_auto_fire, int atk_dir_x, int atk_
     this->pos_x = pos_x;
     this->pos_y = pos_y;
     this->move_unit = move_unit;
-    this->move_type = move_type;
+    this->move_type = move_type; // Move Type = 1: horizontal_walk, = 2: random_walk
     this->move_dir = 1;// move_unit = 1: move right, = -1 move left
     this->fps = fps;
     this->width = width;
@@ -153,11 +153,8 @@ void Role::horizontal_walk(){
     if(this->is_alive){
         if(this->pos_x >= this->width || this->pos_x <= 0){
             this->move_unit = -this->move_unit;
-
         }
-
         this->pos_x = this->pos_x + this->move_unit;
-
     }
 }
 void Role::fire1(){
@@ -220,6 +217,13 @@ bool Role::update_horizontal_walk_event(ALLEGRO_EVENT event){
         return 1;
     }
     return 0;
+}
+bool Role::update_walk_event(ALLEGRO_EVENT event){
+    if(this->move_type == 1){
+        return this->update_horizontal_walk_event(event);
+    }else if(this->move_type == 2){
+        return this->update_random_walk_event(event);
+    }
 }
 void Role::show(){
     if(this->is_alive){
